@@ -1,0 +1,33 @@
+.display {
+    height: 30vh;
+    width: 100v;
+    background: var(--primary-color);
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    font-family: 'Work Sans', sans-serif;
+    text-align: right;
+}
+
+.input-display {
+    height: 70%;
+    font-size: 60px;
+    position: relative;
+}
+
+.text-input-display {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.output-display {
+    height: 30%;
+    font-size: 28px;
+    position: relative;
+}
+
+.text-ouput-display {
+    position: absolute;
+    bottom: 20px;
+    right: 12px;
+}

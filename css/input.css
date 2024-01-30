@@ -1,0 +1,94 @@
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500&display=swap');
+
+button {
+    border-radius: 50%;
+    font-size: 32px;
+    border: none;
+    padding: 30px;
+    width: 85px;
+    height: 90px;
+    text-align: center;
+    font-weight: 500;
+    font-family: 'Work Sans', sans-serif;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    transition: border-radius 0.5s ease;
+}
+
+.input-buttons {
+    height: 65vh;
+    display: grid;
+    grid-template-rows: 1fr 1fr 4fr;
+    align-items: center;
+    justify-self: center;
+    row-gap: 10px;
+}
+
+.first-row {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+
+.first-row-op-buttons {
+    flex: 4;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.menu-overlay-button {
+    display: inline-block;
+    align-items: baseline;
+    flex: 0.5;
+}
+
+.menu-overlay-button>img {
+    transition: transform 0.5s ease;
+}
+
+.first-row-btn {
+    display: inline-block;
+    padding: 20px;
+    width: 20%;
+    text-align: center;
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 500;
+    font-size: 24px;
+    border-radius: 12px;
+}
+
+.second-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    justify-items: center;
+}
+
+.second-row>* {
+    background-color: var(--secondary-color);
+}
+
+
+.num-op-section {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    justify-items: center;
+}
+
+.num-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    row-gap: 10px;
+    column-gap: 10px;
+    justify-items: center;
+}
+
+.op-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.op-buttons>* {
+    background-color: var(--secondary-color);
+}
