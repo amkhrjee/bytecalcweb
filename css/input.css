@@ -15,32 +15,33 @@ button {
     transition: border-radius 0.5s ease;
 }
 
-.input-buttons {
+/* .input-buttons {
     height: 65vh;
     display: grid;
     grid-template-rows: 1fr 1fr 4fr;
     align-items: center;
     justify-self: center;
     row-gap: 10px;
-}
+} */
 
 .first-row {
-    display: flex;
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    justify-content: space-around;
+    justify-items: center;
     align-items: center;
-    justify-content: end;
 }
 
 .first-row-op-buttons {
-    flex: 4;
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     justify-content: space-around;
-    align-items: center;
+    width: 90%;
 }
 
 .menu-overlay-button {
-    display: inline-block;
-    align-items: baseline;
-    flex: 0.5;
+    background-color: var(--primary-color);
+    border-radius: 50px;
 }
 
 .menu-overlay-button>img {
@@ -48,14 +49,23 @@ button {
 }
 
 .first-row-btn {
-    display: inline-block;
-    padding: 20px;
-    width: 20%;
+    /* display: inline-block; */
+    /* padding: 20px; */
     text-align: center;
     font-family: 'Work Sans', sans-serif;
     font-weight: 500;
     font-size: 24px;
     border-radius: 12px;
+}
+
+
+.input-grid-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    justify-items: center;
+    justify-content: space-around;
+    height: fit-content;
+    grid-row-gap: 0.5rem;
 }
 
 .second-row {
@@ -73,6 +83,7 @@ button {
     display: grid;
     grid-template-columns: 3fr 1fr;
     justify-items: center;
+    border: 1px black solid;
 }
 
 .num-buttons {
@@ -80,13 +91,15 @@ button {
     grid-template-columns: 1fr 1fr 1fr;
     row-gap: 10px;
     column-gap: 10px;
-    justify-items: center;
+    justify-content: space-between;
+    border: 1px black solid;
+    gap: 10px;
 }
 
 .op-buttons {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    border: 1px black solid;
 }
 
 .op-buttons>* {

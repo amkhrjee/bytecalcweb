@@ -1,6 +1,5 @@
 .display {
-    height: 30vh;
-    width: 100v;
+    width: 100%;
     background: var(--primary-color);
     border-bottom-left-radius: 30px;
     border-bottom-right-radius: 30px;

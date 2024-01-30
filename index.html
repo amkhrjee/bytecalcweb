@@ -35,10 +35,12 @@
             }
 
             body {
+                height: 100vh;
                 transition: background-color 0.5s ease;
+                display: grid;
+                grid-template-rows: 30% 10% 60%;
             }
         }
-    </style>
     </style>
     <div class="display">
         <div class="input-display">
@@ -52,57 +54,45 @@
             </div>
         </div>
     </div>
-    <div class="input-buttons">
-        <div class="first-row">
-            <div class="first-row-op-buttons">
-                <div class="first-row-btn">log<sub>2</sub></div>
-                <div class="first-row-btn">2<sup>x</sup></div>
-                <div class="first-row-btn">mod</div>
-                <div class="first-row-btn">x<sup>y</sup></div>
-                <!-- <button>to <code>hex</code></button> -->
-            </div>
-            <div class="menu-overlay-button">
-                <img src="./res/downarrow.svg" />
-            </div>
+    <!-- <div class="input-buttons"> -->
+    <div class="first-row">
+        <div class="first-row-op-buttons">
+            <div class="first-row-btn">log<sub>2</sub></div>
+            <div class="first-row-btn">2<sup>x</sup></div>
+            <div class="first-row-btn">mod</div>
+            <div class="first-row-btn">x<sup>y</sup></div>
+            <!-- <button>to <code>hex</code></button> -->
         </div>
-        <div class="second-row">
-            <!-- <div class="wrapper-left"> -->
-            <button style="background-color: var(--tertiary-color);">AC</button>
-            <button>()</button>
-            <button>%</button>
-            <!-- </div> -->
-            <!-- <div class="wrapper-right"> -->
-            <button>/</button>
-            <!-- </div> -->
-            <!-- <button>to <code>bin</code></button> -->
-
-        </div>
-        <div class="num-op-section">
-            <div class="num-buttons">
-                <button>7</button>
-                <button>8</button>
-                <button>9</button>
-                <button>4</button>
-                <button>5</button>
-                <button>6</button>
-                <button>1</button>
-                <button>2</button>
-                <button>3</button>
-                <button>0</button>
-                <button>.</button>
-                <button><span class="material-symbols-outlined">
-                        backspace
-                    </span></button>
-            </div>
-            <div class="op-buttons">
-                <button>×</button>
-                <button>-</button>
-                <button>+</button>
-                <button>=</button>
-
-            </div>
+        <div class="menu-overlay-button">
+            <img src="./res/downarrow.svg" />
         </div>
     </div>
+    <div class="input-grid-wrapper">
+        <button style="background-color: var(--tertiary-color);">AC</button>
+        <button style="background-color: var(--secondary-color);">()</button>
+        <button style="background-color: var(--secondary-color);">%</button>
+        <button style="background-color: var(--secondary-color);">/</button>
+        <button>7</button>
+        <button>8</button>
+        <button>9</button>
+        <button style="background-color: var(--secondary-color);">×</button>
+        <button>4</button>
+        <button>5</button>
+        <button>6</button>
+        <button style="background-color: var(--secondary-color);">-</button>
+        <button>1</button>
+        <button>2</button>
+        <button>3</button>
+        <button style="background-color: var(--secondary-color);">+</button>
+        <button>0</button>
+        <button>.</button>
+        <button><span class="material-symbols-outlined">
+                backspace
+            </span></button>
+        <button style="background-color: var(--secondary-color);">=</button>
+    </div>
+
+    <!-- </div> -->
     <script src="./js/animation.js"></script>
 </body>
 
