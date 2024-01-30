@@ -38,7 +38,7 @@
                 height: 100vh;
                 transition: background-color 0.5s ease;
                 display: grid;
-                grid-template-rows: 30% 10% 60%;
+                grid-template-rows: 30% 10% 10% 60%;
             }
         }
     </style>
@@ -67,8 +67,12 @@
             <img src="./res/downarrow.svg" />
         </div>
     </div>
+    <div class="hidden-row">
+        <div class="hidden-row-btn">Convert to<br> Binary</div>
+        <div class="hidden-row-btn">Convert to<br> Hexadecimal</div>
+    </div>
     <div class="input-grid-wrapper">
-        <button style="background-color: var(--tertiary-color);">AC</button>
+        <button style="background-color: var(--quaternery-color); color: white;">AC</button>
         <button style="background-color: var(--secondary-color);">()</button>
         <button style="background-color: var(--secondary-color);">%</button>
         <button style="background-color: var(--secondary-color);">/</button>

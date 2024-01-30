@@ -2,27 +2,18 @@
 
 button {
     border-radius: 50%;
-    font-size: 32px;
+    font-size: 2rem;
     border: none;
-    padding: 30px;
-    width: 85px;
-    height: 90px;
+    width: 5.3rem;
+    height: 5.6rem;
     text-align: center;
     font-weight: 500;
     font-family: 'Work Sans', sans-serif;
     background-color: var(--primary-color);
     color: var(--text-color);
-    transition: border-radius 0.5s ease;
-}
+    transition: border-radius 0.5s ease, height 0.5s ease;
 
-/* .input-buttons {
-    height: 65vh;
-    display: grid;
-    grid-template-rows: 1fr 1fr 4fr;
-    align-items: center;
-    justify-self: center;
-    row-gap: 10px;
-} */
+}
 
 .first-row {
     display: grid;
@@ -49,15 +40,37 @@ button {
 }
 
 .first-row-btn {
-    /* display: inline-block; */
-    /* padding: 20px; */
     text-align: center;
     font-family: 'Work Sans', sans-serif;
     font-weight: 500;
-    font-size: 24px;
+    font-size: 1.5rem;
     border-radius: 12px;
 }
 
+.hidden-row {
+    display: grid;
+    opacity: 0;
+    grid-template-columns: 1fr 1fr;
+    justify-content: space-around;
+    justify-items: center;
+    display: none;
+    transform: translateY(-50px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.hidden-row-btn {
+    background-color: var(--tertiary-color);
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 500;
+    color: white;
+    font-size: 120%;
+    width: 80%;
+    height: 80%;
+    border-radius: 16px;
+    text-align: center;
+    line-height: 2rem;
+    transition: border-radius 0.4s ease;
+}
 
 .input-grid-wrapper {
     display: grid;
@@ -72,36 +85,4 @@ button {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     justify-items: center;
-}
-
-.second-row>* {
-    background-color: var(--secondary-color);
-}
-
-
-.num-op-section {
-    display: grid;
-    grid-template-columns: 3fr 1fr;
-    justify-items: center;
-    border: 1px black solid;
-}
-
-.num-buttons {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    row-gap: 10px;
-    column-gap: 10px;
-    justify-content: space-between;
-    border: 1px black solid;
-    gap: 10px;
-}
-
-.op-buttons {
-    display: flex;
-    flex-direction: column;
-    border: 1px black solid;
-}
-
-.op-buttons>* {
-    background-color: var(--secondary-color);
 }
