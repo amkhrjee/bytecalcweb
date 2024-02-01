@@ -82,14 +82,12 @@ menuButton.addEventListener("click", () => {
     if (!listToggle) {
         listMenu.style.visibility = "visible"
         listMenu.style.opacity = 1
-        // setTimeout(() => {
-        // }, 100)
         listMenu.style.transform = "translateY(0)"
         listToggle = true
     } else {
         listMenu.style.opacity = 0
+        listMenu.style.transform = "translateY(-50px)"
         setTimeout(() => {
-            listMenu.style.transform = "translateY(-50px)"
             listMenu.style.visibility = "hidden"
         }, 100)
         listToggle = false
