@@ -97,6 +97,8 @@ menuButton.addEventListener("click", () => {
 })
 
 document.querySelector(".wrapper").addEventListener("click", (e) => {
-    if (!e.target.closest(".menu"))
+    if (!e.target.closest(".menu")) {
         listMenu.style.visibility = "hidden"
+        listToggle = false
+    }
 })
