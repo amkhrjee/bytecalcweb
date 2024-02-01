@@ -15,14 +15,14 @@ buttons.forEach(button => {
         button.style.borderRadius = "10%"
         setTimeout(() => {
             button.style.borderRadius = "50%"
-        }, 200)
+        }, 10)
     })
 })
 
 firstRowButtons.forEach(button => {
     button.addEventListener('click', () => {
         if ("vibrate" in navigator)
-            navigator.vibrate(200)
+            navigator.vibrate(10)
         button.style.backgroundColor = "var(--primary-color)"
         setTimeout(() => {
             button.style.backgroundColor = "white"
@@ -35,7 +35,7 @@ menuOverlayButton.addEventListener("click", () => {
     let currentAngle = (parseFloat(arrow.style.transform.replace(/[^0-9\-.,]/g, '')) || 0);
     let rotationAngle = 180
     if ("vibrate" in navigator)
-        navigator.vibrate(200)
+        navigator.vibrate(10)
     arrow.style.transform = "rotate(" + (currentAngle + rotationAngle) + "deg)"
     initialAngle = rotationAngle
 
@@ -66,11 +66,11 @@ menuOverlayButton.addEventListener("click", () => {
 hiddenRowButton.forEach(button => {
     button.addEventListener("click", () => {
         if ("vibrate" in navigator)
-            navigator.vibrate(200)
+            navigator.vibrate(10)
         button.style.borderRadius = "0px"
         setTimeout(() => {
             button.style.borderRadius = "16px"
-        }, 200)
+        }, 10)
     })
 })
 
@@ -78,7 +78,7 @@ let listToggle = false
 menuButton.addEventListener("click", () => {
     console.log("List Clicked!");
     if ("vibrate" in navigator)
-        navigator.vibrate(200)
+        navigator.vibrate(10)
     if (!listToggle) {
         listMenu.style.visibility = "visible"
         listMenu.style.opacity = 1
