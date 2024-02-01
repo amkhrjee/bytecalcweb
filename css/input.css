@@ -16,16 +16,17 @@ button {
 
 .first-row {
     display: grid;
-    grid-template-columns: 3fr 1fr;
     justify-content: space-around;
+    grid-auto-flow: column;
     justify-items: center;
     align-items: center;
 }
 
 .first-row-op-buttons {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    justify-content: space-around;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    justify-content: space-between;
     width: 90%;
 }
 
@@ -75,8 +76,8 @@ button {
     padding: 1rem;
     border-radius: 16px;
     text-align: center;
-    /* line-height: 2rem; */
     transition: border-radius 0.4s ease;
+    user-select: none;
 }
 
 .input-grid-wrapper {
