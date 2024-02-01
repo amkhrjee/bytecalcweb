@@ -12,90 +12,63 @@
 </head>
 
 <body>
-    <style>
-        :root {
-            --primary-color: #EEF5FF;
-            --secondary-color: #B4D4FF;
-            --tertiary-color: #86B6F6;
-            --quaternery-color: #176B87;
-            --text-color: #333;
-
-            * {
-                margin: 0;
-                padding: 0;
-                box-sizing: border-box;
-            }
-
-            .material-symbols-outlined {
-                font-variation-settings:
-                    'FILL' 0,
-                    'wght' 800,
-                    'GRAD' 0,
-                    'opsz' 24;
-            }
-
-            body {
-                height: 100vh;
-                transition: background-color 0.5s ease;
-                display: grid;
-                grid-template-rows: 30% 10% 10% 60%;
-            }
-        }
-    </style>
-    <div class="display">
-        <div class="input-display">
-            <div class="text-input-display">
-                lg(10)*56
+    <div class="wrapper">
+        <div class="display">
+            <div class="input-display">
+                <div class="text-input-display">
+                    lg(10)*56
+                </div>
+            </div>
+            <div class="output-display">
+                <div class="text-ouput-display">
+                    2434423
+                </div>
             </div>
         </div>
-        <div class="output-display">
-            <div class="text-ouput-display">
-                2434423
+        <!-- <div class="input-buttons"> -->
+        <div class="first-row">
+            <div class="first-row-op-buttons">
+                <div class="first-row-btn">log<sub>2</sub></div>
+                <div class="first-row-btn">2<sup>x</sup></div>
+                <div class="first-row-btn">mod</div>
+                <div class="first-row-btn">x<sup>y</sup></div>
+                <!-- <button>to <code>hex</code></button> -->
+            </div>
+            <div class="menu-overlay-button">
+                <img src="./res/downarrow.svg" />
             </div>
         </div>
-    </div>
-    <!-- <div class="input-buttons"> -->
-    <div class="first-row">
-        <div class="first-row-op-buttons">
-            <div class="first-row-btn">log<sub>2</sub></div>
-            <div class="first-row-btn">2<sup>x</sup></div>
-            <div class="first-row-btn">mod</div>
-            <div class="first-row-btn">x<sup>y</sup></div>
-            <!-- <button>to <code>hex</code></button> -->
+        <div class="hidden-row">
+            <div class="hidden-row-content">
+                <div class="hidden-row-btn">Convert to<br> Binary</div>
+                <div class="hidden-row-btn">Convert to<br> Hexadecimal</div>
+            </div>
         </div>
-        <div class="menu-overlay-button">
-            <img src="./res/downarrow.svg" />
+        <div class="input-grid-wrapper">
+            <button style="background-color: var(--quaternery-color); color: white;">AC</button>
+            <button style="background-color: var(--secondary-color);">()</button>
+            <button style="background-color: var(--secondary-color);">%</button>
+            <button style="background-color: var(--secondary-color);">/</button>
+            <button>7</button>
+            <button>8</button>
+            <button>9</button>
+            <button style="background-color: var(--secondary-color);">×</button>
+            <button>4</button>
+            <button>5</button>
+            <button>6</button>
+            <button style="background-color: var(--secondary-color);">-</button>
+            <button>1</button>
+            <button>2</button>
+            <button>3</button>
+            <button style="background-color: var(--secondary-color);">+</button>
+            <button>0</button>
+            <button>.</button>
+            <button><span class="material-symbols-outlined">
+                    backspace
+                </span></button>
+            <button style="background-color: var(--secondary-color);">=</button>
         </div>
     </div>
-    <div class="hidden-row">
-        <div class="hidden-row-btn">Convert to<br> Binary</div>
-        <div class="hidden-row-btn">Convert to<br> Hexadecimal</div>
-    </div>
-    <div class="input-grid-wrapper">
-        <button style="background-color: var(--quaternery-color); color: white;">AC</button>
-        <button style="background-color: var(--secondary-color);">()</button>
-        <button style="background-color: var(--secondary-color);">%</button>
-        <button style="background-color: var(--secondary-color);">/</button>
-        <button>7</button>
-        <button>8</button>
-        <button>9</button>
-        <button style="background-color: var(--secondary-color);">×</button>
-        <button>4</button>
-        <button>5</button>
-        <button>6</button>
-        <button style="background-color: var(--secondary-color);">-</button>
-        <button>1</button>
-        <button>2</button>
-        <button>3</button>
-        <button style="background-color: var(--secondary-color);">+</button>
-        <button>0</button>
-        <button>.</button>
-        <button><span class="material-symbols-outlined">
-                backspace
-            </span></button>
-        <button style="background-color: var(--secondary-color);">=</button>
-    </div>
-
     <!-- </div> -->
     <script src="./js/animation.js"></script>
 </body>

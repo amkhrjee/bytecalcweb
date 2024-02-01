@@ -4,6 +4,7 @@ let menuOverlayButton = document.querySelector(".menu-overlay-button")
 let arrow = document.querySelector(".menu-overlay-button>img")
 let hiddenRow = document.querySelector('.hidden-row')
 let hiddenRowButton = document.querySelectorAll(".hidden-row-btn")
+let inputGridWrapper = document.querySelector('.input-grid-wrapper')
 
 buttons.forEach(button => {
     button.addEventListener('click', () => {
@@ -44,16 +45,18 @@ menuOverlayButton.addEventListener("click", () => {
             hiddenRow.style.opacity = 1
         }, 100)
         hiddenRow.style.transform = "translateY(0)"
+        inputGridWrapper.style.transform = "translateY(5.5rem)"
         buttons.forEach(button => {
-            button.style.height = "4.6rem"
+            button.style.height = "5rem"
         })
         toggleArrow = true
     } else {
         hiddenRow.style.display = "none"
         hiddenRow.style.opacity = 0
         hiddenRow.style.transform = "translateY(-50px)"
+        inputGridWrapper.style.transform = "translateY(0)"
         buttons.forEach(button => {
-            button.style.height = "5.6rem"
+            button.style.height = "6rem"
         })
         toggleArrow = false
     }
