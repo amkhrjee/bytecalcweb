@@ -41,6 +41,15 @@ body {
     border-bottom-right-radius: 30px;
     font-family: 'Work Sans', sans-serif;
     text-align: right;
+
+}
+
+.menu {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    padding: 0;
+    z-index: 999;
 }
 
 .input-display {
@@ -89,4 +98,34 @@ body {
     bottom: 20px;
     right: 1rem;
     font-weight: 800;
+}
+
+.list>* {
+    display: block;
+    text-align: left;
+}
+
+.list {
+    color: var(--primary-color);
+    position: absolute;
+    display: grid;
+    background-color: var(--tertiary-color);
+    border-radius: 12px;
+    gap: 1rem;
+    padding: 1rem;
+    min-width: 8rem;
+    font-size: 1rem;
+    justify-items: start;
+    right: 1rem;
+    z-index: 100;
+    transform: translateY(-50px);
+    transition: transform 0.25s ease, opacity 0.5s ease;
+    opacity: 1;
+    /* display: none; */
+    visibility: hidden;
+}
+
+.list>a {
+    text-decoration: none;
+    color: inherit;
 }

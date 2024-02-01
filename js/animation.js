@@ -1,10 +1,12 @@
-let buttons = document.querySelectorAll("button")
-let firstRowButtons = document.querySelectorAll(".first-row-btn")
-let menuOverlayButton = document.querySelector(".menu-overlay-button")
-let arrow = document.querySelector(".menu-overlay-button>img")
-let hiddenRow = document.querySelector('.hidden-row')
-let hiddenRowButton = document.querySelectorAll(".hidden-row-btn")
-let inputGridWrapper = document.querySelector('.input-grid-wrapper')
+const buttons = document.querySelectorAll("button")
+const firstRowButtons = document.querySelectorAll(".first-row-btn")
+const menuOverlayButton = document.querySelector(".menu-overlay-button")
+const arrow = document.querySelector(".menu-overlay-button>img")
+const hiddenRow = document.querySelector('.hidden-row')
+const hiddenRowButton = document.querySelectorAll(".hidden-row-btn")
+const inputGridWrapper = document.querySelector('.input-grid-wrapper')
+const menuButton = document.querySelector(".menu>img")
+const listMenu = document.querySelector(".list")
 
 buttons.forEach(button => {
     button.addEventListener('click', () => {
@@ -30,7 +32,6 @@ firstRowButtons.forEach(button => {
 
 let toggleArrow = false
 menuOverlayButton.addEventListener("click", () => {
-    console.log("Arrow Clicked!");
     let currentAngle = (parseFloat(arrow.style.transform.replace(/[^0-9\-.,]/g, '')) || 0);
     let rotationAngle = 180
     if ("vibrate" in navigator)
@@ -71,4 +72,31 @@ hiddenRowButton.forEach(button => {
             button.style.borderRadius = "16px"
         }, 200)
     })
+})
+
+let listToggle = false
+menuButton.addEventListener("click", () => {
+    console.log("List Clicked!");
+    if ("vibrate" in navigator)
+        navigator.vibrate(200)
+    if (!listToggle) {
+        listMenu.style.visibility = "visible"
+        listMenu.style.opacity = 1
+        // setTimeout(() => {
+        // }, 100)
+        listMenu.style.transform = "translateY(0)"
+        listToggle = true
+    } else {
+        listMenu.style.opacity = 0
+        setTimeout(() => {
+            listMenu.style.transform = "translateY(-50px)"
+            listMenu.style.visibility = "hidden"
+        }, 100)
+        listToggle = false
+    }
+})
+
+document.querySelector(".wrapper").addEventListener("click", (e) => {
+    if (!e.target.closest(".menu"))
+        listMenu.style.visibility = "hidden"
 })
