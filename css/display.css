@@ -29,7 +29,7 @@ body {
     height: 100%;
     /* transition: background-color 0.5s ease; */
     display: grid;
-    grid-template-rows: 30% 10% 70%;
+    grid-template-rows: 30% 10% 60%;
     margin-inline-start: auto;
 }
 

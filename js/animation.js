@@ -1,4 +1,4 @@
-const buttons = document.querySelectorAll("button")
+const buttons = document.querySelectorAll(".input-grid-wrapper>*")
 const firstRowButtons = document.querySelectorAll(".first-row-btn")
 const menuOverlayButton = document.querySelector(".menu-overlay-button")
 const arrow = document.querySelector(".menu-overlay-button>img")
@@ -47,19 +47,25 @@ menuOverlayButton.addEventListener("click", () => {
             hiddenRow.style.opacity = 1
         }, 100)
         hiddenRow.style.transform = "translateY(0)"
+        inputGridWrapper.style.gap = "0px auto"
+        inputGridWrapper.style.height = "80%"
         inputGridWrapper.style.transform = "translateY(5.5rem)"
-        buttons.forEach(button => {
-            button.style.height = "4.8rem"
-        })
+        // buttons.forEach(button => {
+        //     // button.style.height = "80%"
+        // })
         toggleArrow = true
     } else {
         hiddenRow.style.display = "none"
         hiddenRow.style.opacity = 0
         hiddenRow.style.transform = "translateY(-50px)"
         inputGridWrapper.style.transform = "translateY(0)"
-        buttons.forEach(button => {
-            button.style.height = "6rem"
-        })
+        inputGridWrapper.style.gap = "1rem auto"
+        inputGridWrapper.style.height = "100%"
+
+
+        // buttons.forEach(button => {
+        //     button.style.height = "95%"
+        // })
         toggleArrow = false
     }
 })

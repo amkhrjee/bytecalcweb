@@ -1,11 +1,26 @@
 @import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500&display=swap');
 
-button {
+
+.input-grid-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    transition: transform 0.5s ease;
+    justify-content: space-between;
+    justify-items: center;
+    row-gap: 1rem;
+    /* transition: height 0.5s ease; */
+    padding-bottom: 0.5rem;
+}
+
+.input-grid-wrapper>* {
     border-radius: 50%;
+    /* border: solid 1px red; */
+    height: 95%;
+    width: 80%;
     font-size: 2rem;
-    border: none;
-    width: 5.6rem;
-    height: 6rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     text-align: center;
     font-weight: 500;
     font-family: 'Work Sans', sans-serif;
@@ -78,14 +93,4 @@ button {
     text-align: center;
     transition: border-radius 0.4s ease;
     user-select: none;
-}
-
-.input-grid-wrapper {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    justify-items: center;
-    justify-content: space-around;
-    height: fit-content;
-    grid-row-gap: 0.5rem;
-    transition: transform 0.5s ease;
 }
