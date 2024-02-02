@@ -8,21 +8,23 @@ const inputGridWrapper = document.querySelector('.input-grid-wrapper')
 const menuButton = document.querySelector(".menu>img")
 const listMenu = document.querySelector(".list")
 
+// vibration durations
+const smallVibration = 75
+const tinyVibration = 50
+
 buttons.forEach(button => {
     button.addEventListener('click', () => {
-        if ("vibrate" in navigator)
-            navigator.vibrate(500)
+        Haptics.vibrate(smallVibration)
         button.style.borderRadius = "10%"
         setTimeout(() => {
             button.style.borderRadius = "50%"
-        }, 10)
+        }, 200)
     })
 })
 
 firstRowButtons.forEach(button => {
     button.addEventListener('click', () => {
-        if ("vibrate" in navigator)
-            navigator.vibrate(10)
+        Haptics.vibrate(smallVibration)
         button.style.backgroundColor = "var(--primary-color)"
         setTimeout(() => {
             button.style.backgroundColor = "white"
@@ -34,8 +36,7 @@ let toggleArrow = false
 menuOverlayButton.addEventListener("click", () => {
     let currentAngle = (parseFloat(arrow.style.transform.replace(/[^0-9\-.,]/g, '')) || 0);
     let rotationAngle = 180
-    if ("vibrate" in navigator)
-        navigator.vibrate(10)
+    Haptics.vibrate(smallVibration)
     arrow.style.transform = "rotate(" + (currentAngle + rotationAngle) + "deg)"
     initialAngle = rotationAngle
 
@@ -48,7 +49,7 @@ menuOverlayButton.addEventListener("click", () => {
         hiddenRow.style.transform = "translateY(0)"
         inputGridWrapper.style.transform = "translateY(5.5rem)"
         buttons.forEach(button => {
-            button.style.height = "5rem"
+            button.style.height = "4.8rem"
         })
         toggleArrow = true
     } else {
@@ -65,20 +66,17 @@ menuOverlayButton.addEventListener("click", () => {
 
 hiddenRowButton.forEach(button => {
     button.addEventListener("click", () => {
-        if ("vibrate" in navigator)
-            navigator.vibrate(10)
+        Haptics.vibrate(smallVibration)
         button.style.borderRadius = "0px"
         setTimeout(() => {
             button.style.borderRadius = "16px"
-        }, 10)
+        }, 200)
     })
 })
 
 let listToggle = false
 menuButton.addEventListener("click", () => {
-    console.log("List Clicked!");
-    if ("vibrate" in navigator)
-        navigator.vibrate(10)
+    Haptics.vibrate(tinyVibration)
     if (!listToggle) {
         listMenu.style.visibility = "visible"
         listMenu.style.opacity = 1
@@ -96,7 +94,11 @@ menuButton.addEventListener("click", () => {
 
 document.querySelector(".wrapper").addEventListener("click", (e) => {
     if (!e.target.closest(".menu")) {
-        listMenu.style.visibility = "hidden"
+        listMenu.style.opacity = 0
+        listMenu.style.transform = "translateY(-50px)"
+        setTimeout(() => {
+            listMenu.style.visibility = "hidden"
+        }, 100)
         listToggle = false
     }
 })

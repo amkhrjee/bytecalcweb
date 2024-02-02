@@ -31,7 +31,6 @@ body {
     display: grid;
     grid-template-rows: 30% 10% 70%;
     margin-inline-start: auto;
-    border: solid 1px green;
 }
 
 .display {
