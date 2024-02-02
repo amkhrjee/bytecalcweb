@@ -5,8 +5,10 @@
  * Haptics.js can be freely distributed under the MIT License.
  */
 
-// Change from original: Replaced "global" with "window"
-// Change from original: Converted the IIFE into an actual function to call on DOMContentLoaded
+// Change from original: 
+//      - Replaced "global" with "window"
+//      - Converted the IIFE into an actual function to 
+//      call on DOMContentLoaded event
 
 "use strict";
 

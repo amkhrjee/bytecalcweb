@@ -50,9 +50,6 @@ menuOverlayButton.addEventListener("click", () => {
         inputGridWrapper.style.gap = "0px auto"
         inputGridWrapper.style.height = "80%"
         inputGridWrapper.style.transform = "translateY(5.5rem)"
-        // buttons.forEach(button => {
-        //     // button.style.height = "80%"
-        // })
         toggleArrow = true
     } else {
         hiddenRow.style.display = "none"
@@ -61,11 +58,6 @@ menuOverlayButton.addEventListener("click", () => {
         inputGridWrapper.style.transform = "translateY(0)"
         inputGridWrapper.style.gap = "1rem auto"
         inputGridWrapper.style.height = "100%"
-
-
-        // buttons.forEach(button => {
-        //     button.style.height = "95%"
-        // })
         toggleArrow = false
     }
 })
