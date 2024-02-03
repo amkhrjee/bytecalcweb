@@ -8,7 +8,6 @@
     justify-content: space-between;
     justify-items: center;
     row-gap: 1rem;
-    /* transition: height 0.5s ease; */
     padding-bottom: 0.5rem;
 }
 
@@ -19,6 +18,7 @@
     font-size: 2rem;
     display: flex;
     justify-content: center;
+    user-select: none;
     align-items: center;
     text-align: center;
     font-weight: 500;
@@ -46,11 +46,12 @@
 
 .menu-overlay-button {
     background-color: var(--primary-color);
-    border-radius: 50px;
+    border-radius: 50%;
 }
 
 .menu-overlay-button>img {
     transition: transform 0.5s ease;
+    user-select: none;
 }
 
 .first-row-btn {
@@ -59,6 +60,8 @@
     font-weight: 500;
     font-size: 1.5rem;
     border-radius: 12px;
+    user-select: none;
+    color: var(--text-color);
 }
 
 .hidden-row {

@@ -25,10 +25,7 @@ buttons.forEach(button => {
 firstRowButtons.forEach(button => {
     button.addEventListener('click', () => {
         Haptics.vibrate(smallVibration)
-        button.style.backgroundColor = "var(--primary-color)"
-        setTimeout(() => {
-            button.style.backgroundColor = "white"
-        }, 500)
+
     })
 })
 

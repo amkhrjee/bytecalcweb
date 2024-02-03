@@ -1,14 +1,28 @@
 :root {
-    --primary-color: #EEF5FF;
-    --secondary-color: #B4D4FF;
-    --tertiary-color: #86B6F6;
-    --quaternery-color: #176B87;
-    --text-color: #333;
+
+    --light-primary-color: #EEF5FF;
+    --light-secondary-color: #B4D4FF;
+    --light-tertiary-color: #86B6F6;
+    --light-quaternery-color: #176B87;
+    --light-text-color: #000000;
+
+    --dark-primary-color: #263365;
+    --dark-secondary-color: #40A2D8;
+    --dark-tertiary-color: #0B60B0;
+    --dark-quaternery-color: #000000;
+    --dark-text-color: #fff;
+
+    --primary-color: var(--light-primary-color);
+    --secondary-color: var(--light-secondary-color);
+    --tertiary-color: var(--light-tertiary-color);
+    --quaternery-color: var(--light-quaternery-color);
+    --text-color: var(--light-text-color);
 
     * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
+        transition: background-color 0.5s ease, color 0.5s ease;
     }
 
     .material-symbols-outlined {
@@ -20,8 +34,27 @@
     }
 }
 
+@media (prefers-color-scheme: dark) {
+    :root {
+        --primary-color: var(--dark-primary-color);
+        --secondary-color: var(--dark-secondary-color);
+        --tertiary-color: var(--dark-tertiary-color);
+        --quaternery-color: var(--dark-quaternery-color);
+        --text-color: var(--dark-text-color);
+    }
+
+    body {
+        background-color: var(--dark-quaternery-color);
+    }
+
+    .svg-icon {
+        filter: invert(1000%);
+    }
+}
+
 body {
     height: 100dvh;
+    transition: background-color 0.5s ease, color 0.5s ease;
 }
 
 .wrapper {
@@ -38,7 +71,7 @@ body {
     border-bottom-right-radius: 30px;
     font-family: 'Work Sans', sans-serif;
     text-align: right;
-
+    color: var(--text-color);
 }
 
 .menu {
@@ -66,6 +99,7 @@ body {
 
 .text-input-display>input {
     outline: none;
+    color: var(--text-color);
     border: none;
     font-family: 'Work Sans', sans-serif;
     font-size: 4rem;
@@ -97,6 +131,7 @@ body {
 .list>* {
     display: block;
     text-align: left;
+    color: var(--text-color);
 }
 
 .list {
@@ -113,12 +148,13 @@ body {
     right: 1rem;
     z-index: 100;
     transform: translateY(-50px);
-    transition: transform 0.25s ease, opacity 0.5s ease;
+    transition: transform 0.5s ease, opacity 0.5s ease;
     opacity: 1;
     visibility: hidden;
+    user-select: none;
 }
 
 .list>a {
     text-decoration: none;
-    color: inherit;
+    color: var(--text-color);
 }
