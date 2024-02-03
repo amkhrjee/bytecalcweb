@@ -13,6 +13,27 @@
 </head>
 
 <body onload="loadHaptics()">
+    <div class="pop-up">
+        <h3>Choose theme</h3>
+        <form name="theme">
+            <label>
+                <input type="radio" name="option" value="light">
+                Light
+            </label>
+            <label>
+                <input type="radio" name="option" value="dark">
+                Dark
+            </label>
+            <label>
+                <input type="radio" name="option" value="default">
+                System default
+            </label>
+        </form>
+        <div class="pop-up-buttons">
+            <button>Cancel</button>
+            <button>OK</button>
+        </div>
+    </div>
     <div class="wrapper">
         <div class="display">
             <div class="menu">
@@ -43,7 +64,7 @@
                 <div class="first-row-btn">x<sup>y</sup></div>
             </div>
             <div class="menu-overlay-button">
-                <img src="./res/downarrow.svg" class="svg-icon" />
+                <img id="downarrow" src="./res/downarrow.svg" class="svg-icon" />
             </div>
         </div>
         <div class="hidden-row">
