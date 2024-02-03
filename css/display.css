@@ -59,7 +59,7 @@ body {
 }
 
 .wrapper {
-    max-width: 444px;
+    max-width: 500px;
     height: 100%;
     display: grid;
     grid-template-rows: 30% 10% 60%;

@@ -89,7 +89,7 @@ menuButton.addEventListener("click", () => {
     }
 })
 
-document.querySelector(".wrapper").addEventListener("click", (e) => {
+document.body.addEventListener("click", (e) => {
     if (!e.target.closest(".menu")) {
         listMenu.style.opacity = 0
         listMenu.style.transform = "translateY(-50px)"
@@ -148,6 +148,7 @@ const setDarkThemeColors = () => {
     root.style.setProperty("--text-color", "#FFF")
     document.body.style.backgroundColor = "#000000"
     document.querySelector(".svg-icon").style.filter = "invert(100%)"
+    document.getElementById("downarrow").style.filter = "invert(100%)"
 }
 
 const currentTheme = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? "dark" : "light"
