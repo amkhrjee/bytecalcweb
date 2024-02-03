@@ -1,0 +1,34 @@
+{
+    "name": "ByteCalc",
+    "short_name": "ByteCalc",
+    "description": "Calculator for Programmers",
+    "start_url": "/",
+    "display": "standalone",
+    "icons": [
+        {
+            "src": "./res/favicons/android-chrome-512x512.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        },
+        {
+            "src": "./res/favicons/android-chrome-192x192.png",
+            "type": "image/png",
+            "sizes": "192x192"
+        },
+        {
+            "src": "./res/favicons/apple-touch-icon.png",
+            "type": "image/png",
+            "sizes": "180x180"
+        },
+        {
+            "src": "./res/favicons/favicon-16x16.png",
+            "type": "image/png",
+            "sizes": "16x16"
+        },
+        {
+            "src": "./res/favicons/favicon-32x32.png",
+            "type": "image/png",
+            "sizes": "32x32"
+        }
+    ]
+}
