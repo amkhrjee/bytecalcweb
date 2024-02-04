@@ -15,10 +15,20 @@ const inputArea = document.querySelector(".text-input-display>input")
 const smallVibration = 75
 const tinyVibration = 50
 
+// Parens
+let leftParenPresent = false
+
 // change input area font
 const updateFontSize = () => {
     if (inputArea.value.length >= 7)
         inputArea.style.fontSize = "3rem"
+}
+
+// return focus to input area
+const focusInputArea = () => {
+    if (document.activeElement !== inputArea) {
+        inputArea.focus()
+    }
 }
 
 const insertTextAtCaret = (text) => {
@@ -31,7 +41,6 @@ const insertTextAtCaret = (text) => {
     inputArea.value = newValue;
     const newCaretPos = caretStart + text.length;
     inputArea.setSelectionRange(newCaretPos, newCaretPos);
-    console.log(document.activeElement);
 }
 
 buttons.forEach(button => {
@@ -66,14 +75,22 @@ buttons.forEach(button => {
             || value === "-"
             || value === "×"
             || value === "/"
-            || value === "%") {
+            || value === "%"
+            || value === ".") {
             insertTextAtCaret(value)
         }
-
-        updateFontSize()
-        if (document.activeElement !== inputArea) {
-            inputArea.focus()
+        else if (value === "parens") {
+            if (leftParenPresent) {
+                insertTextAtCaret(")")
+                leftParenPresent = false
+            }
+            else {
+                insertTextAtCaret("(")
+                leftParenPresent = true
+            }
         }
+        updateFontSize()
+        focusInputArea()
     })
 })
 
@@ -81,6 +98,27 @@ firstRowButtons.forEach(button => {
     button.addEventListener('click', () => {
         Haptics.vibrate(smallVibration)
 
+        const value = button.dataset.val
+        let newValue = ""
+        switch (value) {
+            case "log₂":
+                newValue = "log₂(" + inputArea.value + ")"
+                inputArea.value = newValue
+                break
+            case "2^":
+                newValue = "2^(" + inputArea.value + ")"
+                inputArea.value = newValue
+                break
+            case "mod":
+                insertTextAtCaret("mod")
+                break
+            case "^":
+                insertTextAtCaret("^")
+                break
+
+        }
+        updateFontSize()
+        focusInputArea()
     })
 })
 
