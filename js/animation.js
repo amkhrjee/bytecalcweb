@@ -1,4 +1,4 @@
-import { Token, TokenType, Scanner } from "./calculator.js"
+import { Scanner } from "./calculator.js"
 
 const listMenu = document.querySelector(".list")
 const popUpDialog = document.querySelector(".pop-up")
@@ -9,9 +9,9 @@ const arrow = document.querySelector(".menu-overlay-button>img")
 const buttons = document.querySelectorAll(".input-grid-wrapper>*")
 const firstRowButtons = document.querySelectorAll(".first-row-btn")
 const hiddenRowButton = document.querySelectorAll(".hidden-row-btn")
+const inputArea = document.querySelector(".text-input-display>input")
 const inputGridWrapper = document.querySelector('.input-grid-wrapper')
 const menuOverlayButton = document.querySelector(".menu-overlay-button")
-const inputArea = document.querySelector(".text-input-display>input")
 
 // vibration durations
 const smallVibration = 75
@@ -313,4 +313,3 @@ document.querySelectorAll(".pop-up-buttons>button")[1].addEventListener("click",
     }
     closePopUpDialog()
 })
-
