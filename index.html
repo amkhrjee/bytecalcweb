@@ -42,20 +42,19 @@
             <div class="menu">
                 <img src="./res/menu.svg" class="svg-icon">
                 <div class="list">
-                    <span>Theme</span>
-                    <a target="_blank" href="https://github.com/amkhrjee/bytecalcweb">Source</a>
-                    <a href="#">Support</a>
-                    <a target="_blank" href="https://twitter.com/amkhrjee">About Me</a>
+                    <span>🎨 Theme</span>
+                    <a target="_blank" href="https://github.com/amkhrjee/bytecalcweb">👨‍💻 Source</a>
+                    <a href="#">💳 Support</a>
+                    <a target="_blank" href="https://twitter.com/amkhrjee">👦 About Me</a>
                 </div>
             </div>
             <div class="input-display">
                 <div class="text-input-display">
-                    <input inputmode="none" type="text" value="3435" />
+                    <input name="user-unput" inputmode="none" type="text" />
                 </div>
             </div>
             <div class="output-display">
                 <div class="text-ouput-display">
-                    2434423
                 </div>
             </div>
         </div>
@@ -75,32 +74,33 @@
             <div class="hidden-row-btn">Convert to<br> Hexadecimal</div>
         </div>
         <div class="input-grid-wrapper">
-            <div style="background-color: var(--text-color); color: var(--primary-color);">AC</div>
-            <div style="background-color: var(--secondary-color);">()</div>
-            <div style="background-color: var(--secondary-color);">%</div>
-            <div style="background-color: var(--secondary-color);">/</div>
-            <div>7</div>
-            <div>8</div>
-            <div>9</div>
-            <div style="background-color: var(--secondary-color);">×</div>
-            <div>4</div>
-            <div>5</div>
-            <div>6</div>
-            <div style="background-color: var(--secondary-color);">-</div>
-            <div>1</div>
-            <div>2</div>
-            <div>3</div>
-            <div style="background-color: var(--secondary-color);">+</div>
-            <div>0</div>
-            <div>.</div>
-            <div><span class="material-symbols-outlined">
+            <div data-val="AC" style="background-color: var(--text-color); color: var(--primary-color);">AC</div>
+            <div data-val="Parens" class="operator">()</div>
+            <div data-val="%" class="operator">%</div>
+            <div data-val="/" class="operator">/</div>
+            <div data-val="7">7</div>
+            <div data-val="8">8</div>
+            <div data-val="9">9</div>
+            <div data-val="×" class="operator">×</div>
+            <div data-val="4">4</div>
+            <div data-val="5">5</div>
+            <div data-val="6">6</div>
+            <div data-val="-" class="operator">-</div>
+            <div data-val="1">1</div>
+            <div data-val="2">2</div>
+            <div data-val="3">3</div>
+            <div data-val="+" class="operator">+</div>
+            <div data-val="0">0</div>
+            <div data-val=".">.</div>
+            <div data-val="backspace"><span class="material-symbols-outlined">
                     backspace
                 </span></div>
-            <div style="background-color: var(--secondary-color);">=</div>
+            <div data-val="=" style="background-color: var(--secondary-color);">=</div>
         </div>
     </div>
     <script src="js/haptics.js"></script>
     <script src="./js/animation.js"></script>
+    <!-- <script src="./js/calculator.js"></script> -->
 </body>
 
 </html>

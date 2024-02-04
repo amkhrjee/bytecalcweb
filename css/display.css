@@ -34,12 +34,12 @@
     }
 }
 
-@media (orientation: landscape) {
+/* @media (orientation: landscape) {
     body {
         transform: rotate(0deg);
         transform-origin: top left;
     }
-}
+} */
 
 @media (prefers-color-scheme: dark) {
     :root {
@@ -155,14 +155,15 @@ body {
     outline: none;
     color: var(--text-color);
     border: none;
-    font-size: 4rem;
+    font-size: 6rem;
     padding: 0;
     height: fit-content;
     width: 100%;
     background-color: var(--primary-color);
     text-align: right;
-    caret-color: var(--quaternery-color);
+    caret-color: var(--secondary-color);
     font-family: 'Work Sans', sans-serif;
+    transition: font-size 0.5s ease;
 }
 
 .text-input-display>input:focus {
@@ -196,9 +197,10 @@ body {
     border-radius: 12px;
     gap: 1rem;
     padding: 1rem;
-    min-width: 8rem;
+    min-width: 9rem;
     font-size: 1rem;
     justify-items: start;
+    width: fit-content;
     right: 1rem;
     z-index: 100;
     transform: translateY(-50px);

@@ -2,7 +2,7 @@
     "name": "ByteCalc",
     "short_name": "ByteCalc",
     "description": "Calculator for Programmers",
-    "start_url": "https://amkhrjee.github.io/bytecalcweb/",
+    "start_url": "/index.html",
     "display": "standalone",
     "icons": [
         {

@@ -1,26 +1,79 @@
+const listMenu = document.querySelector(".list")
+const popUpDialog = document.querySelector(".pop-up")
+const menuButton = document.querySelector(".menu>img")
+const hiddenRow = document.querySelector('.hidden-row')
+const themeOption = document.querySelector(".list>span")
+const arrow = document.querySelector(".menu-overlay-button>img")
 const buttons = document.querySelectorAll(".input-grid-wrapper>*")
 const firstRowButtons = document.querySelectorAll(".first-row-btn")
-const menuOverlayButton = document.querySelector(".menu-overlay-button")
-const arrow = document.querySelector(".menu-overlay-button>img")
-const hiddenRow = document.querySelector('.hidden-row')
 const hiddenRowButton = document.querySelectorAll(".hidden-row-btn")
 const inputGridWrapper = document.querySelector('.input-grid-wrapper')
-const menuButton = document.querySelector(".menu>img")
-const listMenu = document.querySelector(".list")
-const themeOption = document.querySelector(".list>span")
-const popUpDialog = document.querySelector(".pop-up")
+const menuOverlayButton = document.querySelector(".menu-overlay-button")
+const inputArea = document.querySelector(".text-input-display>input")
 
 // vibration durations
 const smallVibration = 75
 const tinyVibration = 50
+
+// change input area font
+const updateFontSize = () => {
+    if (inputArea.value.length >= 7)
+        inputArea.style.fontSize = "3rem"
+}
+
+const insertTextAtCaret = (text) => {
+    const caretStart = inputArea.selectionStart
+    const caretEnd = inputArea.selectionEnd
+
+    const currentValue = inputArea.value
+
+    const newValue = currentValue.substring(0, caretStart) + text + currentValue.substring(caretEnd)
+    inputArea.value = newValue;
+    const newCaretPos = caretStart + text.length;
+    inputArea.setSelectionRange(newCaretPos, newCaretPos);
+    console.log(document.activeElement);
+}
 
 buttons.forEach(button => {
     button.addEventListener('click', () => {
         Haptics.vibrate(smallVibration)
         button.style.borderRadius = "10%"
         setTimeout(() => {
-            button.style.borderRadius = "50%"
+            button.style.borderRadius = "32px"
         }, 200)
+
+        // populating input
+        const value = button.dataset.val
+        if (!isNaN(value)) {
+            insertTextAtCaret(value)
+        }
+        else if (value === "backspace") {
+            const caretStart = inputArea.selectionStart
+            const caretEnd = inputArea.selectionEnd
+
+            const currentValue = inputArea.value
+
+            const newValue = currentValue.substring(0, caretStart - 1) + currentValue.substring(caretEnd)
+            inputArea.value = newValue;
+            const newCaretPos = caretStart - 1;
+            inputArea.setSelectionRange(newCaretPos, newCaretPos);
+        }
+        else if (value === "AC") {
+            inputArea.value = ""
+            inputArea.style.fontSize = "6rem"
+        }
+        else if (value === "+"
+            || value === "-"
+            || value === "×"
+            || value === "/"
+            || value === "%") {
+            insertTextAtCaret(value)
+        }
+
+        updateFontSize()
+        if (document.activeElement !== inputArea) {
+            inputArea.focus()
+        }
     })
 })
 
@@ -42,6 +95,7 @@ menuOverlayButton.addEventListener("click", () => {
     // toggle display hidden menu
     if (!toggleArrow) {
         hiddenRow.style.display = "grid"
+        hiddenRow.style.zIndex = "1"
         setTimeout(() => {
             hiddenRow.style.opacity = 1
         }, 100)
@@ -52,6 +106,7 @@ menuOverlayButton.addEventListener("click", () => {
         toggleArrow = true
     } else {
         hiddenRow.style.display = "none"
+        hiddenRow.style.zIndex = "-10"
         hiddenRow.style.opacity = 0
         hiddenRow.style.transform = "translateY(-50px)"
         inputGridWrapper.style.transform = "translateY(0)"
@@ -66,7 +121,7 @@ hiddenRowButton.forEach(button => {
         Haptics.vibrate(smallVibration)
         button.style.borderRadius = "0px"
         setTimeout(() => {
-            button.style.borderRadius = "16px"
+            button.style.borderRadius = "24px"
         }, 200)
     })
 })
