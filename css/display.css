@@ -34,6 +34,13 @@
     }
 }
 
+@media (orientation: landscape) {
+    body {
+        transform: rotate(0deg);
+        transform-origin: top left;
+    }
+}
+
 @media (prefers-color-scheme: dark) {
     :root {
         --primary-color: var(--dark-primary-color);
