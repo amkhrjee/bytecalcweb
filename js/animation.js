@@ -1,3 +1,5 @@
+import { Token, TokenType, Scanner } from "./calculator.js"
+
 const listMenu = document.querySelector(".list")
 const popUpDialog = document.querySelector(".pop-up")
 const menuButton = document.querySelector(".menu>img")
@@ -89,6 +91,11 @@ buttons.forEach(button => {
                 leftParenPresent = true
             }
         }
+        else if (value === "=") {
+            let scanner = new Scanner(inputArea.value)
+            let resultTokens = scanner.scanTokens()
+            resultTokens.forEach(token => console.log(token.toString()))
+        }
         updateFontSize()
         focusInputArea()
     })
@@ -115,7 +122,6 @@ firstRowButtons.forEach(button => {
             case "^":
                 insertTextAtCaret("^")
                 break
-
         }
         updateFontSize()
         focusInputArea()
