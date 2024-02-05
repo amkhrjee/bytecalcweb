@@ -1,4 +1,4 @@
-import { Scanner } from "../dist/calculator.js"
+import { Scanner } from "./calculator.js"
 
 const listMenu = document.querySelector(".list")
 const popUpDialog = document.querySelector(".pop-up")
