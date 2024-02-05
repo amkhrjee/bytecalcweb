@@ -83,6 +83,27 @@ export class Scanner {
             case "=":
                 this.addToken(TokenType.EQUAL, null)
                 break
+            case "l":
+                if (this.peekNext() == "o") {
+                    this.advanceChar()
+                    if (this.peekNext() == "g") {
+                        this.advanceChar()
+                        if (this.peekNext() == "₂") {
+                            this.advanceChar()
+                            this.addToken(TokenType.LOG_TWO, null)
+                        }
+                    }
+                }
+                break
+            case "m":
+                if (this.peekNext() == "o") {
+                    this.advanceChar()
+                    if (this.peekNext() == "d") {
+                        this.advanceChar()
+                        this.addToken(TokenType.MOD, null)
+                    }
+                }
+                break
             default:
                 while (this.isDigit(this.peek()))
                     this.advanceChar()
@@ -121,5 +142,156 @@ export class Scanner {
             return this.source.charAt(this.current + 1)
         else
             return null
+    }
+}
+
+abstract class Expr { }
+
+class Binary extends Expr {
+    left: Expr
+    operator: Token
+    right: Expr
+
+    constructor(left: Expr, operator: Token, right: Expr) {
+        super()
+        this.left = left
+        this.operator = operator
+        this.right = right
+    }
+}
+
+class Grouping extends Expr {
+    expression: Expr
+
+    constructor(expression: Expr) {
+        super()
+        this.expression = expression
+    }
+}
+
+class Literal extends Expr {
+    value: any
+
+    constructor(value: any) {
+        super()
+        this.value = value
+    }
+}
+
+class Unary extends Expr {
+    operator: Token
+    right: Expr
+
+    constructor(operator: Token, right: Expr) {
+        super()
+        this.operator = operator
+        this.right = right
+    }
+}
+
+export class Parser {
+    private tokens: Token[] = []
+    private current: number = 0
+
+    constructor(tokens: Token[]) {
+        this.tokens = tokens
+    }
+
+    parse(): Expr {
+        try {
+            return this.expression()
+        } catch {
+            return null
+        }
+    }
+
+    private expression(): Expr {
+        return this.term()
+    }
+
+    private term(): Expr {
+        let expr = this.factor()
+
+        while (this.match(TokenType.PLUS, TokenType.MINUS)) {
+            let operator = this.previous()
+            let right = this.factor()
+            expr = new Binary(expr, operator, right)
+        }
+
+        return expr
+    }
+
+    private factor(): Expr {
+        let expr = this.unary()
+
+        while (this.match(TokenType.SLASH, TokenType.CROSS, TokenType.MOD, TokenType.PERCENT)) {
+            let operator = this.previous()
+            let right = this.unary()
+            expr = new Binary(expr, operator, right)
+        }
+
+        return expr
+    }
+
+    private unary(): Expr {
+        if (this.match(TokenType.MINUS, TokenType.LOG_TWO)) {
+            let operator = this.previous()
+            let expr = this.unary()
+            return new Unary(operator, expr)
+        }
+        else
+            return this.primary()
+    }
+
+    private primary(): Expr {
+        if (this.match(TokenType.NUMBER))
+            return new Literal(this.previous().literal)
+        else if (this.match(TokenType.LEFT_PAREN)) {
+            let expr = this.expression()
+            this.consume(TokenType.RIGHT_PAREN, "Expected ')'")
+            return new Grouping(expr)
+        }
+
+        throw Error("Some Error")
+    }
+
+    private match(...types: TokenType[]): boolean {
+        types.forEach(type => {
+            if (this.check(type)) {
+                this.advance();
+                return true
+            }
+        })
+        return false
+    }
+
+    private check(type: TokenType): boolean {
+        if (this.isAtEnd())
+            return false
+        return this.peek().type == type
+    }
+
+    private advance(): Token {
+        if (!this.isAtEnd())
+            this.current++
+        return this.previous()
+    }
+
+    private isAtEnd(): boolean {
+        return this.current == (this.tokens.length - 1)
+    }
+
+    private peek(): Token {
+        return this.tokens[this.current];
+    }
+
+    private previous(): Token {
+        return this.tokens[this.current - 1]
+    }
+
+    private consume(type: TokenType, message: string): Token {
+        if (this.check(type))
+            return this.advance();
+        throw Error(message);
     }
 }

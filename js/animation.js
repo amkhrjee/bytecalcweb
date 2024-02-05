@@ -1,4 +1,4 @@
-import { Scanner } from "./calculator.js"
+import { Scanner } from "../dist/calculator.js"
 
 const listMenu = document.querySelector(".list")
 const popUpDialog = document.querySelector(".pop-up")
@@ -47,7 +47,7 @@ const insertTextAtCaret = (text) => {
 
 buttons.forEach(button => {
     button.addEventListener('click', () => {
-        Haptics.vibrate(smallVibration)
+        Haptics.vibrate(tinyVibration)
         button.style.borderRadius = "10%"
         setTimeout(() => {
             button.style.borderRadius = "32px"
