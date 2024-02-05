@@ -92,9 +92,9 @@ buttons.forEach(button => {
             }
         }
         else if (value === "=") {
-            let scanner = new Scanner(inputArea.value)
-            let resultTokens = scanner.scanTokens()
-            resultTokens.forEach(token => console.log(token.toString()))
+            // let scanner = new Scanner(inputArea.value)
+            // let resultTokens = scanner.scanTokens()
+            // resultTokens.forEach(token => console.log(token.toString()))
         }
         updateFontSize()
         focusInputArea()
