@@ -129,12 +129,12 @@ firstRowButtons.forEach(button => {
 })
 
 let toggleArrow = false
+
 menuOverlayButton.addEventListener("click", () => {
     let currentAngle = (parseFloat(arrow.style.transform.replace(/[^0-9\-.,]/g, '')) || 0);
     let rotationAngle = 180
-    Haptics.vibrate(smallVibration)
+    Haptics.vibrate(tinyVibration)
     arrow.style.transform = "rotate(" + (currentAngle + rotationAngle) + "deg)"
-    initialAngle = rotationAngle
 
     // toggle display hidden menu
     if (!toggleArrow) {
