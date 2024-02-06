@@ -45,6 +45,18 @@ const insertTextAtCaret = (text) => {
     inputArea.setSelectionRange(newCaretPos, newCaretPos);
 }
 
+const clearAllInput = () => {
+    const caretStart = inputArea.selectionStart
+    const caretEnd = inputArea.selectionEnd
+
+    const currentValue = inputArea.value
+
+    const newValue = currentValue.substring(0, caretStart - 1) + currentValue.substring(caretEnd)
+    inputArea.value = newValue;
+    const newCaretPos = caretStart - 1;
+    inputArea.setSelectionRange(newCaretPos, newCaretPos);
+}
+
 buttons.forEach(button => {
     button.addEventListener('click', () => {
         Haptics.vibrate(tinyVibration)
@@ -59,15 +71,7 @@ buttons.forEach(button => {
             insertTextAtCaret(value)
         }
         else if (value === "backspace") {
-            const caretStart = inputArea.selectionStart
-            const caretEnd = inputArea.selectionEnd
-
-            const currentValue = inputArea.value
-
-            const newValue = currentValue.substring(0, caretStart - 1) + currentValue.substring(caretEnd)
-            inputArea.value = newValue;
-            const newCaretPos = caretStart - 1;
-            inputArea.setSelectionRange(newCaretPos, newCaretPos);
+            clearAllInput()
         }
         else if (value === "AC") {
             inputArea.value = ""
@@ -100,6 +104,22 @@ buttons.forEach(button => {
         focusInputArea()
     })
 })
+
+// Long press to delete all
+// let touchStartTime = 0
+// let longPressThreshold = 500
+// const backspaceButton = document.querySelector("#backspace")
+// backspaceButton.addEventListener("touchstart", (e) => {
+//     let touchStartTime = new Date().getTime()
+//     setTimeout(() => {
+//         if (e.touches.length === 1 && new Date().getTime() - touchStartTime >= longPressThreshold) {
+//             Haptics.vibrate(smallVibration)
+//             clearAllInput()
+//         }
+//     }, longPressThreshold)
+// })
+
+// backspaceButton.addEventListener('touchend', () => clearTimeout());
 
 firstRowButtons.forEach(button => {
     button.addEventListener('click', () => {

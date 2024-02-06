@@ -197,7 +197,31 @@ export class Parser {
     }
 
     private expression(): Expr {
-        return this.term()
+        return this.exponent()
+    }
+
+    private exponent(): Expr {
+        let expr = this.percentage()
+
+        while (this.match(TokenType.EXPONENT)) {
+            let operator = this.previous()
+            let right = this.exponent()
+            expr = new Binary(expr, operator, right)
+        }
+
+        return expr
+    }
+
+    private percentage(): Expr {
+        let expr = this.term()
+
+        if (this.match(TokenType.PERCENT)) {
+            let operator = this.previous()
+            let right = this.term()
+            expr = new Binary(expr, operator, right)
+        }
+
+        return expr
     }
 
     private term(): Expr {
