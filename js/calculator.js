@@ -1,3 +1,4 @@
+// Code inspiration: Crafting Interpreters by Robert Nystrom (https://craftinginterpreters.com/) 
 export var TokenType;
 (function (TokenType) {
     // ONE-CHARACTER
@@ -130,11 +131,17 @@ class Binary extends Expr {
         this.operator = operator;
         this.right = right;
     }
+    accept(visitor) {
+        return visitor.visitBinaryExpr(this);
+    }
 }
 class Grouping extends Expr {
     constructor(expression) {
         super();
         this.expression = expression;
+    }
+    accept(visitor) {
+        return visitor.visitGroupingExpr(this);
     }
 }
 class Literal extends Expr {
@@ -142,12 +149,18 @@ class Literal extends Expr {
         super();
         this.value = value;
     }
+    accept(visitor) {
+        return visitor.visitLiteralExpr(this);
+    }
 }
 class Unary extends Expr {
     constructor(operator, right) {
         super();
         this.operator = operator;
         this.right = right;
+    }
+    accept(visitor) {
+        return visitor.visitUnaryExpr(this);
     }
 }
 export class Parser {
@@ -157,11 +170,12 @@ export class Parser {
         this.tokens = tokens;
     }
     parse() {
+        console.log("Parsing");
         try {
             return this.expression();
         }
-        catch (_a) {
-            return null;
+        catch (error) {
+            return error.message;
         }
     }
     expression() {
@@ -220,7 +234,7 @@ export class Parser {
             this.consume(TokenType.RIGHT_PAREN, "Expected ')'");
             return new Grouping(expr);
         }
-        throw Error("Some Error");
+        throw Error("Error at Primary Evaluation");
     }
     match(...types) {
         types.forEach(type => {
@@ -254,5 +268,54 @@ export class Parser {
         if (this.check(type))
             return this.advance();
         throw Error(message);
+    }
+}
+export class Interpreter {
+    visitBinaryExpr(expr) {
+        let left = Interpreter.evaluate(expr.left);
+        let right = Interpreter.evaluate(expr.right);
+        switch (expr.operator.type) {
+            case TokenType.PLUS:
+                return left + right;
+            case TokenType.MINUS:
+                return left - right;
+            case TokenType.SLASH:
+                return left / right;
+            case TokenType.CROSS:
+                return left * right;
+            case TokenType.MOD:
+                return left % right;
+            case TokenType.EXPONENT:
+                return Math.pow(left, right);
+            case TokenType.PERCENT:
+                return (left / right) * 100;
+            default:
+                return null;
+        }
+    }
+    visitGroupingExpr(expr) {
+        return Interpreter.evaluate(expr.expression);
+    }
+    visitLiteralExpr(expr) {
+        console.log("Executing Literal");
+        return expr.value;
+    }
+    visitUnaryExpr(expr) {
+        let right = Interpreter.evaluate(expr.right);
+        switch (expr.operator.type) {
+            case TokenType.MINUS:
+                return (-right);
+            case TokenType.LOG_TWO:
+                return Math.log2(right);
+            default:
+                return null;
+        }
+    }
+    interpret(expr) {
+        let value = Interpreter.evaluate(expr);
+        return value;
+    }
+    static evaluate(expr) {
+        return expr.accept(this);
     }
 }

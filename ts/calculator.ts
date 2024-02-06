@@ -1,7 +1,8 @@
+// Code inspiration: Crafting Interpreters by Robert Nystrom (https://craftinginterpreters.com/) 
+
 export enum TokenType {
     // ONE-CHARACTER
-    LEFT_PAREN, RIGHT_PAREN, DOT, MINUS, PLUS, SLASH, CROSS, PERCENT, EQUAL,
-    EXPONENT,
+    LEFT_PAREN, RIGHT_PAREN, DOT, MINUS, PLUS, SLASH, CROSS, PERCENT, EQUAL, EXPONENT,
 
     // Literals
     NUMBER,
@@ -136,7 +137,19 @@ export class Scanner {
     }
 }
 
-abstract class Expr { }
+interface Visitor<T> {
+    visitBinaryExpr(expr: Binary): T
+
+    visitGroupingExpr(expr: Grouping): T
+
+    visitLiteralExpr(expr: Literal): T
+
+    visitUnaryExpr(expr: Unary): T
+}
+
+abstract class Expr {
+    abstract accept<T>(visitor: Visitor<T>): T
+}
 
 class Binary extends Expr {
     left: Expr
@@ -149,6 +162,10 @@ class Binary extends Expr {
         this.operator = operator
         this.right = right
     }
+
+    accept<T>(visitor: Visitor<T>): T {
+        return visitor.visitBinaryExpr(this)
+    }
 }
 
 class Grouping extends Expr {
@@ -158,14 +175,22 @@ class Grouping extends Expr {
         super()
         this.expression = expression
     }
+
+    accept<T>(visitor: Visitor<T>): T {
+        return visitor.visitGroupingExpr(this)
+    }
 }
 
 class Literal extends Expr {
-    value: any
+    value: number
 
-    constructor(value: any) {
+    constructor(value: number) {
         super()
         this.value = value
+    }
+
+    accept<T>(visitor: Visitor<T>): T {
+        return visitor.visitLiteralExpr(this)
     }
 }
 
@@ -178,6 +203,10 @@ class Unary extends Expr {
         this.operator = operator
         this.right = right
     }
+
+    accept<T>(visitor: Visitor<T>): T {
+        return visitor.visitUnaryExpr(this)
+    }
 }
 
 export class Parser {
@@ -189,10 +218,11 @@ export class Parser {
     }
 
     parse(): Expr {
+        console.log("Parsing");
         try {
             return this.expression()
-        } catch {
-            return null
+        } catch (error) {
+            return error.message
         }
     }
 
@@ -267,7 +297,7 @@ export class Parser {
             return new Grouping(expr)
         }
 
-        throw Error("Some Error")
+        throw Error("Error at Primary Evaluation")
     }
 
     private match(...types: TokenType[]): boolean {
@@ -308,5 +338,60 @@ export class Parser {
         if (this.check(type))
             return this.advance();
         throw Error(message);
+    }
+}
+
+export class Interpreter implements Visitor<any>{
+    visitBinaryExpr(expr: Binary) {
+        let left = Interpreter.evaluate(expr.left) as number
+        let right = Interpreter.evaluate(expr.right) as number
+
+        switch (expr.operator.type) {
+            case TokenType.PLUS:
+                return left + right
+            case TokenType.MINUS:
+                return left - right
+            case TokenType.SLASH:
+                return left / right
+            case TokenType.CROSS:
+                return left * right
+            case TokenType.MOD:
+                return left % right
+            case TokenType.EXPONENT:
+                return left ** right
+            case TokenType.PERCENT:
+                return (left / right) * 100
+            default:
+                return null
+        }
+    }
+    visitGroupingExpr(expr: Grouping) {
+        return Interpreter.evaluate(expr.expression)
+    }
+    visitLiteralExpr(expr: Literal) {
+        console.log("Executing Literal");
+
+        return expr.value
+    }
+    visitUnaryExpr(expr: Unary) {
+        let right = Interpreter.evaluate(expr.right) as number
+
+        switch (expr.operator.type) {
+            case TokenType.MINUS:
+                return (- right)
+            case TokenType.LOG_TWO:
+                return Math.log2(right)
+            default:
+                return null
+        }
+    }
+
+    interpret(expr: Expr): number {
+        let value = Interpreter.evaluate(expr) as number
+        return value
+    }
+
+    private static evaluate(expr: Expr) {
+        return expr.accept(this as any)
     }
 }

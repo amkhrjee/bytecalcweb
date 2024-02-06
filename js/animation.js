@@ -1,4 +1,4 @@
-import { Scanner } from "./calculator.js"
+import { Interpreter, Parser, Scanner } from "./calculator.js"
 
 const listMenu = document.querySelector(".list")
 const popUpDialog = document.querySelector(".pop-up")
@@ -6,6 +6,7 @@ const menuButton = document.querySelector(".menu>img")
 const hiddenRow = document.querySelector('.hidden-row')
 const themeOption = document.querySelector(".list>span")
 const arrow = document.querySelector(".menu-overlay-button>img")
+const outputDisplay = document.querySelector(".text-ouput-display")
 const buttons = document.querySelectorAll(".input-grid-wrapper>*")
 const firstRowButtons = document.querySelectorAll(".first-row-btn")
 const hiddenRowButton = document.querySelectorAll(".hidden-row-btn")
@@ -98,7 +99,15 @@ buttons.forEach(button => {
         else if (value === "=") {
             let scanner = new Scanner(inputArea.value)
             let resultTokens = scanner.scanTokens()
-            resultTokens.forEach(token => console.log(token.toString()))
+            let parser = new Parser(resultTokens)
+            let expression = parser.parse()
+            console.log(expression);
+            let interpreter = new Interpreter()
+            console.log(interpreter);
+            // let result = interpreter.interpret(expression)
+            // outputDisplay.innerHTML = result
+            // console.log(result);
+            // resultTokens.forEach(token => console.log(token.toString()))
         }
         updateFontSize()
         focusInputArea()
