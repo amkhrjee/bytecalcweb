@@ -1,6 +1,7 @@
 export enum TokenType {
     // ONE-CHARACTER
     LEFT_PAREN, RIGHT_PAREN, DOT, MINUS, PLUS, SLASH, CROSS, PERCENT, EQUAL,
+    EXPONENT,
 
     // Literals
     NUMBER,
@@ -83,26 +84,16 @@ export class Scanner {
             case "=":
                 this.addToken(TokenType.EQUAL, null)
                 break
+            case "^":
+                this.addToken(TokenType.EXPONENT, null)
+                break
             case "l":
-                if (this.peekNext() == "o") {
-                    this.advanceChar()
-                    if (this.peekNext() == "g") {
-                        this.advanceChar()
-                        if (this.peekNext() == "₂") {
-                            this.advanceChar()
-                            this.addToken(TokenType.LOG_TWO, null)
-                        }
-                    }
-                }
+                this.current += 3
+                this.addToken(TokenType.LOG_TWO, null)
                 break
             case "m":
-                if (this.peekNext() == "o") {
-                    this.advanceChar()
-                    if (this.peekNext() == "d") {
-                        this.advanceChar()
-                        this.addToken(TokenType.MOD, null)
-                    }
-                }
+                this.current += 2
+                this.addToken(TokenType.MOD, null)
                 break
             default:
                 while (this.isDigit(this.peek()))

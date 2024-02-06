@@ -10,11 +10,12 @@ export var TokenType;
     TokenType[TokenType["CROSS"] = 6] = "CROSS";
     TokenType[TokenType["PERCENT"] = 7] = "PERCENT";
     TokenType[TokenType["EQUAL"] = 8] = "EQUAL";
+    TokenType[TokenType["EXPONENT"] = 9] = "EXPONENT";
     // Literals
-    TokenType[TokenType["NUMBER"] = 9] = "NUMBER";
+    TokenType[TokenType["NUMBER"] = 10] = "NUMBER";
     // Keywords
-    TokenType[TokenType["MOD"] = 10] = "MOD";
-    TokenType[TokenType["LOG_TWO"] = 11] = "LOG_TWO";
+    TokenType[TokenType["MOD"] = 11] = "MOD";
+    TokenType[TokenType["LOG_TWO"] = 12] = "LOG_TWO";
 })(TokenType || (TokenType = {}));
 export class Token {
     constructor(type, lexeme, literal) {
@@ -70,26 +71,16 @@ export class Scanner {
             case "=":
                 this.addToken(TokenType.EQUAL, null);
                 break;
+            case "^":
+                this.addToken(TokenType.EXPONENT, null);
+                break;
             case "l":
-                if (this.peekNext() == "o") {
-                    this.advanceChar();
-                    if (this.peekNext() == "g") {
-                        this.advanceChar();
-                        if (this.peekNext() == "₂") {
-                            this.advanceChar();
-                            this.addToken(TokenType.LOG_TWO, null);
-                        }
-                    }
-                }
+                this.current += 3;
+                this.addToken(TokenType.LOG_TWO, null);
                 break;
             case "m":
-                if (this.peekNext() == "o") {
-                    this.advanceChar();
-                    if (this.peekNext() == "d") {
-                        this.advanceChar();
-                        this.addToken(TokenType.MOD, null);
-                    }
-                }
+                this.current += 2;
+                this.addToken(TokenType.MOD, null);
                 break;
             default:
                 while (this.isDigit(this.peek()))
