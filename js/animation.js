@@ -21,6 +21,16 @@ const tinyVibration = 50;
 // Parens
 let leftParenPresent = false;
 
+const showOutput = (message, isError) => {
+  if (!isError) {
+    outputDisplay.style.color = "inherit";
+    outputDisplay.innerHTML = message;
+  } else {
+    outputDisplay.style.color = "red";
+    outputDisplay.innerHTML = message;
+  }
+};
+
 // change input area font
 const updateFontSize = () => {
   if (inputArea.value.length >= 6 && inputArea.value.length <= 9)
@@ -183,6 +193,25 @@ hiddenRowButton.forEach((button) => {
     setTimeout(() => {
       button.style.borderRadius = "24px";
     }, 200);
+
+    const outputVal =
+      outputDisplay.innerHTML.length && outputDisplay.innerHTML != "Empty Input"
+        ? parseFloat(outputDisplay.innerHTML)
+        : parseFloat(inputArea.value);
+    // functionality
+    if (button.dataset.val == "bin") {
+      if (outputVal) {
+        inputArea.value = "BIN(" + outputVal + ")";
+        showOutput(outputVal.toString(2), false);
+        inputArea.style.fontSize = "3.5rem";
+      } else showOutput("Empty Input", true);
+    } else if (button.dataset.val == "hex") {
+      if (outputVal) {
+        inputArea.value = "HEX(" + outputVal + ")";
+        showOutput(outputVal.toString(16), false);
+        inputArea.style.fontSize = "3.5rem";
+      } else showOutput("Empty Input", true);
+    }
   });
 });
 

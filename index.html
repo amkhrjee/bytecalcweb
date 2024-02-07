@@ -1,133 +1,121 @@
 <!doctype html>
 <html lang="en">
-  <!-- icon credits: "https://www.flaticon.com/free-icons/calculator" -->
+<!-- icon credits: "https://www.flaticon.com/free-icons/calculator" -->
 
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ByteCalc</title>
-    <meta name="description" content="Calculator for Programmers" />
-    <meta property="og:title" content="ByteCalc" />
-    <meta property="og:image" content="./res/favicons/favicon-32x32.png" />
-    <meta property="og:url" content="https://amkhrjee.github.io/bytecalcweb/" />
-    <link rel="stylesheet" href="./css/display.css" />
-    <link rel="manifest" href="./manifest.json" />
-    <link rel="stylesheet" href="./css/input.css" />
-    <link
-      rel="icon"
-      href="/res/favicons/favicon-32x32.png"
-      type="image/x-icon"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
-    />
-    <script src="js/haptics.js"></script>
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ByteCalc</title>
+  <meta name="description" content="Calculator for Programmers" />
+  <meta property="og:title" content="ByteCalc" />
+  <meta property="og:image" content="./res/favicons/favicon-32x32.png" />
+  <meta property="og:url" content="https://amkhrjee.github.io/bytecalcweb/" />
+  <link rel="stylesheet" href="./css/display.css" />
+  <link rel="manifest" href="./manifest.json" />
+  <link rel="stylesheet" href="./css/input.css" />
+  <link rel="icon" href="/res/favicons/favicon-32x32.png" type="image/x-icon" />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <script src="js/haptics.js"></script>
+</head>
 
-  <body onload="loadHaptics()">
-    <div class="pop-up">
-      <h3>Choose theme</h3>
-      <form name="theme">
-        <label>
-          <input type="radio" name="option" value="light" />
-          Light
-        </label>
-        <label>
-          <input type="radio" name="option" value="dark" />
-          Dark
-        </label>
-        <label>
-          <input type="radio" name="option" value="default" />
-          System default
-        </label>
-      </form>
-      <div class="pop-up-buttons">
-        <button>Cancel</button>
-        <button>OK</button>
+<body onload="loadHaptics()">
+  <div class="pop-up">
+    <h3>Choose theme</h3>
+    <form name="theme">
+      <label>
+        <input type="radio" name="option" value="light" />
+        Light
+      </label>
+      <label>
+        <input type="radio" name="option" value="dark" />
+        Dark
+      </label>
+      <label>
+        <input type="radio" name="option" value="default" />
+        System default
+      </label>
+    </form>
+    <div class="pop-up-buttons">
+      <button>Cancel</button>
+      <button>OK</button>
+    </div>
+  </div>
+  <div class="wrapper">
+    <div class="display">
+      <div class="menu">
+        <img src="./res/menu.svg" class="svg-icon" />
+        <div class="list">
+          <span>🎨 Theme</span>
+          <a target="_blank" href="https://github.com/amkhrjee/bytecalcweb">👨‍💻 Source</a>
+          <a href="#">💳 Support</a>
+          <a target="_blank" href="https://twitter.com/amkhrjee">👦 About Me</a>
+        </div>
+      </div>
+      <div class="input-display">
+        <div class="text-input-display">
+          <input name="user-unput" inputmode="none" type="text" />
+        </div>
+      </div>
+      <div class="output-display">
+        <div class="text-ouput-display"></div>
       </div>
     </div>
-    <div class="wrapper">
-      <div class="display">
-        <div class="menu">
-          <img src="./res/menu.svg" class="svg-icon" />
-          <div class="list">
-            <span>🎨 Theme</span>
-            <a target="_blank" href="https://github.com/amkhrjee/bytecalcweb"
-              >👨‍💻 Source</a
-            >
-            <a href="#">💳 Support</a>
-            <a target="_blank" href="https://twitter.com/amkhrjee"
-              >👦 About Me</a
-            >
-          </div>
-        </div>
-        <div class="input-display">
-          <div class="text-input-display">
-            <input name="user-unput" inputmode="none" type="text" />
-          </div>
-        </div>
-        <div class="output-display">
-          <div class="text-ouput-display"></div>
-        </div>
+    <div class="first-row">
+      <div class="first-row-op-buttons">
+        <div data-val="log₂" class="first-row-btn">log<sub>2</sub></div>
+        <div data-val="2^" class="first-row-btn">2<sup>x</sup></div>
+        <div data-val="mod" class="first-row-btn">mod</div>
+        <div data-val="^" class="first-row-btn">x<sup>y</sup></div>
       </div>
-      <div class="first-row">
-        <div class="first-row-op-buttons">
-          <div data-val="log₂" class="first-row-btn">log<sub>2</sub></div>
-          <div data-val="2^" class="first-row-btn">2<sup>x</sup></div>
-          <div data-val="mod" class="first-row-btn">mod</div>
-          <div data-val="^" class="first-row-btn">x<sup>y</sup></div>
-        </div>
-        <div class="menu-overlay-button">
-          <img id="downarrow" src="./res/downarrow.svg" class="svg-icon" />
-        </div>
+      <div class="menu-overlay-button">
+        <img id="downarrow" src="./res/downarrow.svg" class="svg-icon" />
       </div>
-      <div class="hidden-row">
-        <div class="hidden-row-btn">
-          Convert to<br />
-          Binary
-        </div>
-        <div class="hidden-row-btn">
-          Convert to<br />
-          Hexadecimal
-        </div>
+    </div>
+    <div class="hidden-row">
+      <div data-val="bin" class="hidden-row-btn">
+        Convert to<br />
+        Binary
       </div>
-      <div class="input-grid-wrapper">
-        <div
-          data-val="AC"
-          style="
+      <div data-val="hex" class="hidden-row-btn">
+        Convert to<br />
+        Hexadecimal
+      </div>
+    </div>
+    <div class="input-grid-wrapper">
+      <div data-val="AC" style="
             background-color: var(--text-color);
             color: var(--primary-color);
-          "
-        >
-          AC
-        </div>
-        <div data-val="parens" class="operator">()</div>
-        <div data-val="%" class="operator">%</div>
-        <div data-val="/" class="operator">/</div>
-        <div data-val="7">7</div>
-        <div data-val="8">8</div>
-        <div data-val="9">9</div>
-        <div data-val="×" class="operator">×</div>
-        <div data-val="4">4</div>
-        <div data-val="5">5</div>
-        <div data-val="6">6</div>
-        <div data-val="-" class="operator">-</div>
-        <div data-val="1">1</div>
-        <div data-val="2">2</div>
-        <div data-val="3">3</div>
-        <div data-val="+" class="operator">+</div>
-        <div data-val="0">0</div>
-        <div data-val=".">.</div>
-        <div id="backspace" data-val="backspace">
-          <span class="material-symbols-outlined"> backspace </span>
-        </div>
-        <div data-val="=" style="background-color: var(--secondary-color)">
-          =
-        </div>
+          ">
+        AC
+      </div>
+      <div data-val="parens" class="operator">()</div>
+      <div data-val="%" class="operator">%</div>
+      <div data-val="/" class="operator">/</div>
+      <div data-val="7">7</div>
+      <div data-val="8">8</div>
+      <div data-val="9">9</div>
+      <div data-val="×" class="operator">×</div>
+      <div data-val="4">4</div>
+      <div data-val="5">5</div>
+      <div data-val="6">6</div>
+      <div data-val="-" class="operator">-</div>
+      <div data-val="1">1</div>
+      <div data-val="2">2</div>
+      <div data-val="3">3</div>
+      <div data-val="+" class="operator">+</div>
+      <div data-val="0">0</div>
+      <div data-val=".">.</div>
+      <div id="backspace" data-val="backspace">
+        <span class="material-symbols-outlined"> backspace </span>
+      </div>
+      <div data-val="=" style="background-color: var(--secondary-color)">
+        =
       </div>
     </div>
-    <script src="js/haptics.js"></script>
-    <script type="module" src="./js/animation.js"></script>
-  </body>
+  </div>
+  <script src="js/haptics.js"></script>
+  <script type="module" src="./js/animation.js"></script>
+</body>
+
 </html>
