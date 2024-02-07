@@ -166,11 +166,6 @@ export class Parser {
         this.tokens = [];
         this.current = 0;
         this.tokens = tokens;
-        console.log("Tokens Received: ");
-        tokens.forEach(token => {
-            console.log(token.toString());
-        });
-        console.log("---------------------");
     }
     parse() {
         console.log("Parsing");

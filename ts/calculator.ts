@@ -210,12 +210,6 @@ export class Parser {
 
     constructor(tokens: Token[]) {
         this.tokens = tokens
-        console.log("Tokens Received: ");
-        tokens.forEach(token => {
-            console.log(token.toString());
-        })
-        console.log("---------------------");
-
     }
 
     parse(): Expr {
