@@ -2,7 +2,7 @@
 
 export enum TokenType {
     // ONE-CHARACTER
-    LEFT_PAREN, RIGHT_PAREN, DOT, MINUS, PLUS, SLASH, CROSS, PERCENT, EQUAL, EXPONENT,
+    LEFT_PAREN, RIGHT_PAREN, DOT, MINUS, PLUS, SLASH, CROSS, PERCENT, EQUAL, EXPONENT, END,
 
     // Literals
     NUMBER,
@@ -23,7 +23,7 @@ export class Token {
     }
 
     toString = () => {
-        return this.type + " " + this.lexeme + " " + this.literal
+        return TokenType[this.type] + ": " + this.lexeme + " " + this.literal
     }
 }
 
@@ -32,11 +32,6 @@ export class Scanner {
     tokens: Token[]
     start: number
     current: number
-
-    static keywords: Record<string, TokenType> = {
-        "mod": TokenType.MOD,
-        "log₂": TokenType.LOG_TWO
-    }
 
     constructor(src: string) {
         this.source = src
@@ -51,7 +46,7 @@ export class Scanner {
             this.start = this.current
             this.scanToken()
         }
-
+        this.tokens.push(new Token(TokenType.END, "", null))
         return this.tokens
     }
 
@@ -215,6 +210,12 @@ export class Parser {
 
     constructor(tokens: Token[]) {
         this.tokens = tokens
+        console.log("Tokens Received: ");
+        tokens.forEach(token => {
+            console.log(token.toString());
+        })
+        console.log("---------------------");
+
     }
 
     parse(): Expr {
@@ -227,10 +228,14 @@ export class Parser {
     }
 
     private expression(): Expr {
+        console.log("Parsing Expression");
+
         return this.exponent()
     }
 
     private exponent(): Expr {
+        console.log("Parsing Exponent");
+
         let expr = this.percentage()
 
         while (this.match(TokenType.EXPONENT)) {
@@ -243,6 +248,8 @@ export class Parser {
     }
 
     private percentage(): Expr {
+        console.log("Parsing Percentage");
+
         let expr = this.term()
 
         if (this.match(TokenType.PERCENT)) {
@@ -255,6 +262,8 @@ export class Parser {
     }
 
     private term(): Expr {
+        console.log("Parsing Term");
+
         let expr = this.factor()
 
         while (this.match(TokenType.PLUS, TokenType.MINUS)) {
@@ -267,6 +276,8 @@ export class Parser {
     }
 
     private factor(): Expr {
+        console.log("Parsing Factor");
+
         let expr = this.unary()
 
         while (this.match(TokenType.SLASH, TokenType.CROSS, TokenType.MOD, TokenType.PERCENT)) {
@@ -279,6 +290,8 @@ export class Parser {
     }
 
     private unary(): Expr {
+        console.log("Parsing Unary");
+
         if (this.match(TokenType.MINUS, TokenType.LOG_TWO)) {
             let operator = this.previous()
             let expr = this.unary()
@@ -289,9 +302,14 @@ export class Parser {
     }
 
     private primary(): Expr {
-        if (this.match(TokenType.NUMBER))
+        console.log("Parsing Primary");
+
+        if (this.match(TokenType.NUMBER)) {
+            console.log("Matched Number!");
             return new Literal(this.previous().literal)
-        else if (this.match(TokenType.LEFT_PAREN)) {
+        }
+
+        if (this.match(TokenType.LEFT_PAREN)) {
             let expr = this.expression()
             this.consume(TokenType.RIGHT_PAREN, "Expected ')'")
             return new Grouping(expr)
@@ -301,12 +319,13 @@ export class Parser {
     }
 
     private match(...types: TokenType[]): boolean {
-        types.forEach(type => {
+        for (let type of types) {
             if (this.check(type)) {
-                this.advance();
+                this.advance()
                 return true
             }
-        })
+        }
+
         return false
     }
 
@@ -318,12 +337,12 @@ export class Parser {
 
     private advance(): Token {
         if (!this.isAtEnd())
-            this.current++
+            this.current += 1
         return this.previous()
     }
 
     private isAtEnd(): boolean {
-        return this.current == (this.tokens.length - 1)
+        return this.tokens[this.current].type == TokenType.END
     }
 
     private peek(): Token {

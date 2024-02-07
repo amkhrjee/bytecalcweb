@@ -12,16 +12,17 @@ export var TokenType;
     TokenType[TokenType["PERCENT"] = 7] = "PERCENT";
     TokenType[TokenType["EQUAL"] = 8] = "EQUAL";
     TokenType[TokenType["EXPONENT"] = 9] = "EXPONENT";
+    TokenType[TokenType["END"] = 10] = "END";
     // Literals
-    TokenType[TokenType["NUMBER"] = 10] = "NUMBER";
+    TokenType[TokenType["NUMBER"] = 11] = "NUMBER";
     // Keywords
-    TokenType[TokenType["MOD"] = 11] = "MOD";
-    TokenType[TokenType["LOG_TWO"] = 12] = "LOG_TWO";
+    TokenType[TokenType["MOD"] = 12] = "MOD";
+    TokenType[TokenType["LOG_TWO"] = 13] = "LOG_TWO";
 })(TokenType || (TokenType = {}));
 export class Token {
     constructor(type, lexeme, literal) {
         this.toString = () => {
-            return this.type + " " + this.lexeme + " " + this.literal;
+            return TokenType[this.type] + ": " + this.lexeme + " " + this.literal;
         };
         this.type = type;
         this.lexeme = lexeme;
@@ -40,6 +41,7 @@ export class Scanner {
             this.start = this.current;
             this.scanToken();
         }
+        this.tokens.push(new Token(TokenType.END, "", null));
         return this.tokens;
     }
     scanToken() {
@@ -118,10 +120,6 @@ export class Scanner {
             return null;
     }
 }
-Scanner.keywords = {
-    "mod": TokenType.MOD,
-    "log₂": TokenType.LOG_TWO
-};
 class Expr {
 }
 class Binary extends Expr {
@@ -168,6 +166,11 @@ export class Parser {
         this.tokens = [];
         this.current = 0;
         this.tokens = tokens;
+        console.log("Tokens Received: ");
+        tokens.forEach(token => {
+            console.log(token.toString());
+        });
+        console.log("---------------------");
     }
     parse() {
         console.log("Parsing");
@@ -179,9 +182,11 @@ export class Parser {
         }
     }
     expression() {
+        console.log("Parsing Expression");
         return this.exponent();
     }
     exponent() {
+        console.log("Parsing Exponent");
         let expr = this.percentage();
         while (this.match(TokenType.EXPONENT)) {
             let operator = this.previous();
@@ -191,6 +196,7 @@ export class Parser {
         return expr;
     }
     percentage() {
+        console.log("Parsing Percentage");
         let expr = this.term();
         if (this.match(TokenType.PERCENT)) {
             let operator = this.previous();
@@ -200,6 +206,7 @@ export class Parser {
         return expr;
     }
     term() {
+        console.log("Parsing Term");
         let expr = this.factor();
         while (this.match(TokenType.PLUS, TokenType.MINUS)) {
             let operator = this.previous();
@@ -209,6 +216,7 @@ export class Parser {
         return expr;
     }
     factor() {
+        console.log("Parsing Factor");
         let expr = this.unary();
         while (this.match(TokenType.SLASH, TokenType.CROSS, TokenType.MOD, TokenType.PERCENT)) {
             let operator = this.previous();
@@ -218,6 +226,7 @@ export class Parser {
         return expr;
     }
     unary() {
+        console.log("Parsing Unary");
         if (this.match(TokenType.MINUS, TokenType.LOG_TWO)) {
             let operator = this.previous();
             let expr = this.unary();
@@ -227,9 +236,12 @@ export class Parser {
             return this.primary();
     }
     primary() {
-        if (this.match(TokenType.NUMBER))
+        console.log("Parsing Primary");
+        if (this.match(TokenType.NUMBER)) {
+            console.log("Matched Number!");
             return new Literal(this.previous().literal);
-        else if (this.match(TokenType.LEFT_PAREN)) {
+        }
+        if (this.match(TokenType.LEFT_PAREN)) {
             let expr = this.expression();
             this.consume(TokenType.RIGHT_PAREN, "Expected ')'");
             return new Grouping(expr);
@@ -237,12 +249,12 @@ export class Parser {
         throw Error("Error at Primary Evaluation");
     }
     match(...types) {
-        types.forEach(type => {
+        for (let type of types) {
             if (this.check(type)) {
                 this.advance();
                 return true;
             }
-        });
+        }
         return false;
     }
     check(type) {
@@ -252,11 +264,11 @@ export class Parser {
     }
     advance() {
         if (!this.isAtEnd())
-            this.current++;
+            this.current += 1;
         return this.previous();
     }
     isAtEnd() {
-        return this.current == (this.tokens.length - 1);
+        return this.tokens[this.current].type == TokenType.END;
     }
     peek() {
         return this.tokens[this.current];
