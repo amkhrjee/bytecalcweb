@@ -121,7 +121,7 @@ buttons.forEach((button) => {
       let expression = parser.parse();
       let interpreter = new Interpreter();
       let result = interpreter.interpret(expression);
-      outputDisplay.innerHTML = result;
+      showOutput(result, false);
     }
     updateFontSize();
     focusInputArea();
