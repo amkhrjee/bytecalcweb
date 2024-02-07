@@ -356,8 +356,8 @@ export class Parser {
 
 export class Interpreter implements Visitor<any>{
     visitBinaryExpr(expr: Binary) {
-        let left = Interpreter.evaluate(expr.left) as number
-        let right = Interpreter.evaluate(expr.right) as number
+        let left = this.evaluate(expr.left) as number
+        let right = this.evaluate(expr.right) as number
 
         switch (expr.operator.type) {
             case TokenType.PLUS:
@@ -379,7 +379,7 @@ export class Interpreter implements Visitor<any>{
         }
     }
     visitGroupingExpr(expr: Grouping) {
-        return Interpreter.evaluate(expr.expression)
+        return this.evaluate(expr.expression)
     }
     visitLiteralExpr(expr: Literal) {
         console.log("Executing Literal");
@@ -387,7 +387,7 @@ export class Interpreter implements Visitor<any>{
         return expr.value
     }
     visitUnaryExpr(expr: Unary) {
-        let right = Interpreter.evaluate(expr.right) as number
+        let right = this.evaluate(expr.right) as number
 
         switch (expr.operator.type) {
             case TokenType.MINUS:
@@ -400,11 +400,11 @@ export class Interpreter implements Visitor<any>{
     }
 
     interpret(expr: Expr): number {
-        let value = Interpreter.evaluate(expr) as number
+        let value = this.evaluate(expr) as number
         return value
     }
 
-    private static evaluate(expr: Expr) {
-        return expr.accept(this as any)
+    private evaluate(expr: Expr) {
+        return expr.accept(this)
     }
 }

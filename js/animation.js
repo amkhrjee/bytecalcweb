@@ -77,6 +77,7 @@ buttons.forEach(button => {
         else if (value === "AC") {
             inputArea.value = ""
             inputArea.style.fontSize = "6rem"
+            outputDisplay.innerHTML = ""
         }
         else if (value === "+"
             || value === "-"
@@ -99,17 +100,11 @@ buttons.forEach(button => {
         else if (value === "=") {
             let scanner = new Scanner(inputArea.value)
             let resultTokens = scanner.scanTokens()
-            // console.log(resultTokens);
             let parser = new Parser(resultTokens)
             let expression = parser.parse()
-            console.log("-----IGNORE---------");
-            console.log(expression);
-            // let interpreter = new Interpreter()
-            // console.log(interpreter);
-            // let result = interpreter.interpret(expression)
-            // outputDisplay.innerHTML = result
-            // console.log(result);
-            // resultTokens.forEach(token => console.log(token.toString()))
+            let interpreter = new Interpreter()
+            let result = interpreter.interpret(expression)
+            outputDisplay.innerHTML = result
         }
         updateFontSize()
         focusInputArea()
