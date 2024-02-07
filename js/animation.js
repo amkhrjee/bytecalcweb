@@ -23,8 +23,12 @@ let leftParenPresent = false
 
 // change input area font
 const updateFontSize = () => {
-    if (inputArea.value.length >= 7)
-        inputArea.style.fontSize = "3rem"
+    if (inputArea.value.length >= 6 && inputArea.value.length <= 9)
+        inputArea.style.fontSize = "4.5rem"
+    else if (inputArea.value.length > 9 && inputArea.value.length <= 12)
+        inputArea.style.fontSize = "3.5rem"
+    else if (inputArea.value.length > 12)
+        inputArea.style.fontSize = "2.5rem"
 }
 
 // return focus to input area
@@ -88,7 +92,11 @@ buttons.forEach(button => {
             insertTextAtCaret(value)
         }
         else if (value === "parens") {
-            if (leftParenPresent) {
+            if (inputArea.value.length > 0) {
+                const newValue = "(" + inputArea.value + ")"
+                inputArea.value = newValue
+            }
+            else if (leftParenPresent) {
                 insertTextAtCaret(")")
                 leftParenPresent = false
             }
@@ -110,22 +118,6 @@ buttons.forEach(button => {
         focusInputArea()
     })
 })
-
-// Long press to delete all
-// let touchStartTime = 0
-// let longPressThreshold = 500
-// const backspaceButton = document.querySelector("#backspace")
-// backspaceButton.addEventListener("touchstart", (e) => {
-//     let touchStartTime = new Date().getTime()
-//     setTimeout(() => {
-//         if (e.touches.length === 1 && new Date().getTime() - touchStartTime >= longPressThreshold) {
-//             Haptics.vibrate(smallVibration)
-//             clearAllInput()
-//         }
-//     }, longPressThreshold)
-// })
-
-// backspaceButton.addEventListener('touchend', () => clearTimeout());
 
 firstRowButtons.forEach(button => {
     button.addEventListener('click', () => {
@@ -170,7 +162,6 @@ menuOverlayButton.addEventListener("click", () => {
             hiddenRow.style.opacity = 1
         }, 100)
         hiddenRow.style.transform = "translateY(0)"
-        inputGridWrapper.style.gap = "0px auto"
         inputGridWrapper.style.height = "80%"
         inputGridWrapper.style.transform = "translateY(5.5rem)"
         toggleArrow = true
@@ -180,7 +171,6 @@ menuOverlayButton.addEventListener("click", () => {
         hiddenRow.style.opacity = 0
         hiddenRow.style.transform = "translateY(-50px)"
         inputGridWrapper.style.transform = "translateY(0)"
-        inputGridWrapper.style.gap = "1rem auto"
         inputGridWrapper.style.height = "100%"
         toggleArrow = false
     }

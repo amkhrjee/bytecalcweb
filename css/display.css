@@ -66,7 +66,7 @@ body {
 }
 
 .wrapper {
-    max-width: 600px;
+    /* max-width: 600px; */
     height: 100%;
     display: grid;
     grid-template-rows: 30% 10% 60%;
@@ -172,7 +172,7 @@ body {
 
 .output-display {
     height: 30%;
-    font-size: 28px;
+    font-size: 2rem;
     position: relative;
 }
 
@@ -180,7 +180,6 @@ body {
     position: absolute;
     bottom: 20px;
     right: 1rem;
-    font-weight: 800;
 }
 
 .list>* {
