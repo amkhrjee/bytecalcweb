@@ -94,7 +94,7 @@ buttons.forEach((button) => {
     ) {
       insertTextAtCaret(value);
     } else if (value === "parens") {
-      if (inputArea.value.length > 0) {
+      if (inputArea.value.length > 0 && !leftParenPresent) {
         const newValue = "(" + inputArea.value + ")";
         inputArea.value = newValue;
       } else if (leftParenPresent) {
