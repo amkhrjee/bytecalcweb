@@ -1,55 +1,52 @@
 {
-    "name": "ByteCalc",
-    "short_name": "ByteCalc",
-    "description": "Calculator tailor-made for people who work with computers.",
-    "start_url": "https://amkhrjee.github.io/bytecalcweb/",
-    "display": "standalone",
-    "categories": [
-        "utilities",
-        "developer tools"
-    ],
-    "screenshots": [
-        {
-            "src": "./res/screenshots/dark_mode_one.png",
-            "sizes": "412x915",
-            "label": "Dark Mode with Log Base Two Operation"
-        },
-        {
-            "src": "./res/screenshots/dark_mode_two.png",
-            "sizes": "412x915",
-            "label": "Binary and Hex converter"
-        },
-        {
-            "src": "./res/screenshots/light_mode_one.png",
-            "sizes": "412x915",
-            "label": "Light Mode"
-        }
-    ],
-    "icons": [
-        {
-            "src": "./res/favicons/android-chrome-512x512.png",
-            "type": "image/png",
-            "sizes": "512x512"
-        },
-        {
-            "src": "./res/favicons/android-chrome-192x192.png",
-            "type": "image/png",
-            "sizes": "192x192"
-        },
-        {
-            "src": "./res/favicons/apple-touch-icon.png",
-            "type": "image/png",
-            "sizes": "180x180"
-        },
-        {
-            "src": "./res/favicons/favicon-16x16.png",
-            "type": "image/png",
-            "sizes": "16x16"
-        },
-        {
-            "src": "./res/favicons/favicon-32x32.png",
-            "type": "image/png",
-            "sizes": "32x32"
-        }
-    ]
+  "name": "ByteCalc",
+  "short_name": "ByteCalc",
+  "description": "Calculator tailor-made for people who work with computers.",
+  "start_url": "https://amkhrjee.github.io/bytecalcweb/",
+  "display": "standalone",
+  "categories": ["utilities", "developer tools"],
+  "screenshots": [
+    {
+      "src": "./res/screenshots/dark_mode_one.png",
+      "sizes": "412x915",
+      "label": "Dark Mode with Log Base Two Operation"
+    },
+    {
+      "src": "./res/screenshots/dark_mode_two.png",
+      "sizes": "412x915",
+      "label": "Binary and Hex converter"
+    },
+    {
+      "src": "./res/screenshots/light_mode_one.png",
+      "sizes": "412x915",
+      "label": "Light Mode"
+    }
+  ],
+  "icons": [
+    {
+      "src": "./res/favicons/android-chrome-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    },
+    {
+      "src": "./res/favicons/android-chrome-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "./res/favicons/apple-touch-icon.png",
+      "type": "image/png",
+      "sizes": "180x180"
+    },
+    {
+      "src": "./res/favicons/favicon-16x16.png",
+      "type": "image/png",
+      "sizes": "16x16"
+    },
+    {
+      "src": "./res/favicons/favicon-32x32.png",
+      "type": "image/png",
+      "sizes": "32x32"
+    }
+  ]
 }

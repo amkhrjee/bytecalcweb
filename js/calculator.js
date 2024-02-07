@@ -1,4 +1,4 @@
-// Code inspiration: Crafting Interpreters by Robert Nystrom (https://craftinginterpreters.com/) 
+// Code inspiration: Crafting Interpreters by Robert Nystrom (https://craftinginterpreters.com/)
 export var TokenType;
 (function (TokenType) {
     // ONE-CHARACTER
@@ -311,7 +311,7 @@ export class Interpreter {
         let right = this.evaluate(expr.right);
         switch (expr.operator.type) {
             case TokenType.MINUS:
-                return (-right);
+                return -right;
             case TokenType.LOG_TWO:
                 return Math.log2(right);
             default:

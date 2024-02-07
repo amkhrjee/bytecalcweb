@@ -1,37 +1,38 @@
 :root {
+  --light-primary-color: #eef5ff;
+  --light-secondary-color: #b4d4ff;
+  --light-tertiary-color: #86b6f6;
+  --light-quaternery-color: #176b87;
+  --light-text-color: #000000;
 
-    --light-primary-color: #EEF5FF;
-    --light-secondary-color: #B4D4FF;
-    --light-tertiary-color: #86B6F6;
-    --light-quaternery-color: #176B87;
-    --light-text-color: #000000;
+  --dark-primary-color: #263365;
+  --dark-secondary-color: #40a2d8;
+  --dark-tertiary-color: #0b60b0;
+  --dark-quaternery-color: #000000;
+  --dark-text-color: #fff;
 
-    --dark-primary-color: #263365;
-    --dark-secondary-color: #40A2D8;
-    --dark-tertiary-color: #0B60B0;
-    --dark-quaternery-color: #000000;
-    --dark-text-color: #fff;
+  --primary-color: var(--light-primary-color);
+  --secondary-color: var(--light-secondary-color);
+  --tertiary-color: var(--light-tertiary-color);
+  --quaternery-color: var(--light-quaternery-color);
+  --text-color: var(--light-text-color);
 
-    --primary-color: var(--light-primary-color);
-    --secondary-color: var(--light-secondary-color);
-    --tertiary-color: var(--light-tertiary-color);
-    --quaternery-color: var(--light-quaternery-color);
-    --text-color: var(--light-text-color);
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    transition:
+      background-color 0.5s ease,
+      color 0.5s ease;
+  }
 
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        transition: background-color 0.5s ease, color 0.5s ease;
-    }
-
-    .material-symbols-outlined {
-        font-variation-settings:
-            'FILL' 0,
-            'wght' 800,
-            'GRAD' 0,
-            'opsz' 24;
-    }
+  .material-symbols-outlined {
+    font-variation-settings:
+      "FILL" 0,
+      "wght" 800,
+      "GRAD" 0,
+      "opsz" 24;
+  }
 }
 
 /* @media (orientation: landscape) {
@@ -42,174 +43,178 @@
 } */
 
 @media (prefers-color-scheme: dark) {
-    :root {
-        --primary-color: var(--dark-primary-color);
-        --secondary-color: var(--dark-secondary-color);
-        --tertiary-color: var(--dark-tertiary-color);
-        --quaternery-color: var(--dark-quaternery-color);
-        --text-color: var(--dark-text-color);
-    }
+  :root {
+    --primary-color: var(--dark-primary-color);
+    --secondary-color: var(--dark-secondary-color);
+    --tertiary-color: var(--dark-tertiary-color);
+    --quaternery-color: var(--dark-quaternery-color);
+    --text-color: var(--dark-text-color);
+  }
 
-    body {
-        background-color: var(--dark-quaternery-color);
-    }
+  body {
+    background-color: var(--dark-quaternery-color);
+  }
 
-    .svg-icon {
-        filter: invert(100%);
-    }
+  .svg-icon {
+    filter: invert(100%);
+  }
 }
 
 body {
-    height: 100dvh;
-    transition: background-color 0.5s ease, color 0.5s ease;
-    font-family: 'Work Sans', sans-serif;
+  height: 100dvh;
+  transition:
+    background-color 0.5s ease,
+    color 0.5s ease;
+  font-family: "Work Sans", sans-serif;
 }
 
 .wrapper {
-    /* max-width: 600px; */
-    height: 100%;
-    display: grid;
-    grid-template-rows: 30% 10% 60%;
-    margin-inline-start: auto;
-    transition: opacity 0.5s ease;
+  /* max-width: 600px; */
+  height: 100%;
+  display: grid;
+  grid-template-rows: 30% 10% 60%;
+  margin-inline-start: auto;
+  transition: opacity 0.5s ease;
 }
 
 .pop-up {
-    position: absolute;
-    text-align: center;
-    background-color: var(--tertiary-color);
-    width: 70%;
-    border-radius: 20px;
-    color: var(--text-color);
-    padding: 1rem 1.5rem;
-    z-index: 99;
-    display: flex;
-    flex-direction: column;
-    row-gap: 1rem;
-    top: 30%;
-    left: 15%;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.5s ease;
+  position: absolute;
+  text-align: center;
+  background-color: var(--tertiary-color);
+  width: 70%;
+  border-radius: 20px;
+  color: var(--text-color);
+  padding: 1rem 1.5rem;
+  z-index: 99;
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+  top: 30%;
+  left: 15%;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease;
 }
 
-.pop-up>h3 {
-    text-align: left;
+.pop-up > h3 {
+  text-align: left;
 }
 
-.pop-up>form {
-    display: flex;
-    flex-direction: column;
-    text-align: left;
-    row-gap: 0.75rem;
+.pop-up > form {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  row-gap: 0.75rem;
 }
 
 .pop-up-buttons {
-    /* width: 50%; */
-    display: flex;
-    justify-content: end;
+  /* width: 50%; */
+  display: flex;
+  justify-content: end;
 }
 
-.pop-up-buttons>button {
-    font-family: inherit;
-    outline: none;
-    background-color: inherit;
-    color: inherit;
-    border: none;
-    padding-left: 1.5rem;
-    font-size: inherit;
+.pop-up-buttons > button {
+  font-family: inherit;
+  outline: none;
+  background-color: inherit;
+  color: inherit;
+  border: none;
+  padding-left: 1.5rem;
+  font-size: inherit;
 }
 
 .display {
-    background: var(--primary-color);
-    border-bottom-left-radius: 30px;
-    border-bottom-right-radius: 30px;
-    text-align: right;
-    color: var(--text-color);
+  background: var(--primary-color);
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+  text-align: right;
+  color: var(--text-color);
 }
 
 .menu {
-    position: absolute;
-    right: 1rem;
-    top: 1rem;
-    padding: 0;
-    z-index: 999;
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  padding: 0;
+  z-index: 999;
 }
 
 .input-display {
-    height: 70%;
-    position: relative;
-    width: 100%;
+  height: 70%;
+  position: relative;
+  width: 100%;
 }
 
 .text-input-display {
-    display: flex;
-    overflow-x: auto;
-    position: absolute;
-    bottom: 0;
-    right: 1rem;
-    left: 1rem;
+  display: flex;
+  overflow-x: auto;
+  position: absolute;
+  bottom: 0;
+  right: 1rem;
+  left: 1rem;
 }
 
-.text-input-display>input {
-    outline: none;
-    color: var(--text-color);
-    border: none;
-    font-size: 6rem;
-    padding: 0;
-    height: fit-content;
-    width: 100%;
-    background-color: var(--primary-color);
-    text-align: right;
-    caret-color: var(--secondary-color);
-    font-family: 'Work Sans', sans-serif;
-    transition: font-size 0.5s ease;
+.text-input-display > input {
+  outline: none;
+  color: var(--text-color);
+  border: none;
+  font-size: 6rem;
+  padding: 0;
+  height: fit-content;
+  width: 100%;
+  background-color: var(--primary-color);
+  text-align: right;
+  caret-color: var(--secondary-color);
+  font-family: "Work Sans", sans-serif;
+  transition: font-size 0.5s ease;
 }
 
-.text-input-display>input:focus {
-    border: none;
+.text-input-display > input:focus {
+  border: none;
 }
 
 .output-display {
-    height: 30%;
-    font-size: 2rem;
-    position: relative;
+  height: 30%;
+  font-size: 2rem;
+  position: relative;
 }
 
 .text-ouput-display {
-    position: absolute;
-    bottom: 20px;
-    right: 1rem;
+  position: absolute;
+  bottom: 20px;
+  right: 1rem;
 }
 
-.list>* {
-    display: block;
-    text-align: left;
-    color: var(--text-color);
+.list > * {
+  display: block;
+  text-align: left;
+  color: var(--text-color);
 }
 
 .list {
-    color: var(--primary-color);
-    position: absolute;
-    display: grid;
-    background-color: var(--tertiary-color);
-    border-radius: 12px;
-    gap: 1rem;
-    padding: 1rem;
-    min-width: 9rem;
-    font-size: 1rem;
-    justify-items: start;
-    width: fit-content;
-    right: 1rem;
-    z-index: 100;
-    transform: translateY(-50px);
-    transition: transform 0.5s ease, opacity 0.5s ease;
-    opacity: 1;
-    visibility: hidden;
-    user-select: none;
+  color: var(--primary-color);
+  position: absolute;
+  display: grid;
+  background-color: var(--tertiary-color);
+  border-radius: 12px;
+  gap: 1rem;
+  padding: 1rem;
+  min-width: 9rem;
+  font-size: 1rem;
+  justify-items: start;
+  width: fit-content;
+  right: 1rem;
+  z-index: 100;
+  transform: translateY(-50px);
+  transition:
+    transform 0.5s ease,
+    opacity 0.5s ease;
+  opacity: 1;
+  visibility: hidden;
+  user-select: none;
 }
 
-.list>a {
-    text-decoration: none;
-    color: var(--text-color);
+.list > a {
+  text-decoration: none;
+  color: var(--text-color);
 }
