@@ -56,8 +56,41 @@ export class Scanner {
       this.start = this.current;
       this.scanToken();
     }
+    // Check for implicit multiplications
+    let currentIndex = 0;
+    this.tokens.forEach((token) => {
+      if (currentIndex > 0) {
+        if (token.type == TokenType.LEFT_PAREN) {
+          let previousIndex = currentIndex - 1;
+          if (
+            this.tokens[previousIndex].type == TokenType.NUMBER ||
+            this.tokens[previousIndex].type == TokenType.RIGHT_PAREN
+          ) {
+            this.addCrossAt(currentIndex);
+          }
+        } else if (token.type == TokenType.RIGHT_PAREN) {
+          let nextIndex = currentIndex + 1;
+          if (
+            this.tokens[nextIndex].type == TokenType.NUMBER ||
+            this.tokens[nextIndex].type == TokenType.LEFT_PAREN
+          ) {
+            this.addCrossAt(currentIndex + 1);
+          }
+        }
+      }
+      currentIndex += 1;
+    });
     this.tokens.push(new Token(TokenType.END, "", null));
     return this.tokens;
+  }
+
+  private addCrossAt(indexToInsertAt: number): void {
+    this.tokens.splice(
+      indexToInsertAt,
+      0,
+      new Token(TokenType.CROSS, "", null)
+    );
+    indexToInsertAt += 2;
   }
 
   private scanToken(): void {

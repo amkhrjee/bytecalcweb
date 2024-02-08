@@ -31,6 +31,13 @@ const showOutput = (message, isError) => {
   }
 };
 
+// Pretty print tokens
+const printTokens = (tokens) => {
+  tokens.forEach((token) => {
+    console.log(token.toString());
+  });
+};
+
 // change input area font
 const updateFontSize = () => {
   if (inputArea.value.length >= 6 && inputArea.value.length <= 9)
@@ -114,6 +121,7 @@ buttons.forEach((button) => {
     } else if (value === "=") {
       let scanner = new Scanner(inputArea.value);
       let resultTokens = scanner.scanTokens();
+      printTokens(resultTokens);
       let parser = new Parser(resultTokens);
       try {
         let expression = parser.parse();
