@@ -118,10 +118,14 @@ buttons.forEach((button) => {
       let scanner = new Scanner(inputArea.value);
       let resultTokens = scanner.scanTokens();
       let parser = new Parser(resultTokens);
-      let expression = parser.parse();
-      let interpreter = new Interpreter();
-      let result = interpreter.interpret(expression);
-      showOutput(result, false);
+      try {
+        let expression = parser.parse();
+        let interpreter = new Interpreter();
+        let result = interpreter.interpret(expression);
+        showOutput(result, false);
+      } catch (error) {
+        showOutput(error.message, true);
+      }
     }
     updateFontSize();
     focusInputArea();

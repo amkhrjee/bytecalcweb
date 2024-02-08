@@ -110,7 +110,7 @@ export class Scanner {
         }
         this.addToken(
           TokenType.NUMBER,
-          parseFloat(this.source.substring(this.start, this.current)),
+          parseFloat(this.source.substring(this.start, this.current))
         );
     }
   }
@@ -226,19 +226,15 @@ export class Parser {
     try {
       return this.expression();
     } catch (error) {
-      return error.message;
+      throw error;
     }
   }
 
   private expression(): Expr {
-    console.log("Parsing Expression");
-
     return this.exponent();
   }
 
   private exponent(): Expr {
-    console.log("Parsing Exponent");
-
     let expr = this.percentage();
 
     while (this.match(TokenType.EXPONENT)) {
@@ -251,8 +247,6 @@ export class Parser {
   }
 
   private percentage(): Expr {
-    console.log("Parsing Percentage");
-
     let expr = this.term();
 
     if (this.match(TokenType.PERCENT)) {
@@ -265,8 +259,6 @@ export class Parser {
   }
 
   private term(): Expr {
-    console.log("Parsing Term");
-
     let expr = this.factor();
 
     while (this.match(TokenType.PLUS, TokenType.MINUS)) {
@@ -279,8 +271,6 @@ export class Parser {
   }
 
   private factor(): Expr {
-    console.log("Parsing Factor");
-
     let expr = this.unary();
 
     while (
@@ -288,7 +278,7 @@ export class Parser {
         TokenType.SLASH,
         TokenType.CROSS,
         TokenType.MOD,
-        TokenType.PERCENT,
+        TokenType.PERCENT
       )
     ) {
       let operator = this.previous();
@@ -319,11 +309,11 @@ export class Parser {
 
     if (this.match(TokenType.LEFT_PAREN)) {
       let expr = this.expression();
-      this.consume(TokenType.RIGHT_PAREN, "Expected ')'");
+      this.consume(TokenType.RIGHT_PAREN, "Missing )");
       return new Grouping(expr);
     }
 
-    throw Error("Error at Primary Evaluation");
+    throw Error("Format Error");
   }
 
   private match(...types: TokenType[]): boolean {
@@ -369,24 +359,27 @@ export class Interpreter implements Visitor<any> {
   visitBinaryExpr(expr: Binary) {
     let left = this.evaluate(expr.left) as number;
     let right = this.evaluate(expr.right) as number;
-
-    switch (expr.operator.type) {
-      case TokenType.PLUS:
-        return left + right;
-      case TokenType.MINUS:
-        return left - right;
-      case TokenType.SLASH:
-        return left / right;
-      case TokenType.CROSS:
-        return left * right;
-      case TokenType.MOD:
-        return left % right;
-      case TokenType.EXPONENT:
-        return left ** right;
-      case TokenType.PERCENT:
-        return (left / right) * 100;
-      default:
-        return null;
+    try {
+      switch (expr.operator.type) {
+        case TokenType.PLUS:
+          return left + right;
+        case TokenType.MINUS:
+          return left - right;
+        case TokenType.SLASH:
+          return left / right;
+        case TokenType.CROSS:
+          return left * right;
+        case TokenType.MOD:
+          return left % right;
+        case TokenType.EXPONENT:
+          return left ** right;
+        case TokenType.PERCENT:
+          return (left / right) * 100;
+        default:
+          return null;
+      }
+    } catch (error) {
+      throw error;
     }
   }
   visitGroupingExpr(expr: Grouping) {

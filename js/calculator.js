@@ -173,15 +173,13 @@ export class Parser {
             return this.expression();
         }
         catch (error) {
-            return error.message;
+            throw error;
         }
     }
     expression() {
-        console.log("Parsing Expression");
         return this.exponent();
     }
     exponent() {
-        console.log("Parsing Exponent");
         let expr = this.percentage();
         while (this.match(TokenType.EXPONENT)) {
             let operator = this.previous();
@@ -191,7 +189,6 @@ export class Parser {
         return expr;
     }
     percentage() {
-        console.log("Parsing Percentage");
         let expr = this.term();
         if (this.match(TokenType.PERCENT)) {
             let operator = this.previous();
@@ -201,7 +198,6 @@ export class Parser {
         return expr;
     }
     term() {
-        console.log("Parsing Term");
         let expr = this.factor();
         while (this.match(TokenType.PLUS, TokenType.MINUS)) {
             let operator = this.previous();
@@ -211,7 +207,6 @@ export class Parser {
         return expr;
     }
     factor() {
-        console.log("Parsing Factor");
         let expr = this.unary();
         while (this.match(TokenType.SLASH, TokenType.CROSS, TokenType.MOD, TokenType.PERCENT)) {
             let operator = this.previous();
@@ -238,10 +233,10 @@ export class Parser {
         }
         if (this.match(TokenType.LEFT_PAREN)) {
             let expr = this.expression();
-            this.consume(TokenType.RIGHT_PAREN, "Expected ')'");
+            this.consume(TokenType.RIGHT_PAREN, "Missing )");
             return new Grouping(expr);
         }
-        throw Error("Error at Primary Evaluation");
+        throw Error("Format Error");
     }
     match(...types) {
         for (let type of types) {
@@ -281,23 +276,28 @@ export class Interpreter {
     visitBinaryExpr(expr) {
         let left = this.evaluate(expr.left);
         let right = this.evaluate(expr.right);
-        switch (expr.operator.type) {
-            case TokenType.PLUS:
-                return left + right;
-            case TokenType.MINUS:
-                return left - right;
-            case TokenType.SLASH:
-                return left / right;
-            case TokenType.CROSS:
-                return left * right;
-            case TokenType.MOD:
-                return left % right;
-            case TokenType.EXPONENT:
-                return Math.pow(left, right);
-            case TokenType.PERCENT:
-                return (left / right) * 100;
-            default:
-                return null;
+        try {
+            switch (expr.operator.type) {
+                case TokenType.PLUS:
+                    return left + right;
+                case TokenType.MINUS:
+                    return left - right;
+                case TokenType.SLASH:
+                    return left / right;
+                case TokenType.CROSS:
+                    return left * right;
+                case TokenType.MOD:
+                    return left % right;
+                case TokenType.EXPONENT:
+                    return Math.pow(left, right);
+                case TokenType.PERCENT:
+                    return (left / right) * 100;
+                default:
+                    return null;
+            }
+        }
+        catch (error) {
+            throw error;
         }
     }
     visitGroupingExpr(expr) {
