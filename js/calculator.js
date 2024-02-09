@@ -202,16 +202,7 @@ export class Parser {
         }
     }
     expression() {
-        return this.exponent();
-    }
-    exponent() {
-        let expr = this.percentage();
-        while (this.match(TokenType.EXPONENT)) {
-            let operator = this.previous();
-            let right = this.exponent();
-            expr = new Binary(expr, operator, right);
-        }
-        return expr;
+        return this.percentage();
     }
     percentage() {
         let expr = this.term();
@@ -232,10 +223,19 @@ export class Parser {
         return expr;
     }
     factor() {
-        let expr = this.unary();
-        while (this.match(TokenType.SLASH, TokenType.CROSS, TokenType.MOD, TokenType.PERCENT)) {
+        let expr = this.exponent();
+        while (this.match(TokenType.SLASH, TokenType.CROSS, TokenType.MOD)) {
             let operator = this.previous();
-            let right = this.unary();
+            let right = this.exponent();
+            expr = new Binary(expr, operator, right);
+        }
+        return expr;
+    }
+    exponent() {
+        let expr = this.unary();
+        while (this.match(TokenType.EXPONENT)) {
+            let operator = this.previous();
+            let right = this.exponent();
             expr = new Binary(expr, operator, right);
         }
         return expr;

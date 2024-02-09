@@ -145,8 +145,10 @@ firstRowButtons.forEach((button) => {
     let newValue = "";
     switch (value) {
       case "log₂":
-        newValue = "log₂(" + inputArea.value + ")";
-        inputArea.value = newValue;
+        // newValue = "log₂(" + inputArea.value + ")";
+        // inputArea.value = newValue;
+        insertTextAtCaret("log₂(");
+        leftParenPresent = true;
         break;
       case "2^":
         newValue = "2^(" + inputArea.value + ")";
