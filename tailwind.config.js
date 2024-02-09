@@ -2,7 +2,11 @@
 module.exports = {
   content: ["./css/*.css", "./index.html"],
   theme: {
-    extend: {},
+    extend: {
+      transitionProperty: {
+        rounded: "border-radius",
+      },
+    },
   },
   plugins: [],
 };
