@@ -1,3 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 
 @import url("https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500&display=swap");
 
 .input-grid-wrapper {
@@ -102,4 +107,4 @@
   background-color: var(--secondary-color);
   font-size: 2.5rem;
   font-family: "Verdana", sans-serif;
-}
+} */

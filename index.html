@@ -20,30 +20,9 @@
 </head>
 
 <body onload="loadHaptics()">
-  <div class="pop-up">
-    <h3>Choose theme</h3>
-    <form name="theme">
-      <label>
-        <input type="radio" name="option" value="light" />
-        Light
-      </label>
-      <label>
-        <input type="radio" name="option" value="dark" />
-        Dark
-      </label>
-      <label>
-        <input type="radio" name="option" value="default" />
-        System default
-      </label>
-    </form>
-    <div class="pop-up-buttons">
-      <button>Cancel</button>
-      <button>OK</button>
-    </div>
-  </div>
   <div class="wrapper">
     <div class="display">
-      <div class="menu">
+      <!-- <div class="menu">
         <img src="./res/menu.svg" class="svg-icon" />
         <div class="list">
           <span>🎨 Theme</span>
@@ -51,7 +30,7 @@
           <a href="#">💳 Support</a>
           <a target="_blank" href="https://twitter.com/amkhrjee">👦 About Me</a>
         </div>
-      </div>
+      </div> -->
       <div class="input-display">
         <div class="text-input-display">
           <input name="user-unput" inputmode="none" type="text" />
@@ -63,14 +42,16 @@
     </div>
     <div class="first-row">
       <div class="first-row-op-buttons">
-        <div data-val="log₂" class="first-row-btn">log<sub>2</sub></div>
-        <div data-val="2^" class="first-row-btn">2<sup>x</sup></div>
-        <div data-val="mod" class="first-row-btn">mod</div>
-        <div data-val="^" class="first-row-btn">^</div>
+        <md-text-button data-val="log₂" class="first-row-btn">log<sub>2</sub></md-text-button>
+        <md-text-button data-val="2^" class="first-row-btn">2<sup>x</sup></md-text-button>
+        <md-text-button data-val="mod" class="first-row-btn">mod</md-text-button>
+        <md-text-button data-val="^" class="first-row-btn">^</md-text-button>
       </div>
-      <div class="menu-overlay-button">
-        <img id="downarrow" src="./res/downarrow.svg" class="svg-icon" />
-      </div>
+      <md-filled-tonal-icon-button toggle class="menu-overlay-button">
+        <md-icon>expand_more</md-icon>
+        <md-icon slot="selected">keyboard_arrow_up</md-icon>
+        </md-icon>
+      </md-filled-tonal-icon-button>
     </div>
     <div class="hidden-row">
       <div data-val="bin" class="hidden-row-btn">
@@ -83,39 +64,37 @@
       </div>
     </div>
     <div class="input-grid-wrapper">
-      <div data-val="AC" style="
+      <md-filled-tonal-button data-val="AC" style="
             background-color: var(--text-color);
             color: var(--primary-color);
           ">
         AC
-      </div>
-      <div data-val="parens" class="operator">()</div>
-      <div data-val="%" class="operator">%</div>
-      <div data-val="/" class="operator">/</div>
-      <div data-val="7">7</div>
-      <div data-val="8">8</div>
-      <div data-val="9">9</div>
-      <div data-val="×" class="operator">×</div>
-      <div data-val="4">4</div>
-      <div data-val="5">5</div>
-      <div data-val="6">6</div>
-      <div data-val="-" class="operator">-</div>
-      <div data-val="1">1</div>
-      <div data-val="2">2</div>
-      <div data-val="3">3</div>
-      <div data-val="+" class="operator">+</div>
-      <div data-val="0">0</div>
-      <div data-val=".">.</div>
-      <div id="backspace" data-val="backspace">
-        <span class="material-symbols-outlined"> backspace </span>
-      </div>
-      <div data-val="=" style="background-color: var(--secondary-color)">
-        =
-      </div>
+      </md-filled-tonal-button>
+      <md-filled-tonal-button data-val="parens" class="operator">()</md-filled-tonal-button>
+      <md-filled-tonal-button data-val="%" class="operator">%</md-filled-tonal-button>
+      <md-filled-tonal-button data-val="/" class="operator">/</md-filled-tonal-button>
+      <md-filled-tonal-button data-val="7">7</md-filled-tonal-button>
+      <md-filled-tonal-button data-val="8">8</md-filled-tonal-button>
+      <md-filled-tonal-button data-val="9">9</md-filled-tonal-button>
+      <md-filled-tonal-button data-val="×" class="operator">×</md-filled-tonal-button>
+      <md-filled-tonal-button data-val="4">4</md-filled-tonal-button>
+      <md-filled-tonal-button data-val="5">5</md-filled-tonal-button>
+      <md-filled-tonal-button data-val="6">6</md-filled-tonal-button>
+      <md-filled-tonal-button data-val="-" class="operator">-</md-filled-tonal-button>
+      <md-filled-tonal-button data-val="1">1</md-filled-tonal-button>
+      <md-filled-tonal-button data-val="2">2</md-filled-tonal-button>
+      <md-filled-tonal-button data-val="3">3</md-filled-tonal-button>
+      <md-filled-tonal-button data-val="+" class="operator">+</md-filled-tonal-button>
+      <md-filled-tonal-button data-val="0">0</md-filled-tonal-button>
+      <md-filled-tonal-button data-val=".">.</md-filled-tonal-button>
+      <md-filled-tonal-button id="backspace" data-val="backspace">
+        <md-icon>backspace</md-icon>
+      </md-filled-tonal-button>
+      <md-filled-tonal-button data-val="=" style="background-color: var(--secondary-color)"> =</md-filled-tonal-button>
     </div>
   </div>
   <script src="js/haptics.js"></script>
-  <script type="module" src="./js/animation.js"></script>
+  <script type="module" src="./bundle.js"></script>
 </body>
 
 </html>
