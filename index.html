@@ -10,9 +10,8 @@
   <meta property="og:title" content="ByteCalc" />
   <meta property="og:image" content="./res/favicons/favicon-32x32.png" />
   <meta property="og:url" content="https://amkhrjee.github.io/bytecalcweb/" />
-  <link rel="stylesheet" href="./css/display.css" />
   <link rel="manifest" href="./manifest.json" />
-  <link rel="stylesheet" href="./css/input.css" />
+  <link rel="stylesheet" href="./css/output.css" />
   <link rel="icon" href="/res/favicons/favicon-32x32.png" type="image/x-icon" />
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
@@ -20,32 +19,28 @@
 </head>
 
 <body onload="loadHaptics()">
-  <div class="wrapper">
-    <div class="display">
-      <!-- <div class="menu">
-        <img src="./res/menu.svg" class="svg-icon" />
-        <div class="list">
-          <span>🎨 Theme</span>
-          <a target="_blank" href="https://github.com/amkhrjee/bytecalcweb">👨‍💻 Source</a>
-          <a href="#">💳 Support</a>
-          <a target="_blank" href="https://twitter.com/amkhrjee">👦 About Me</a>
-        </div>
-      </div> -->
-      <div class="input-display">
-        <div class="text-input-display">
-          <input name="user-unput" inputmode="none" type="text" />
+  <div class="h-dvh grid grid-rows-6">
+    <!-- Display -->
+    <div class="text-right bg-red-600 rounded-b-2xl row-span-2">
+      <!-- Input Display -->
+      <div class="h-3/4 w-full">
+        <div class="flex absolute bottom-0 right-1 left-1 overflow-x-auto">
+          <input class="outline-none border-none p-0 h-fit w-full text-right focus:border-none" name="user-unput"
+            inputmode="none" type="text" />
         </div>
       </div>
-      <div class="output-display">
-        <div class="text-ouput-display"></div>
+      <!-- Output Display -->
+      <div class="h-1/4">
+        <div class="absolute bottom-{20} right-1"></div>
       </div>
     </div>
-    <div class="first-row">
-      <div class="first-row-op-buttons">
-        <md-text-button data-val="log₂" class="first-row-btn">log<sub>2</sub></md-text-button>
-        <md-text-button data-val="2^" class="first-row-btn">2<sup>x</sup></md-text-button>
-        <md-text-button data-val="mod" class="first-row-btn">mod</md-text-button>
-        <md-text-button data-val="^" class="first-row-btn">^</md-text-button>
+    <!-- First Row Operations -->
+    <div class="grid justify-around grid-flow-col justify-items-center items-center">
+      <div class="grid grid-cols-4 gap-2 justify-between">
+        <md-text-button data-val="log₂" class="text-center">log<sub>2</sub></md-text-button>
+        <md-text-button data-val="2^" class="text-center">2<sup>x</sup></md-text-button>
+        <md-text-button data-val="mod" class="text-center">mod</md-text-button>
+        <md-text-button data-val="^" class="text-center">^</md-text-button>
       </div>
       <md-filled-tonal-icon-button toggle class="menu-overlay-button">
         <md-icon>expand_more</md-icon>
@@ -53,44 +48,41 @@
         </md-icon>
       </md-filled-tonal-icon-button>
     </div>
-    <div class="hidden-row">
-      <div data-val="bin" class="hidden-row-btn">
+    <!-- Hidden Buttons -->
+    <div class="absolute opacity-0 hidden w-full">
+      <md-filled-md-filled-button data-val="bin">
         Convert to<br />
         Binary
-      </div>
-      <div data-val="hex" class="hidden-row-btn">
+      </md-filled-md-filled-button>
+      <md-filled-button data-val="hex">
         Convert to<br />
         Hexadecimal
-      </div>
+      </md-filled-button>
     </div>
-    <div class="input-grid-wrapper">
-      <md-filled-tonal-button data-val="AC" style="
-            background-color: var(--text-color);
-            color: var(--primary-color);
-          ">
-        AC
-      </md-filled-tonal-button>
-      <md-filled-tonal-button data-val="parens" class="operator">()</md-filled-tonal-button>
-      <md-filled-tonal-button data-val="%" class="operator">%</md-filled-tonal-button>
-      <md-filled-tonal-button data-val="/" class="operator">/</md-filled-tonal-button>
+    <!-- Input Buttons -->
+    <div class="row-span-3 grid grid-cols-4 justify-between justify-items-center gap-3 pb-1">
+      <md-filled-tonal-button data-val="AC">AC</md-filled-tonal-button>
+      <md-filled-tonal-button data-val="parens">()</md-filled-tonal-button>
+      <md-filled-tonal-button data-val="%">%</md-filled-tonal-button>
+      <md-filled-tonal-button data-val="/">/</md-filled-tonal-button>
       <md-filled-tonal-button data-val="7">7</md-filled-tonal-button>
       <md-filled-tonal-button data-val="8">8</md-filled-tonal-button>
       <md-filled-tonal-button data-val="9">9</md-filled-tonal-button>
-      <md-filled-tonal-button data-val="×" class="operator">×</md-filled-tonal-button>
+      <md-filled-tonal-button data-val="×">×</md-filled-tonal-button>
       <md-filled-tonal-button data-val="4">4</md-filled-tonal-button>
       <md-filled-tonal-button data-val="5">5</md-filled-tonal-button>
       <md-filled-tonal-button data-val="6">6</md-filled-tonal-button>
-      <md-filled-tonal-button data-val="-" class="operator">-</md-filled-tonal-button>
+      <md-filled-tonal-button data-val="-">-</md-filled-tonal-button>
       <md-filled-tonal-button data-val="1">1</md-filled-tonal-button>
       <md-filled-tonal-button data-val="2">2</md-filled-tonal-button>
       <md-filled-tonal-button data-val="3">3</md-filled-tonal-button>
-      <md-filled-tonal-button data-val="+" class="operator">+</md-filled-tonal-button>
+      <md-filled-tonal-button data-val="+">+</md-filled-tonal-button>
       <md-filled-tonal-button data-val="0">0</md-filled-tonal-button>
       <md-filled-tonal-button data-val=".">.</md-filled-tonal-button>
       <md-filled-tonal-button id="backspace" data-val="backspace">
         <md-icon>backspace</md-icon>
       </md-filled-tonal-button>
-      <md-filled-tonal-button data-val="=" style="background-color: var(--secondary-color)"> =</md-filled-tonal-button>
+      <md-filled-tonal-button data-val="="> =</md-filled-tonal-button>
     </div>
   </div>
   <script src="js/haptics.js"></script>

@@ -1,9 +1,10 @@
 import { Interpreter, Parser, Scanner } from "./calculator.js";
 // material-web (https://material-web.dev) imports
-import "@material/web/button/filled-tonal-button.js";
-import "@material/web/button/text-button.js";
-import "@material/web/iconbutton/filled-tonal-icon-button.js";
 import "@material/web/icon/icon.js";
+import "@material/web/button/text-button.js";
+import "@material/web/button/filled-button.js";
+import "@material/web/button/filled-tonal-button.js";
+import "@material/web/iconbutton/filled-tonal-icon-button.js";
 
 const listMenu = document.querySelector(".list");
 const popUpDialog = document.querySelector(".pop-up");
