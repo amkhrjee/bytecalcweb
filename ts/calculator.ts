@@ -58,9 +58,9 @@ export class Scanner {
     }
     this.tokens.push(new Token(TokenType.END, "", null));
 
-    // Check for implicit multiplications
-    // Scenarios:
-    /*    1. <num>(
+    /* Check for implicit multiplications
+      Scenarios:
+          1. <num>(
           2. )(
           3. )<num>
           4. <num>log
