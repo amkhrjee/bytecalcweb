@@ -56,11 +56,23 @@ export class Scanner {
       this.start = this.current;
       this.scanToken();
     }
+    this.tokens.push(new Token(TokenType.END, "", null));
+
     // Check for implicit multiplications
+    // Scenarios:
+    /*    1. <num>(
+          2. )(
+          3. )<num>
+          4. <num>log
+          5. )log
+    */
     let currentIndex = 0;
     this.tokens.forEach((token) => {
       if (currentIndex > 0) {
-        if (token.type == TokenType.LEFT_PAREN) {
+        if (
+          token.type == TokenType.LEFT_PAREN ||
+          token.type == TokenType.LOG_TWO
+        ) {
           let previousIndex = currentIndex - 1;
           if (
             this.tokens[previousIndex].type == TokenType.NUMBER ||
@@ -80,7 +92,6 @@ export class Scanner {
       }
       currentIndex += 1;
     });
-    this.tokens.push(new Token(TokenType.END, "", null));
     return this.tokens;
   }
 
@@ -316,8 +327,6 @@ export class Parser {
   }
 
   private unary(): Expr {
-    console.log("Parsing Unary");
-
     if (this.match(TokenType.MINUS, TokenType.LOG_TWO)) {
       let operator = this.previous();
       let expr = this.unary();
@@ -326,10 +335,7 @@ export class Parser {
   }
 
   private primary(): Expr {
-    console.log("Parsing Primary");
-
     if (this.match(TokenType.NUMBER)) {
-      console.log("Matched Number!");
       return new Literal(this.previous().literal);
     }
 
@@ -412,8 +418,6 @@ export class Interpreter implements Visitor<any> {
     return this.evaluate(expr.expression);
   }
   visitLiteralExpr(expr: Literal) {
-    console.log("Executing Literal");
-
     return expr.value;
   }
   visitUnaryExpr(expr: Unary) {
