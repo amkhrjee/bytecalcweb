@@ -21,27 +21,54 @@
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
   <script src="js/haptics.js"></script>
+
 </head>
 
 <body onload="loadHaptics()">
+
   <div class="h-dvh grid grid-rows-12">
     <!-- Display -->
-    <div class="text-right bg-red-600 rounded-b-2xl row-span-4">
+    <div class="text-rightrounded-b-2xl row-span-4 relative">
+      <!-- Top Bar -->
+      <div class="absolute border-solid border-2 border-red-600 flex w-full justify-between">
+        <div>Placeholder</div>
+        <md-outlined-button><md-icon>favorite</md-icon> Support</md-outlined-button>
+        <span style="position: relative">
+          <md-icon-button id="usage-anchor-2"><md-icon>more_vert</md-icon></md-icon-button>
+          <md-menu id="usage-menu-2">
+            <md-menu-item>
+              <div slot="headline">Apple</div>
+            </md-menu-item>
+            <md-menu-item>
+              <div slot="headline">Banana</div>
+            </md-menu-item>
+            <md-menu-item>
+              <div slot="headline">Cucumber</div>
+            </md-menu-item>
+          </md-menu>
+        </span>
+      </div>
       <!-- Input Display -->
-      <div class="h-3/4 w-full">
-        <div class="flex absolute bottom-0 right-1 left-1 overflow-x-auto">
-          <input class="outline-none border-none p-0 h-fit w-full text-right focus:border-none" name="user-unput"
-            inputmode="none" type="text" />
+      <div class="h-3/4 relative">
+        <div class="flex h-fit absolute bottom-0 right-4 left-4 overflow-x-auto ">
+          <input class="outline-none text-8xl border-none p-0 h-fit w-full text-right focus:border-none"
+            name="user-unput" inputmode="none" value="123" type="text" />
         </div>
       </div>
       <!-- Output Display -->
-      <div class="h-1/4">
-        <div class="absolute bottom-{20} right-1"></div>
+      <div class="h-1/4 relative">
+        <div class="absolute flex justify-between w-full pr-4 pl-2">
+          <md-icon-button>
+            <md-icon>content_copy</md-icon>
+          </md-icon-button>
+          <div class="text-4xl max-w-full right-4">12345</div>
+        </div>
+
       </div>
     </div>
     <!-- First Row Operations -->
     <div class="grid justify-around grid-flow-col justify-items-center items-center">
-      <div class="grid grid-cols-4 gap-2 justify-between w-full">
+      <div class="grid grid-cols-4 gap-2 justify-items-end justify-between w-full">
         <md-text-button data-val="log₂" class="text-center text-2xl w-fit">log<sub>2</sub></md-text-button>
         <md-text-button data-val="2^" class="text-center text-2xl w-fit">2<sup>x</sup></md-text-button>
         <md-text-button data-val="mod" class="text-center text-2xl w-fit">mod</md-text-button>
@@ -66,54 +93,62 @@
     </div>
     <!-- Input Buttons -->
     <div class="row-span-7 h-full grid grid-cols-4 justify-between justify-items-center gap-3 pb-3 px-3">
-      <md-filled-tonal-button class="text-3xl w-fit h-full text-center rounded-full active:rounded"
+      <md-filled-tonal-button class="text-3xl font-semibold w-full h-full text-center rounded-full p-0"
         data-val="AC">AC</md-filled-tonal-button>
-      <md-filled-tonal-button class="text-3xl font-semibold w-full h-full text-center rounded-full active:rounded"
+      <md-filled-tonal-button class="text-3xl font-semibold w-full h-full text-center rounded-full "
         data-val="parens">()</md-filled-tonal-button>
-      <md-filled-tonal-button class="text-3xl font-semibold w-full h-full text-center rounded-full active:rounded"
+      <md-filled-tonal-button class="text-3xl font-semibold w-full h-full text-center rounded-full "
         data-val="%">%</md-filled-tonal-button>
-      <md-filled-tonal-button class="text-3xl font-semibold w-full h-full text-center rounded-full active:rounded"
+      <md-filled-tonal-button class="text-3xl font-semibold w-full h-full text-center rounded-full "
         data-val="/">/</md-filled-tonal-button>
       <md-filled-tonal-button
-        class="text-3xl font-semibold w-full h-full text-center-[border-radius] duration-500 ease-in-out rounded-full active:rounded"
+        class="text-3xl font-semibold w-full h-full text-center-[border-radius] duration-500 ease-in-out rounded-full"
         data-val="7">7</md-filled-tonal-button>
-      <md-filled-tonal-button class="text-3xl font-semibold w-full h-full text-center rounded-full active:rounded"
+      <md-filled-tonal-button class="text-3xl font-semibold w-full h-full text-center rounded-full"
         data-val="8">8</md-filled-tonal-button>
-      <md-filled-tonal-button class="text-3xl font-semibold w-full h-full text-center rounded-full active:rounded"
+      <md-filled-tonal-button class="text-3xl font-semibold w-full h-full text-center rounded-full"
         data-val="9">9</md-filled-tonal-button>
-      <md-filled-tonal-button class="text-3xl font-semibold w-full h-full text-center rounded-full active:rounded"
+      <md-filled-tonal-button class="text-3xl font-semibold w-full h-full text-center rounded-full"
         data-val="×">×</md-filled-tonal-button>
-      <md-filled-tonal-button class="text-3xl font-semibold w-full h-full text-center rounded-full active:rounded"
+      <md-filled-tonal-button class="text-3xl font-semibold w-full h-full text-center rounded-full"
         data-val="4">4</md-filled-tonal-button>
-      <md-filled-tonal-button class="text-3xl font-semibold w-full h-full text-center rounded-full active:rounded"
+      <md-filled-tonal-button class="text-3xl font-semibold w-full h-full text-center rounded-full"
         data-val="5">5</md-filled-tonal-button>
-      <md-filled-tonal-button class="text-3xl font-semibold w-full h-full text-center rounded-full active:rounded"
+      <md-filled-tonal-button class="text-3xl font-semibold w-full h-full text-center rounded-full"
         data-val="6">6</md-filled-tonal-button>
-      <md-filled-tonal-button class="text-3xl font-semibold w-full h-full text-center rounded-full active:rounded"
+      <md-filled-tonal-button class="text-3xl font-semibold w-full h-full text-center rounded-full"
         data-val="-">-</md-filled-tonal-button>
-      <md-filled-tonal-button class="text-3xl font-semibold w-full h-full text-center rounded-full active:rounded"
+      <md-filled-tonal-button class="text-3xl font-semibold w-full h-full text-center rounded-full"
         data-val="1">1</md-filled-tonal-button>
-      <md-filled-tonal-button class="text-3xl font-semibold w-full h-full text-center rounded-full active:rounded"
+      <md-filled-tonal-button class="text-3xl font-semibold w-full h-full text-center rounded-full"
         data-val="2">2</md-filled-tonal-button>
-      <md-filled-tonal-button class="text-3xl font-semibold w-full h-full text-center rounded-full active:rounded"
+      <md-filled-tonal-button class="text-3xl font-semibold w-full h-full text-center rounded-full"
         data-val="3">3</md-filled-tonal-button>
-      <md-filled-tonal-button class="text-3xl font-semibold w-full h-full text-center rounded-full active:rounded"
+      <md-filled-tonal-button class="text-3xl font-semibold w-full h-full text-center rounded-full"
         data-val="+">+</md-filled-tonal-button>
-      <md-filled-tonal-button class="text-3xl font-semibold w-full h-full text-center rounded-full active:rounded"
+      <md-filled-tonal-button class="text-3xl font-semibold w-full h-full text-center rounded-full"
         data-val="0">0</md-filled-tonal-button>
-      <md-filled-tonal-button class="text-3xl font-semibold w-full h-full text-center rounded-full active:rounded"
+      <md-filled-tonal-button class="text-3xl font-semibold w-full h-full text-center rounded-full "
         data-val=".">.</md-filled-tonal-button>
-      <md-filled-tonal-button class="text-3xl font-semibold w-full h-full text-center rounded-full active:rounded"
-        id="backspace" data-val="backspace">
+      <md-filled-tonal-button class="text-3xl font-semibold w-full h-full text-center rounded-full" id="backspace"
+        data-val="backspace">
         <md-icon>backspace</md-icon>
       </md-filled-tonal-button>
-      <md-filled-tonal-button class="text-3xl font-semibold w-full h-full text-center rounded-full active:rounded"
-        data-val="=">
+      <md-filled-tonal-button class="text-3xl font-semibold w-full h-full text-center rounded-full" data-val="=">
         =</md-filled-tonal-button>
     </div>
   </div>
   <script src="js/haptics.js"></script>
   <script type="module" src="./bundle.js"></script>
+  <script type="module">
+    // This example uses MdMenu.prototype.anchorElement to set the anchor as an
+    // HTMLElement reference.
+    const anchorEl = document.body.querySelector('#usage-anchor-2');
+    const menuEl = document.body.querySelector('#usage-menu-2');
+    menuEl.anchorElement = anchorEl;
+
+    anchorEl.addEventListener('click', () => { menuEl.open = !menuEl.open; });
+  </script>
 </body>
 
 </html>
