@@ -26,9 +26,9 @@
 
 <body onload="loadHaptics()">
   <!-- Display -->
-  <div>
+  <div class="display">
     <!-- Top Bar -->
-    <div>
+    <div class="topbar">
       <div>Placeholder</div>
 
       <md-outlined-button>
@@ -38,7 +38,8 @@
         </span>
       </md-outlined-button>
 
-      <span style="position: relative;">
+      <div>Menu</div>
+      <!-- <span style="position: relative;">
         <md-icon-button id="usage-anchor-2"><md-icon>more_vert</md-icon></md-icon-button>
         <md-menu id="usage-menu-2">
           <md-menu-item>
@@ -51,27 +52,24 @@
             <div slot="headline">Cucumber</div>
           </md-menu-item>
         </md-menu>
-      </span>
+      </span> -->
     </div>
     <!-- Input Display -->
-    <div>
+    <div class="input-display-wrapper">
       <div>
-        <input name="user-unput" inputmode="none" value="123" type="text" />
+        <input name="user-input" inputmode="none" value="123" type="text" />
       </div>
     </div>
     <!-- Output Display -->
-    <div>
-      <div>
-        <md-icon-button>
-          <md-icon>content_copy</md-icon>
-        </md-icon-button>
-        <div>12345</div>
-      </div>
-
+    <div class="output-display-wrapper">
+      <md-icon-button>
+        <md-icon>content_copy</md-icon>
+      </md-icon-button>
+      <div>1234</div>
     </div>
   </div>
   <!-- First Row Operations -->
-  <div>
+  <div class="first-row">
     <div>
       <md-text-button data-val="log₂">log<sub>2</sub></md-text-button>
       <md-text-button data-val="2^">2<sup>x</sup></md-text-button>
@@ -96,9 +94,8 @@
       </md-filled-button>
     </div> -->
   <!-- Input Buttons -->
-  <div>
-    <md-filled-tonal-button class="text
-      data-val=" AC">AC</md-filled-tonal-button>
+  <div class="buttons">
+    <md-filled-tonal-button data-val="AC">AC</md-filled-tonal-button>
     <md-filled-tonal-button data-val="parens">()</md-filled-tonal-button>
     <md-filled-tonal-button data-val="%">%</md-filled-tonal-button>
     <md-filled-tonal-button data-val="/">/</md-filled-tonal-button>
@@ -119,13 +116,11 @@
     <md-filled-tonal-button id="backspace" data-val="backspace">
       <md-icon>backspace</md-icon>
     </md-filled-tonal-button>
-    <md-filled-tonal-button data-val="=">
-      =</md-filled-tonal-button>
+    <md-filled-tonal-button data-val="=">=</md-filled-tonal-button>
   </div>
-  <!-- </div> -->
   <script src="js/haptics.js"></script>
   <script type="module" src="./bundle.js"></script>
-  <script type="module">
+  <!-- <script type="module">
     // This example uses MdMenu.prototype.anchorElement to set the anchor as an
     // HTMLElement reference.
     const anchorEl = document.body.querySelector('#usage-anchor-2');
@@ -133,7 +128,7 @@
     menuEl.anchorElement = anchorEl;
 
     anchorEl.addEventListener('click', () => { menuEl.open = !menuEl.open; });
-  </script>
+  </script> -->
 </body>
 
 </html>

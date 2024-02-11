@@ -1,11 +1,17 @@
+@use "./topbar.scss";
 @use "./display.scss";
 @use "./first-row.scss";
 @use "./input.scss";
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
   height: 100dvh;
   display: grid;
-  grid-template-rows: 30% 10% 60%;
-  justify-content: center;
+  grid-template-rows: 35% 10% 55%;
   justify-items: center;
 }

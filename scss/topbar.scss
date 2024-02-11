@@ -1,0 +1,21 @@
+.topbar {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    top: 0.5rem;
+    z-index: 10;
+    justify-content: space-between;
+    justify-items: center;
+    align-items: center;
+
+    md-outlined-button {
+        min-width: 8rem;
+
+        span {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.5rem;
+        }
+    }
+}
