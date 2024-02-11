@@ -3,7 +3,7 @@
   position: relative;
   border-bottom-left-radius: 30px;
   border-bottom-right-radius: 30px;
-  background: skyblue;
+  background-color: var(--md-sys-color-tertiary-container);
 }
 
 .input-display-wrapper {
@@ -20,16 +20,16 @@
 
     input {
       outline: none;
-      // color: var(--text-color);
+      color: var(--md-sys-color-tertiary);
       border: none;
       font-size: 6rem;
       padding: 0;
       height: fit-content;
       width: 100%;
-      // background-color: var(--primary-color);
+      background-color: inherit;
       text-align: right;
-      // caret-color: var(--secondary-color);
-      // font-family: "Work Sans", sans-serif;
+      caret-color: var(--md-sys-color-secondary);
+      font-family: inherit;
       transition: font-size 0.5s ease;
     }
 
@@ -54,5 +54,6 @@
     text-align: right;
     max-width: 22rem;
     overflow-x: hidden;
+    color: var(--md-sys-color-tertiary);
   }
 }

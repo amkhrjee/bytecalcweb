@@ -9,9 +9,67 @@
   box-sizing: border-box;
 }
 
+:root {
+  // Material Theme Tokens
+  --md-sys-color-primary: hsl(100, 55%, 27%);
+  --md-sys-color-primary-container: hsl(98, 79%, 77%);
+  --md-sys-color-secondary: hsl(95, 13%, 34%);
+  --md-sys-color-secondary-container: hsl(90, 37%, 85%);
+  --md-sys-color-tertiary: hsl(180, 29%, 31%);
+  --md-sys-color-tertiary-container: hsl(181, 56%, 83%);
+  --md-sys-color-error: hsl(0, 75%, 42%);
+  --md-sys-color-error-container: hsl(6, 100%, 92%);
+  --md-sys-color-background: hsl(84, 29%, 90%);
+  --md-sys-color-surface: hsl(84, 3%, 36%);
+  --md-sys-color-surface-bright: hsl(72, 50%, 96%);
+  --md-sys-color-surface-dim: hsl(72, 12%, 84%);
+  --md-sys-color-surface-container: hsl(72, 24%, 92%);
+  --md-sys-color-surface-container-lowest: hsl(0, 0%, 100%);
+  --md-sys-color-surface-container-low: hsl(72, 33%, 94%);
+  --md-sys-color-surface-container-high: hsl(72, 19%, 89%);
+  --md-sys-color-surface-container-highest: hsl(73, 14%, 87%);
+  --md-sys-color-outline: hsl(85, 5%, 45%);
+  --md-sys-color-outline-variant: hsl(83, 11%, 76%);
+
+  // Material Typography Tokens
+  --md-ref-typeface-brand: 'Spline Sans Mono';
+  --md-ref-typeface-plain: 'Spline Sans Mono';
+  // --md-sys-typescale-label-medium-size: 4rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    // Material Theme Tokens
+    --md-sys-color-primary: hsl(98, 52%, 66%);
+    --md-sys-color-primary-container: hsl(99, 86%, 17%);
+    --md-sys-color-on-primary: hsl(101, 100%, 14%);
+    --md-sys-color-secondary: hsl(91, 21%, 74%);
+    --md-sys-color-secondary-container: hsl(94, 17%, 25%);
+    --md-sys-color-on-secondary-container: hsl(91, 21%, 74%);
+    --md-sys-color-tertiary: hsl(181, 34%, 72%);
+    --md-sys-color-tertiary-container: hsl(180, 44%, 21%);
+    --md-sys-color-error: hsl(6, 100%, 84%);
+    --md-sys-color-error-container: hsl(356, 100%, 29%);
+    --md-sys-color-background: hsl(84, 29%, 90%);
+    --md-sys-color-surface: hsl(90, 18%, 7%);
+    --md-sys-color-surface-bright: hsl(86, 6%, 21%);
+    --md-sys-color-surface-dim: hsl(90, 18%, 7%);
+    --md-sys-color-surface-container: hsl(86, 12%, 12%);
+    --md-sys-color-surface-container-lowest: hsl(90, 25%, 5%);
+    --md-sys-color-surface-container-low: hsl(86, 14%, 10%);
+    --md-sys-color-surface-container-high: hsl(86, 9%, 15%);
+    --md-sys-color-surface-container-highest: hsl(86, 7%, 20%);
+    --md-sys-color-outline: hsl(85, 5%, 55%);
+    --md-sys-color-outline-variant: hsl(90, 7%, 26%);
+  }
+}
+
 body {
   height: 100dvh;
   display: grid;
   grid-template-rows: 35% 10% 55%;
   justify-items: center;
+  background-color: var(--md-sys-color-surface-container);
+  font-family: "Spline Sans Mono", monospace;
+  transition: background-color 0.5s ease;
 }
