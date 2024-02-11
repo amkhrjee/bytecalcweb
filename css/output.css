@@ -59,6 +59,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding-left: 1rem;
 }
 .output-display-wrapper div {
   position: absolute;
