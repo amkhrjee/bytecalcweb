@@ -23,6 +23,17 @@
   flex: 1;
   text-align: center;
 }
+.topbar > div:first-child {
+  padding-left: 1rem;
+  text-align: left;
+}
+.topbar > div:last-child {
+  text-align: right;
+  padding-right: 1rem;
+}
+.topbar > div:last-child md-elevated-button {
+  min-width: 4rem;
+}
 
 .display {
   width: 100%;

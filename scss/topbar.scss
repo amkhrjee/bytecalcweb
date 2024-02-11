@@ -24,4 +24,18 @@
 .topbar>div {
     flex: 1;
     text-align: center;
+
+    &:first-child {
+        padding-left: 1rem;
+        text-align: left;
+    }
+
+    &:last-child {
+        text-align: right;
+        padding-right: 1rem;
+
+        md-elevated-button {
+            min-width: 4rem;
+        }
+    }
 }

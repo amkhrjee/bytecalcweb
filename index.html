@@ -28,7 +28,11 @@
   <div class="display">
     <!-- Top Bar -->
     <div class="topbar">
-      <div>Placeholder</div>
+      <div>
+        <md-icon-button>
+          <md-icon>menu</md-icon>
+        </md-icon-button>
+      </div>
 
       <md-outlined-button>
         <span>
@@ -37,21 +41,11 @@
         </span>
       </md-outlined-button>
 
-      <div>Placeholder</div>
-      <!-- <span style="position: relative;">
-        <md-icon-button id="usage-anchor-2"><md-icon>more_vert</md-icon></md-icon-button>
-        <md-menu id="usage-menu-2">
-          <md-menu-item>
-            <div slot="headline">Apple</div>
-          </md-menu-item>
-          <md-menu-item>
-            <div slot="headline">Banana</div>
-          </md-menu-item>
-          <md-menu-item>
-            <div slot="headline">Cucumber</div>
-          </md-menu-item>
-        </md-menu>
-      </span> -->
+      <div>
+        <md-elevated-button>
+          DEC
+        </md-elevated-button>
+      </div>
     </div>
     <!-- Input Display -->
     <div class="input-display-wrapper">
@@ -119,15 +113,6 @@
   </div>
   <script src="js/haptics.js"></script>
   <script type="module" src="./bundle.js"></script>
-  <!-- <script type="module">
-    // This example uses MdMenu.prototype.anchorElement to set the anchor as an
-    // HTMLElement reference.
-    const anchorEl = document.body.querySelector('#usage-anchor-2');
-    const menuEl = document.body.querySelector('#usage-menu-2');
-    menuEl.anchorElement = anchorEl;
-
-    anchorEl.addEventListener('click', () => { menuEl.open = !menuEl.open; });
-  </script> -->
 </body>
 
 </html>
