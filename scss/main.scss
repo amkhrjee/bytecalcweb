@@ -1,0 +1,11 @@
+@use "./display.scss";
+@use "./first-row.scss";
+@use "./input.scss";
+
+body {
+  height: 100dvh;
+  display: grid;
+  grid-template-rows: 30% 10% 60%;
+  justify-content: center;
+  justify-items: center;
+}
