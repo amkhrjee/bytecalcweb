@@ -39,11 +39,14 @@
     <md-divider></md-divider>
     <div class="list">
       <md-list>
-        <md-list-item><md-icon slot="start">palette</md-icon>Change Theme</md-list-item>
-        <md-list-item><md-icon slot="start">bug_report</md-icon>Report Bug</md-list-item>
-        <md-list-item><md-icon slot="start">function</md-icon>Request Feature</md-list-item>
-        <md-list-item><md-icon slot="start">code</md-icon>View Source</md-list-item>
-        <md-list-item><md-icon slot="start">emoji_people</md-icon>About Me</md-list-item>
+        <md-list-item type="button"><md-icon slot="start">palette</md-icon>Change Theme</md-list-item>
+        <md-list-item type="button"><md-icon slot="start">bug_report</md-icon>Report Bug</md-list-item>
+        <md-list-item type="button"><md-icon slot="start">function</md-icon>Request Feature</md-list-item>
+        <md-list-item target="_blank" href="https://github.com/amkhrjee/bytecalcweb" type="button"><md-icon
+            slot="start">code</md-icon>View Source</md-list-item>
+        <md-list-item target="_blank" href="https://x.com/amkhrjee" type="button"><md-icon
+            slot="start">emoji_people</md-icon>About
+          Me</md-list-item>
       </md-list>
       <div>Made in India 🇮🇳</div>
     </div>
@@ -95,22 +98,21 @@
       <md-text-button data-val="^">^</md-text-button>
     </div>
     <md-filled-tonal-icon-button toggle>
-      <md-icon>expand_more</md-icon>
-      <md-icon slot="selected">keyboard_arrow_up</md-icon>
+      <md-icon>chevron_left</md-icon>
+      <md-icon slot="selected">chevron_right</md-icon>
       </md-icon>
     </md-filled-tonal-icon-button>
   </div>
   <!-- Hidden Buttons -->
-  <!-- <div class="absolute opacity-0 hidden w-full">
-      <md-filled-md-filled-button data-val="bin">
-        Convert to<br />
-        Binary
-      </md-filled-md-filled-button>
-      <md-filled-button data-val="hex">
-        Convert to<br />
-        Hexadecimal
-      </md-filled-button>
-    </div> -->
+  <div class="hidden-ops">
+    <md-filled-button data-val="bin">
+      Convert to <br> Binary
+    </md-filled-button>
+    <md-filled-button data-val="hex">
+      Convert to <br>Hexadecimal
+    </md-filled-button>
+  </div>
+
   <!-- Input Buttons -->
   <div class="buttons">
     <md-filled-button data-val="AC">AC</md-filled-button>

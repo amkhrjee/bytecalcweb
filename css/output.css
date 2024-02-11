@@ -99,6 +99,7 @@
   align-items: center;
 }
 .first-row div {
+  transition: translateX 0.5s ease;
   display: flex;
   width: 100%;
   justify-content: space-evenly;
@@ -107,6 +108,30 @@
 .first-row div md-text-button {
   font-size: 1.5rem;
   width: 100%;
+}
+.first-row md-filled-tonal-icon-button {
+  transition: translateX 0.5s ease;
+}
+
+.hidden-ops {
+  position: absolute;
+  top: 35dvh;
+  bottom: 55dvh;
+  right: 0;
+  width: 85%;
+  display: flex;
+  justify-content: space-around;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  align-items: center;
+  transform: translateX(85dvw);
+  transition: translateX 0.5s ease;
+}
+.hidden-ops > * {
+  width: fit-content;
+  padding-inline: 2rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
 }
 
 .buttons {
@@ -132,6 +157,9 @@
   height: 99dvh;
   border-top-right-radius: 12px;
   border-bottom-right-radius: 12px;
+  visibility: hidden;
+  transform: translateX(-70dvw);
+  transition: translateX 0.5s ease;
 }
 
 .info {
@@ -159,7 +187,6 @@
 .list {
   position: relative;
   height: 80%;
-  padding-left: 1rem;
 }
 .list md-list {
   max-width: 100%;

@@ -1,3 +1,5 @@
+$baseWidth: 100dvw;
+
 .menu {
     position: absolute;
     z-index: 20;
@@ -8,8 +10,9 @@
     height: 99dvh;
     border-top-right-radius: 12px;
     border-bottom-right-radius: 12px;
-    // visibility: hidden;
-    // transform: translateX();
+    visibility: hidden;
+    transform: translateX(-$baseWidth*0.7);
+    transition: translateX 0.5s ease;
 }
 
 .info {
@@ -38,7 +41,6 @@
 .list {
     position: relative;
     height: 80%;
-    padding-left: 1rem;
 
     md-list {
         max-width: 100%;

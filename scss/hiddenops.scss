@@ -1,0 +1,21 @@
+.hidden-ops {
+    position: absolute;
+    top: 100dvh*0.35;
+    bottom: 100dvh*0.55;
+    right: 0;
+    width: 85%;
+    display: flex;
+    justify-content: space-around;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    align-items: center;
+    transform: translateX(100dvw*0.85);
+    transition: translateX 0.5s ease;
+
+    >* {
+        width: fit-content;
+        padding-inline: 2rem;
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+    }
+}
