@@ -12,6 +12,7 @@
     transform: translateX(100dvw*0.85);
     transition: translateX 0.5s ease;
     visibility: hidden;
+    display: none;
 
     >* {
         width: fit-content;
