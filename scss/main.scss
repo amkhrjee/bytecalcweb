@@ -13,13 +13,17 @@
   // Material Theme Tokens
   --md-sys-color-primary: hsl(100, 55%, 27%);
   --md-sys-color-primary-container: hsl(98, 79%, 77%);
+  --md-sys-color-on-primary: hsl(0, 0%, 100%);
   --md-sys-color-secondary: hsl(95, 13%, 34%);
   --md-sys-color-secondary-container: hsl(90, 37%, 85%);
+  --md-sys-color-on-secondary-container: hsl(100, 41%, 9%);
   --md-sys-color-tertiary: hsl(180, 29%, 31%);
   --md-sys-color-tertiary-container: hsl(181, 56%, 83%);
   --md-sys-color-error: hsl(0, 75%, 42%);
   --md-sys-color-error-container: hsl(6, 100%, 92%);
   --md-sys-color-background: hsl(84, 29%, 90%);
+  --md-sys-color-on-surface: hsl(90, 8%, 10%);
+  --md-sys-color-on-surface-variant: hsl(90, 7%, 26%);
   --md-sys-color-surface: hsl(84, 3%, 36%);
   --md-sys-color-surface-bright: hsl(72, 50%, 96%);
   --md-sys-color-surface-dim: hsl(72, 12%, 84%);
@@ -34,7 +38,6 @@
   // Material Typography Tokens
   --md-ref-typeface-brand: 'Spline Sans Mono';
   --md-ref-typeface-plain: 'Spline Sans Mono';
-  // --md-sys-typescale-label-medium-size: 4rem;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -51,6 +54,8 @@
     --md-sys-color-error: hsl(6, 100%, 84%);
     --md-sys-color-error-container: hsl(356, 100%, 29%);
     --md-sys-color-background: hsl(84, 29%, 90%);
+    --md-sys-color-on-surface: hsl(60, 11%, 88%);
+    --md-sys-color-on-surface-variant: hsl(83, 11%, 76%);
     --md-sys-color-surface: hsl(90, 18%, 7%);
     --md-sys-color-surface-bright: hsl(86, 6%, 21%);
     --md-sys-color-surface-dim: hsl(90, 18%, 7%);
