@@ -6,7 +6,7 @@
     align-items: center;
 
     div {
-        transition: translateX 0.5s ease;
+        transition: transform 0.5s ease;
         display: flex;
         width: 100%;
         justify-content: space-evenly;
@@ -19,6 +19,6 @@
     }
 
     md-filled-tonal-icon-button {
-        transition: translateX 0.5s ease;
+        transition: transform 0.5s ease;
     }
 }

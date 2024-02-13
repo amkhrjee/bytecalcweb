@@ -10,8 +10,7 @@
     padding-bottom: 1rem;
     align-items: center;
     transform: translateX(100dvw*0.85);
-    transition: translateX 0.5s ease;
-    visibility: hidden;
+    transition: transform 0.5s ease;
     display: none;
 
     >* {
@@ -19,5 +18,14 @@
         padding-inline: 2rem;
         padding-top: 0.5rem;
         padding-bottom: 0.5rem;
+
+        @media screen and (max-width: 376px) {
+            padding-inline: 1.5rem;
+        }
+    }
+
+    @media screen and (max-width: 376px) {
+        left: 14dvw;
+        padding-top: 0.5rem;
     }
 }

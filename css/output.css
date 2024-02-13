@@ -119,7 +119,7 @@
   align-items: center;
 }
 .first-row div {
-  transition: translateX 0.5s ease;
+  transition: transform 0.5s ease;
   display: flex;
   width: 100%;
   justify-content: space-evenly;
@@ -130,7 +130,7 @@
   width: 100%;
 }
 .first-row md-filled-tonal-icon-button {
-  transition: translateX 0.5s ease;
+  transition: transform 0.5s ease;
 }
 
 .hidden-ops {
@@ -145,8 +145,7 @@
   padding-bottom: 1rem;
   align-items: center;
   transform: translateX(85dvw);
-  transition: translateX 0.5s ease;
-  visibility: hidden;
+  transition: transform 0.5s ease;
   display: none;
 }
 .hidden-ops > * {
@@ -154,6 +153,17 @@
   padding-inline: 2rem;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
+}
+@media screen and (max-width: 376px) {
+  .hidden-ops > * {
+    padding-inline: 1.5rem;
+  }
+}
+@media screen and (max-width: 376px) {
+  .hidden-ops {
+    left: 14dvw;
+    padding-top: 0.5rem;
+  }
 }
 
 .buttons {

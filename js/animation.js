@@ -30,6 +30,31 @@ const inputArea = document.querySelector(".text-input-display>input");
 const inputGridWrapper = document.querySelector(".input-grid-wrapper");
 const menuOverlayButton = document.querySelector(".menu-overlay-button");
 
+// Hidden Buttons Transition Animation
+const toggleButton = document.querySelector("md-filled-tonal-icon-button");
+const opButtons = document.querySelector(".op-buttons");
+const hiddenOps = document.querySelector(".hidden-ops");
+
+let isFirstRowHidden = false;
+toggleButton.addEventListener("click", () => {
+  if (!isFirstRowHidden) {
+    opButtons.style.transform = "translateX(-100dvw)";
+    toggleButton.style.transform = "translateX(-85dvw)";
+    hiddenOps.style.display = "block";
+    setTimeout(() => {
+      hiddenOps.style.transform = "translateX(0)";
+    }, 50);
+    isFirstRowHidden = true;
+  } else {
+    opButtons.style.transform = "translateX(0)";
+    toggleButton.style.transform = "translateX(0)";
+    hiddenOps.style.transform = "translateX(85dvw)";
+    setTimeout(() => {
+      hiddenOps.style.display = "none";
+    }, 500);
+    isFirstRowHidden = false;
+  }
+});
 // // vibration durations
 // const smallVibration = 75;
 // const tinyVibration = 50;
