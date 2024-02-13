@@ -16,18 +16,11 @@ import "@material/web/divider/divider.js";
 import "@material/web/dialog/dialog.js";
 import "@material/web/radio/radio.js";
 
-const listMenu = document.querySelector(".list");
-const popUpDialog = document.querySelector(".pop-up");
-const menuButton = document.querySelector(".menu>img");
-const hiddenRow = document.querySelector(".hidden-row");
-const themeOption = document.querySelector(".list>span");
-const arrow = document.querySelector(".menu-overlay-button>img");
-const outputDisplay = document.querySelector(".text-ouput-display");
-const buttons = document.querySelectorAll(".input-grid-wrapper>*");
-const firstRowButtons = document.querySelectorAll(".first-row-btn");
+const outputDisplay = document.querySelector(".output-display");
+const buttons = document.querySelectorAll(".buttons>*");
+const firstRowButtons = document.querySelectorAll(".op-buttons>*");
 const hiddenRowButton = document.querySelectorAll(".hidden-row-btn");
-const inputArea = document.querySelector(".text-input-display>input");
-const inputGridWrapper = document.querySelector(".input-grid-wrapper");
+const inputArea = document.querySelector(".numinput");
 const menuOverlayButton = document.querySelector(".menu-overlay-button");
 
 // Hidden Buttons Transition Animation
@@ -55,157 +48,151 @@ toggleButton.addEventListener("click", () => {
     isFirstRowHidden = false;
   }
 });
+
 // // vibration durations
-// const smallVibration = 75;
-// const tinyVibration = 50;
+const smallVibration = 75;
+const tinyVibration = 50;
 
-// // Parens
-// let leftParenPresent = false;
+// Parens
+let leftParenPresent = false;
 
-// const showOutput = (message, isError) => {
-//   if (!isError) {
-//     outputDisplay.style.color = "inherit";
-//     outputDisplay.innerHTML = message;
-//   } else {
-//     outputDisplay.style.color = "red";
-//     outputDisplay.innerHTML = message;
-//   }
-// };
-
-// // Pretty print tokens
-// const printTokens = (tokens) => {
-//   tokens.forEach((token) => {
-//     console.log(token.toString());
-//   });
-// };
+const showOutput = (message, isError) => {
+  if (!isError) {
+    outputDisplay.style.color = "inherit";
+    outputDisplay.innerHTML = message;
+  } else {
+    outputDisplay.style.color = "red";
+    outputDisplay.innerHTML = message;
+  }
+};
 
 // // change input area font
-// const updateFontSize = () => {
-//   if (inputArea.value.length >= 6 && inputArea.value.length <= 9)
-//     inputArea.style.fontSize = "4.5rem";
-//   else if (inputArea.value.length > 9 && inputArea.value.length <= 12)
-//     inputArea.style.fontSize = "3.5rem";
-//   else if (inputArea.value.length > 12) inputArea.style.fontSize = "2.5rem";
-// };
+const updateFontSize = () => {
+  if (inputArea.value.length >= 6 && inputArea.value.length <= 9)
+    inputArea.style.fontSize = "4.5rem";
+  else if (inputArea.value.length > 9 && inputArea.value.length <= 12)
+    inputArea.style.fontSize = "3.5rem";
+  else if (inputArea.value.length > 12) inputArea.style.fontSize = "2.5rem";
+};
 
-// // return focus to input area
-// const focusInputArea = () => {
-//   if (document.activeElement !== inputArea) {
-//     inputArea.focus();
-//   }
-// };
+// return focus to input area
+const focusInputArea = () => {
+  if (document.activeElement !== inputArea) {
+    inputArea.focus();
+  }
+};
 
-// const insertTextAtCaret = (text) => {
-//   const caretStart = inputArea.selectionStart;
-//   const caretEnd = inputArea.selectionEnd;
+const insertTextAtCaret = (text) => {
+  const caretStart = inputArea.selectionStart;
+  const caretEnd = inputArea.selectionEnd;
 
-//   const currentValue = inputArea.value;
+  const currentValue = inputArea.value;
 
-//   const newValue =
-//     currentValue.substring(0, caretStart) +
-//     text +
-//     currentValue.substring(caretEnd);
-//   inputArea.value = newValue;
-//   const newCaretPos = caretStart + text.length;
-//   inputArea.setSelectionRange(newCaretPos, newCaretPos);
-// };
+  const newValue =
+    currentValue.substring(0, caretStart) +
+    text +
+    currentValue.substring(caretEnd);
+  inputArea.value = newValue;
+  const newCaretPos = caretStart + text.length;
+  inputArea.setSelectionRange(newCaretPos, newCaretPos);
+};
 
-// const clearAllInput = () => {
-//   const caretStart = inputArea.selectionStart;
-//   const caretEnd = inputArea.selectionEnd;
+const clearAllInput = () => {
+  const caretStart = inputArea.selectionStart;
+  const caretEnd = inputArea.selectionEnd;
 
-//   const currentValue = inputArea.value;
+  const currentValue = inputArea.value;
 
-//   const newValue =
-//     currentValue.substring(0, caretStart - 1) +
-//     currentValue.substring(caretEnd);
-//   inputArea.value = newValue;
-//   const newCaretPos = caretStart - 1;
-//   inputArea.setSelectionRange(newCaretPos, newCaretPos);
-// };
+  const newValue =
+    currentValue.substring(0, caretStart - 1) +
+    currentValue.substring(caretEnd);
+  inputArea.value = newValue;
+  const newCaretPos = caretStart - 1;
+  inputArea.setSelectionRange(newCaretPos, newCaretPos);
+};
 
-// buttons.forEach((button) => {
-//   button.addEventListener("click", () => {
-//     Haptics.vibrate(tinyVibration);
-//     button.style.borderRadius = "10%";
-//     setTimeout(() => {
-//       button.style.borderRadius = "32px";
-//     }, 200);
+buttons.forEach((button) => {
+  button.addEventListener("click", () => {
+    Haptics.vibrate(tinyVibration);
+    button.style.borderRadius = "10px";
+    setTimeout(() => {
+      button.style.borderRadius = "40px";
+    }, 200);
 
-//     // populating input
-//     const value = button.dataset.val;
-//     if (!isNaN(value)) {
-//       insertTextAtCaret(value);
-//     } else if (value === "backspace") {
-//       clearAllInput();
-//     } else if (value === "AC") {
-//       inputArea.value = "";
-//       inputArea.style.fontSize = "6rem";
-//       outputDisplay.innerHTML = "";
-//     } else if (
-//       value === "+" ||
-//       value === "-" ||
-//       value === "×" ||
-//       value === "/" ||
-//       value === "%" ||
-//       value === "."
-//     ) {
-//       insertTextAtCaret(value);
-//     } else if (value === "parens") {
-//       if (leftParenPresent) {
-//         insertTextAtCaret(")");
-//         leftParenPresent = false;
-//       } else {
-//         insertTextAtCaret("(");
-//         leftParenPresent = true;
-//       }
-//     } else if (value === "=") {
-//       let scanner = new Scanner(inputArea.value);
-//       let resultTokens = scanner.scanTokens();
-//       printTokens(resultTokens);
-//       let parser = new Parser(resultTokens);
-//       try {
-//         let expression = parser.parse();
-//         let interpreter = new Interpreter();
-//         let result = interpreter.interpret(expression);
-//         showOutput(result, false);
-//       } catch (error) {
-//         showOutput(error.message, true);
-//       }
-//     }
-//     updateFontSize();
-//     focusInputArea();
-//   });
-// });
+    // populating input
+    const value = button.dataset.val;
+    if (!isNaN(value)) {
+      insertTextAtCaret(value);
+    } else if (value === "backspace") {
+      clearAllInput();
+    } else if (value === "AC") {
+      inputArea.value = "";
+      inputArea.style.fontSize = "6rem";
+      outputDisplay.innerHTML = "";
+    } else if (
+      value === "+" ||
+      value === "-" ||
+      value === "×" ||
+      value === "/" ||
+      value === "%" ||
+      value === "."
+    ) {
+      insertTextAtCaret(value);
+    } else if (value === "parens") {
+      if (leftParenPresent) {
+        insertTextAtCaret(")");
+        leftParenPresent = false;
+      } else {
+        insertTextAtCaret("(");
+        leftParenPresent = true;
+      }
+    } else if (value === "=") {
+      let scanner = new Scanner(inputArea.value);
+      let resultTokens = scanner.scanTokens();
+      let parser = new Parser(resultTokens);
+      try {
+        let expression = parser.parse();
+        let interpreter = new Interpreter();
+        let result = interpreter.interpret(expression);
+        console.log(result);
+        showOutput(result, false);
+      } catch (error) {
+        showOutput(error.message, true);
+      }
+    }
+    updateFontSize();
+    focusInputArea();
+  });
+});
 
-// firstRowButtons.forEach((button) => {
-//   button.addEventListener("click", () => {
-//     Haptics.vibrate(smallVibration);
+firstRowButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    Haptics.vibrate(smallVibration);
 
-//     const value = button.dataset.val;
-//     let newValue = "";
-//     switch (value) {
-//       case "log₂":
-//         // newValue = "log₂(" + inputArea.value + ")";
-//         // inputArea.value = newValue;
-//         insertTextAtCaret("log₂(");
-//         leftParenPresent = true;
-//         break;
-//       case "2^":
-//         newValue = "2^(" + inputArea.value + ")";
-//         inputArea.value = newValue;
-//         break;
-//       case "mod":
-//         insertTextAtCaret("mod");
-//         break;
-//       case "^":
-//         insertTextAtCaret("^");
-//         break;
-//     }
-//     updateFontSize();
-//     focusInputArea();
-//   });
-// });
+    const value = button.dataset.val;
+    let newValue = "";
+    switch (value) {
+      case "log₂":
+        // newValue = "log₂(" + inputArea.value + ")";
+        // inputArea.value = newValue;
+        insertTextAtCaret("log₂(");
+        leftParenPresent = true;
+        break;
+      case "2^":
+        newValue = "2^(" + inputArea.value + ")";
+        inputArea.value = newValue;
+        break;
+      case "mod":
+        insertTextAtCaret("mod");
+        break;
+      case "^":
+        insertTextAtCaret("^");
+        break;
+    }
+    updateFontSize();
+    focusInputArea();
+  });
+});
 
 // let toggleArrow = false;
 

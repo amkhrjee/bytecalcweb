@@ -177,6 +177,8 @@
 .buttons * {
   height: 100%;
   font-size: 1.7rem;
+  transition: border-radius 0.5s ease;
+  border-radius: 40px;
 }
 
 .menu {
