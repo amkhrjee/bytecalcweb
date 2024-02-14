@@ -16,15 +16,36 @@ import "@material/web/divider/divider.js";
 import "@material/web/dialog/dialog.js";
 import "@material/web/radio/radio.js";
 
+// ELements
 const outputDisplay = document.querySelector(".output-display");
+const buttonsWrapper = document.querySelector(".buttons");
 const buttons = document.querySelectorAll(".buttons>*");
 const firstRowButtons = document.querySelectorAll(".op-buttons>*");
 const hiddenRowButton = document.querySelectorAll(".hidden-row-btn");
 const inputArea = document.querySelector(".numinput");
-const menuOverlayButton = document.querySelector(".menu-overlay-button");
+const menuButton = document.querySelector(".menu-btn");
 const copyButton = document.querySelector(
   ".output-display-wrapper>md-icon-button"
 );
+const toggleButton = document.querySelector("md-filled-tonal-icon-button");
+const opButtons = document.querySelector(".op-buttons");
+const hiddenOps = document.querySelector(".hidden-ops");
+const display = document.querySelector(".display");
+const firstRow = document.querySelector(".first-row");
+const navDrawer = document.querySelector(".menu");
+
+// Navigation Drawer
+let isNavDrawerOpen = false;
+menuButton.addEventListener("click", () => {
+  isNavDrawerOpen = true;
+  navDrawer.style.visibility = "visible";
+  navDrawer.style.transform = "translateX(0)";
+  [display, firstRow, hiddenOps, buttonsWrapper].forEach((element) => {
+    element.style.opacity = "0.5";
+    element.style.filter = "blur(2px)";
+    console.log(element);
+  });
+});
 
 // Copy Button
 copyButton.addEventListener("click", () => {
@@ -39,9 +60,6 @@ copyButton.addEventListener("click", () => {
 });
 
 // Hidden Buttons Transition Animation
-const toggleButton = document.querySelector("md-filled-tonal-icon-button");
-const opButtons = document.querySelector(".op-buttons");
-const hiddenOps = document.querySelector(".hidden-ops");
 
 let isFirstRowHidden = false;
 toggleButton.addEventListener("click", () => {
@@ -297,16 +315,24 @@ firstRowButtons.forEach((button) => {
 //   }
 // });
 
-// document.body.addEventListener("click", (e) => {
-//   if (!e.target.closest(".menu")) {
-//     listMenu.style.opacity = 0;
-//     listMenu.style.transform = "translateY(-50px)";
-//     setTimeout(() => {
-//       listMenu.style.visibility = "hidden";
-//     }, 100);
-//     listToggle = false;
-//   }
-// });
+document.body.addEventListener("click", (e) => {
+  if (
+    !e.target.closest(".menu") &&
+    !e.target.closest(".menu-btn") &&
+    isNavDrawerOpen
+  ) {
+    console.log("Clicking outside the menu!");
+    [display, firstRow, hiddenOps, buttonsWrapper].forEach((element) => {
+      element.style.opacity = 1;
+      element.style.filter = "blur(0px)";
+    });
+    navDrawer.style.transform = "translateX(-70dvw)";
+    setTimeout(() => {
+      navDrawer.style.visibility = "hidden";
+    }, 100);
+    isNavDrawerOpen = false;
+  }
+});
 
 // const openPopUpDialog = () => {
 //   popUpDialog.style.visibility = "visible";

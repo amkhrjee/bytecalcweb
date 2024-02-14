@@ -60,6 +60,7 @@
   border-bottom-left-radius: 30px;
   border-bottom-right-radius: 30px;
   background-color: var(--md-sys-color-tertiary-container);
+  transition: opacity 0.5s ease, filter 0.5s ease;
 }
 
 .input-display-wrapper {
@@ -121,6 +122,7 @@
   justify-content: space-between;
   padding-inline: 1rem;
   align-items: center;
+  transition: opacity 0.5s ease, filter 0.5s ease;
 }
 .first-row div {
   transition: transform 0.5s ease;
@@ -150,7 +152,7 @@
   justify-items: center;
   align-items: center;
   transform: translateX(85dvw);
-  transition: transform 0.5s ease;
+  transition: transform 0.5s ease, opacity 0.5s ease, filter 0.5s ease;
   display: none;
 }
 .hidden-ops > * {
@@ -178,6 +180,7 @@
   padding-inline: 0.5rem;
   padding-bottom: 0.5rem;
   gap: 0.25rem;
+  transition: opacity 0.5s ease, filter 0.5s ease;
 }
 .buttons * {
   height: 100%;
@@ -198,7 +201,7 @@
   border-bottom-right-radius: 12px;
   visibility: hidden;
   transform: translateX(-70dvw);
-  transition: translateX 0.5s ease;
+  transition: transform 0.5s ease;
 }
 
 .info {

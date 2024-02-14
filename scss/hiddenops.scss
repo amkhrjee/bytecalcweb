@@ -11,8 +11,9 @@
     justify-items: center;
     align-items: center;
     transform: translateX(100dvw*0.85);
-    transition: transform 0.5s ease;
+    transition: transform 0.5s ease, opacity 0.5s ease, filter 0.5s ease;
     display: none;
+
 
     >* {
         width: fit-content;
