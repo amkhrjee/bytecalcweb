@@ -3,6 +3,7 @@
     position: absolute;
     margin-top: 25dvh;
     margin-left: 7.5dvw;
+    z-index: 10;
 
     div[slot="headline"] {
         padding: 1rem;
@@ -20,7 +21,7 @@
 
 .support-dialog {
     @include common-dialog();
-    display: none;
+    // display: none;
 
     md-list {
         background-color: inherit;

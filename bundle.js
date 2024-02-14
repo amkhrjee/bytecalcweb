@@ -6989,6 +6989,25 @@ const hiddenOps = document.querySelector(".hidden-ops");
 const display = document.querySelector(".display");
 const firstRow = document.querySelector(".first-row");
 const navDrawer = document.querySelector(".menu");
+const supportButton = document.querySelector(".support-btn");
+const supportDialog = document.querySelector(".support-dialog");
+const dialogCloseButton = document.querySelector(".dialog-close-btn");
+// Support Button
+supportButton.addEventListener("click", () => {
+  supportDialog.open = true;
+});
+
+dialogCloseButton.addEventListener("click", () => {
+  supportDialog.open = false;
+});
+
+document.querySelector(".upi-payment").addEventListener("click", () => {
+  navigator.clipboard.writeText("aniruddhamukherjee@fbl").then(() => {
+    alert(
+      "The UPI ID aniruddhamukherjee@fbl has been copied to your clipboard. You can open the UPI app of your choice, paste the UPI ID and pay to my UPI ID. Thanks for your support!"
+    );
+  });
+});
 
 // Navigation Drawer
 let isNavDrawerOpen = false;

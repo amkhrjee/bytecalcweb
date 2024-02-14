@@ -245,7 +245,7 @@
   position: absolute;
   margin-top: 25dvh;
   margin-left: 7.5dvw;
-  display: none;
+  z-index: 10;
 }
 .support-dialog div[slot=headline] {
   padding: 1rem;
@@ -266,6 +266,7 @@
   position: absolute;
   margin-top: 25dvh;
   margin-left: 7.5dvw;
+  z-index: 10;
   display: none;
 }
 .theme-dialog div[slot=headline] {

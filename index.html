@@ -46,23 +46,9 @@
     <div slot="actions">
       <md-text-button>Close</md-text-button>
     </div>
-  </md-dialog>
-
-  <md-dialog open class="support-dialog">
-    <div slot="headline">Support developer</div>
-    <div slot="content">
-      <md-divider></md-divider>
-      <md-list>
-        <md-list-item type="button"><md-icon slot="start">payments</md-icon>Support via PayPal</md-list-item>
-        <md-list-item type="button"><md-icon slot="start">local_cafe</md-icon>Support via BuyMeACoffee</md-list-item>
-        <md-list-item type="button"><md-icon slot="start">currency_rupee</md-icon>Support via UPI (India)</md-list-item>
-        <md-list-item type="button"><md-icon slot="start">grade</md-icon>Star on GitHub</md-list-item>
-      </md-list>
-    </div>
-    <div slot="actions">
-      <md-text-button>Close</md-text-button>
-    </div>
   </md-dialog> -->
+
+
 
   <!-- Side Menu -->
   <div class="menu">
@@ -101,7 +87,7 @@
         </md-icon-button>
       </div>
 
-      <md-outlined-button>
+      <md-outlined-button class="support-btn">
         <span>
           <md-icon>favorite</md-icon>
           Support
@@ -178,6 +164,26 @@
     </md-filled-tonal-button>
     <md-filled-button data-val="=">=</md-filled-button>
   </div>
+
+  <md-dialog class="support-dialog">
+    <div slot="headline">Support developer</div>
+    <div slot="content">
+      <md-divider></md-divider>
+      <md-list>
+        <md-list-item target="_blank" href="https://paypal.me/amkhrjee?country.x=IN&locale.x=en_GB"
+          type="button"><md-icon slot="start">payments</md-icon>Support via PayPal</md-list-item>
+        <md-list-item target="_blank" href="https://www.buymeacoffee.com/amkhrjee" type="button"><md-icon
+            slot="start">local_cafe</md-icon>Support via BuyMeACoffee</md-list-item>
+        <md-list-item class="upi-payment" type="button"><md-icon slot="start">currency_rupee</md-icon>Support via UPI
+          (India)</md-list-item>
+        <md-list-item target="_blank" href="https://github.com/amkhrjee/bytecalcweb" type="button"><md-icon
+            slot="start">grade</md-icon>Star on GitHub</md-list-item>
+      </md-list>
+    </div>
+    <div slot="actions">
+      <md-text-button class="dialog-close-btn">Close</md-text-button>
+    </div>
+  </md-dialog>
   <script src="js/haptics.js"></script>
   <script type="module" src="./bundle.js"></script>
 </body>
