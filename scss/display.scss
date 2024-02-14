@@ -52,9 +52,14 @@
   div {
     position: absolute;
     right: 1rem;
+    font-size: 1.5rem;
     text-align: right;
     max-width: 22rem;
     overflow-x: hidden;
-    color: var(--md-sys-color-tertiary);
+    color: var(--md-sys-color-on-secondary-container);
+  }
+
+  md-icon-button {
+    display: none;
   }
 }

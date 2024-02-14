@@ -6978,6 +6978,21 @@ const firstRowButtons = document.querySelectorAll(".op-buttons>*");
 document.querySelectorAll(".hidden-row-btn");
 const inputArea = document.querySelector(".numinput");
 document.querySelector(".menu-overlay-button");
+const copyButton = document.querySelector(
+  ".output-display-wrapper>md-icon-button"
+);
+
+// Copy Button
+copyButton.addEventListener("click", () => {
+  navigator.clipboard
+    .writeText(outputDisplay.innerHTML)
+    .then(() => {
+      console.log("text added to clipboard");
+    })
+    .catch(() => {
+      console.error("could not add to the clipboard");
+    });
+});
 
 // Hidden Buttons Transition Animation
 const toggleButton = document.querySelector("md-filled-tonal-icon-button");
@@ -7013,11 +7028,19 @@ const tinyVibration = 50;
 let leftParenPresent = false;
 
 const showOutput = (message, isError) => {
-  if (!isError) {
-    outputDisplay.style.color = "inherit";
-    outputDisplay.innerHTML = message;
+  copyButton.selected = false;
+  // copyButton.toggle = true;
+  if (String(message).length < 10) {
+    outputDisplay.style.fontSize = "2rem";
   } else {
-    outputDisplay.style.color = "red";
+    outputDisplay.style.fontSize = "1.5rem";
+  }
+  if (!isError) {
+    outputDisplay.style.color = "var(--md-sys-color-on-secondary-container)";
+    outputDisplay.innerHTML = message;
+    copyButton.style.display = "block";
+  } else {
+    outputDisplay.style.color = "var(--md-sys-color-error)";
     outputDisplay.innerHTML = message;
   }
 };
@@ -7065,6 +7088,7 @@ const clearAllInput = () => {
   inputArea.value = newValue;
   const newCaretPos = caretStart - 1;
   inputArea.setSelectionRange(newCaretPos, newCaretPos);
+  copyButton.style.display = "none";
 };
 
 buttons.forEach((button) => {
@@ -7085,6 +7109,7 @@ buttons.forEach((button) => {
       inputArea.value = "";
       inputArea.style.fontSize = "6rem";
       outputDisplay.innerHTML = "";
+      copyButton.style.display = "none";
     } else if (
       value === "+" ||
       value === "-" ||

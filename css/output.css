@@ -105,10 +105,14 @@
 .output-display-wrapper div {
   position: absolute;
   right: 1rem;
+  font-size: 1.5rem;
   text-align: right;
   max-width: 22rem;
   overflow-x: hidden;
-  color: var(--md-sys-color-tertiary);
+  color: var(--md-sys-color-on-secondary-container);
+}
+.output-display-wrapper md-icon-button {
+  display: none;
 }
 
 .first-row {
@@ -140,9 +144,10 @@
   right: 0;
   width: 85%;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   padding-top: 1rem;
   padding-bottom: 1rem;
+  justify-items: center;
   align-items: center;
   transform: translateX(85dvw);
   transition: transform 0.5s ease;
