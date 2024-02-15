@@ -34,13 +34,13 @@
     <div slot="headline">Change theme</div>
     <div slot="content">
       <md-divider></md-divider>
-      <form>
-        <md-radio aria-label="light" name="theme" value="light"></md-radio>
-        <label for="theme">Light</label>
-        <md-radio aria-label="dark" name="theme" value="dark"></md-radio>
-        <label for="theme">Dark</label>
-        <md-radio aria-label="default" name="theme" value="default" checked></md-radio>
-        <label for="theme">System default</label>
+      <form name="theme">
+        <md-radio id="light" aria-label="light" name="option" value="light"></md-radio>
+        <label for="light">Light</label>
+        <md-radio id="dark" aria-label="dark" name="option" value="dark"></md-radio>
+        <label for="dark">Dark</label>
+        <md-radio id="default" aria-label="default" name="option" value="default" checked></md-radio>
+        <label for="default" for="theme">System default</label>
       </form>
     </div>
     <div slot="actions">

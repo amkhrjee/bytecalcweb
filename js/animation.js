@@ -53,7 +53,6 @@ const tinyVibration = 50;
 
 // Theme change mechanism
 changeThemeButton.addEventListener("click", () => {
-  console.log("Button Clicked!!!");
   themeDialog.open = true;
   // Closing  the navDrawer
   [display, firstRow, hiddenOps, buttonsWrapper].forEach((element) => {
@@ -115,7 +114,6 @@ menuButton.addEventListener("click", () => {
   [display, firstRow, hiddenOps, buttonsWrapper].forEach((element) => {
     element.style.opacity = "0.5";
     element.style.filter = "blur(2px)";
-    console.log(element);
   });
 });
 
@@ -133,7 +131,6 @@ copyButton.addEventListener("click", () => {
 });
 
 // Hidden Buttons Transition Animation
-
 let isFirstRowHidden = false;
 toggleButton.addEventListener("click", () => {
   Haptics.vibrate(tinyVibration);
@@ -267,7 +264,6 @@ buttons.forEach((button) => {
         let expression = parser.parse();
         let interpreter = new Interpreter();
         let result = interpreter.interpret(expression);
-        console.log(result);
         showOutput(result, false);
       } catch (error) {
         showOutput(error.message, true);
@@ -286,8 +282,6 @@ firstRowButtons.forEach((button) => {
     let newValue = "";
     switch (value) {
       case "log₂":
-        // newValue = "log₂(" + inputArea.value + ")";
-        // inputArea.value = newValue;
         insertTextAtCaret("log₂(");
         leftParenPresent = true;
         break;
@@ -348,99 +342,148 @@ document.body.addEventListener("click", (e) => {
     isNavDrawerOpen = false;
   }
 });
-// themeOption.addEventListener("click", () => {
-//   Haptics.vibrate(tinyVibration);
-//   openPopUpDialog();
-// });
 
-// const setLightThemeColors = () => {
-//   const root = document.documentElement;
-//   root.style.setProperty("--primary-color", "#EEF5FF");
-//   root.style.setProperty("--secondary-color", "#B4D4FF");
-//   root.style.setProperty("--tertiary-color", "#86B6F6");
-//   root.style.setProperty("--quaternery-color", "#176B87");
-//   root.style.setProperty("--text-color", "#000000");
-//   document.body.style.backgroundColor = "#FFF";
-//   document.querySelector(".svg-icon").style.filter = "invert(0%)";
-//   document.getElementById("downarrow").style.filter = "invert(0%)";
-// };
+const setLightThemeColors = () => {
+  const root = document.documentElement;
 
-// const setDarkThemeColors = () => {
-//   const root = document.documentElement;
-//   root.style.setProperty("--primary-color", "#263365");
-//   root.style.setProperty("--secondary-color", "#40A2D8");
-//   root.style.setProperty("--tertiary-color", "#0B60B0");
-//   root.style.setProperty("--quaternery-color", "#000000");
-//   root.style.setProperty("--text-color", "#FFF");
-//   document.body.style.backgroundColor = "#000000";
-//   document.querySelector(".svg-icon").style.filter = "invert(100%)";
-//   document.getElementById("downarrow").style.filter = "invert(100%)";
-// };
+  root.style.setProperty("--md-sys-color-primary", "hsl(100, 55%, 27%)");
+  root.style.setProperty(
+    "--md-sys-color-primary-container",
+    "hsl(98, 79%, 77%)"
+  );
+  root.style.setProperty("--md-sys-color-on-primary", "hsl(0, 0%, 100%)");
+  root.style.setProperty("--md-sys-color-secondary", "hsl(95, 13%, 34%)");
+  root.style.setProperty(
+    "--md-sys-color-secondary-container",
+    "hsl(90, 37%, 85%)"
+  );
+  root.style.setProperty(
+    "--md-sys-color-on-secondary-container",
+    "hsl(100, 41%, 9%)"
+  );
+  root.style.setProperty("--md-sys-color-tertiary", "hsl(180, 29%, 31%)");
+  root.style.setProperty(
+    "--md-sys-color-tertiary-container",
+    "hsl(181, 56%, 83%)"
+  );
+  root.style.setProperty("--md-sys-color-error", "hsl(0, 75%, 42%)");
+  root.style.setProperty("--md-sys-color-error-container", "hsl(6, 100%, 92%)");
+  root.style.setProperty("--md-sys-color-background", "hsl(84, 29%, 90%)");
+  root.style.setProperty("--md-sys-color-on-surface", "hsl(90, 8%, 10%)");
+  root.style.setProperty(
+    "--md-sys-color-on-surface-variant",
+    "hsl(90, 7%, 26%)"
+  );
+  root.style.setProperty("--md-sys-color-surface", "hsl(84, 3%, 36%)");
+  root.style.setProperty("--md-sys-color-surface-bright", "hsl(72, 50%, 96%)");
+  root.style.setProperty("--md-sys-color-surface-dim", "hsl(72, 12%, 84%)");
+  root.style.setProperty(
+    "--md-sys-color-surface-container",
+    "hsl(72, 24%, 92%)"
+  );
+  root.style.setProperty(
+    "--md-sys-color-surface-container-lowest",
+    "hsl(0, 0%, 100%)"
+  );
+  root.style.setProperty(
+    "--md-sys-color-surface-container-low",
+    "hsl(72, 33%, 94%)"
+  );
+  root.style.setProperty(
+    "--md-sys-color-surface-container-high",
+    "hsl(72, 19%, 89%)"
+  );
+  root.style.setProperty(
+    "--md-sys-color-surface-container-highest",
+    "hsl(73, 14%, 87%)"
+  );
+  root.style.setProperty("--md-sys-color-outline", "hsl(85, 5%, 45%)");
+  root.style.setProperty("--md-sys-color-outline-variant", "hsl(83, 11%, 76%)");
+};
 
-// const currentTheme =
-//   window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
-//     ? "dark"
-//     : "light";
-// const newTheme = null;
+const setDarkThemeColors = () => {
+  const root = document.documentElement;
 
-// document.forms.theme.addEventListener("change", (e) => {
-//   if (e.target.type === "radio") {
-//     const selectedTheme = e.target.value;
+  root.style.setProperty("--md-sys-color-primary", "hsl(98, 52%, 66%)");
+  root.style.setProperty(
+    "--md-sys-color-primary-container",
+    "hsl(99, 86%, 17%)"
+  );
+  root.style.setProperty("--md-sys-color-on-primary", "hsl(101, 100%, 14%)");
+  root.style.setProperty("--md-sys-color-secondary", "hsl(91, 21%, 74%)");
+  root.style.setProperty(
+    "--md-sys-color-secondary-container",
+    "hsl(94, 17%, 25%)"
+  );
+  root.style.setProperty(
+    "--md-sys-color-on-secondary-container",
+    "hsl(91, 21%, 74%)"
+  );
+  root.style.setProperty("--md-sys-color-tertiary", "hsl(181, 34%, 72%)");
+  root.style.setProperty(
+    "--md-sys-color-tertiary-container",
+    "hsl(180, 44%, 21%)"
+  );
+  root.style.setProperty("--md-sys-color-error", "hsl(6, 100%, 84%)");
+  root.style.setProperty(
+    "--md-sys-color-error-container",
+    "hsl(356, 100%, 29%)"
+  );
+  root.style.setProperty("--md-sys-color-background", "hsl(84, 29%, 90%)");
+  root.style.setProperty("--md-sys-color-on-surface", "hsl(60, 11%, 88%)");
+  root.style.setProperty(
+    "--md-sys-color-on-surface-variant",
+    "hsl(83, 11%, 76%)"
+  );
+  root.style.setProperty("--md-sys-color-surface", "hsl(90, 18%, 7%)");
+  root.style.setProperty("--md-sys-color-surface-bright", "hsl(86, 6%, 21%)");
+  root.style.setProperty("--md-sys-color-surface-dim", "hsl(90, 18%, 7%)");
+  root.style.setProperty(
+    "--md-sys-color-surface-container",
+    "hsl(86, 12%, 12%)"
+  );
+  root.style.setProperty(
+    "--md-sys-color-surface-container-lowest",
+    "hsl(90, 25%, 5%)"
+  );
+  root.style.setProperty(
+    "--md-sys-color-surface-container-low",
+    "hsl(86, 14%, 10%)"
+  );
+  root.style.setProperty(
+    "--md-sys-color-surface-container-high",
+    "hsl(86, 9%, 15%)"
+  );
+  root.style.setProperty(
+    "--md-sys-color-surface-container-highest",
+    "hsl(86, 7%, 20%)"
+  );
+  root.style.setProperty("--md-sys-color-outline", "hsl(85, 5%, 55%)");
+  root.style.setProperty("--md-sys-color-outline-variant", "hsl(90, 7%, 26%)");
+};
 
-//     // change the theme instantly
-//     const root = document.documentElement;
-//     switch (selectedTheme) {
-//       case "light":
-//         setLightThemeColors();
-//         newTheme = "light";
-//         break;
-//       case "dark":
-//         setDarkThemeColors();
-//         newTheme = "dark";
-//         break;
-//       case "default":
-//         if (
-//           window.matchMedia &&
-//           window.matchMedia("(prefers-color-scheme: dark)").matches
-//         ) {
-//           setDarkThemeColors();
-//           newTheme = "dark";
-//           break;
-//         } else {
-//           setLightThemeColors();
-//           newTheme = "light";
-//           break;
-//         }
-//     }
-//   }
-// });
-
-// document.querySelector("input[type='radio']").addEventListener("click", () => {
-//   Haptics.vibrate(tinyVibration);
-// });
-
-// document
-//   .querySelectorAll(".pop-up-buttons>button")[0]
-//   .addEventListener("click", () => {
-//     Haptics.vibrate(tinyVibration);
-//     // Revert back to previous config
-//     if (currentTheme == "dark") setDarkThemeColors();
-//     else setLightThemeColors();
-//     closePopUpDialog();
-//   });
-
-// document
-//   .querySelectorAll(".pop-up-buttons>button")[1]
-//   .addEventListener("click", () => {
-//     Haptics.vibrate(tinyVibration);
-//     // Save the current config
-//     if (newTheme) {
-//       if (newTheme != currentTheme) {
-//         if (newTheme == "dark") setDarkThemeColors();
-//         else setLightThemeColors();
-//       } else {
-//         // Dont't do anything for  now
-//       }
-//     }
-//     closePopUpDialog();
-//   });
+document.forms.theme.addEventListener("change", (e) => {
+  console.log(e.target.value);
+  console.log("In the form!");
+  const selectedTheme = e.target.value;
+  // change the theme instantly
+  switch (selectedTheme) {
+    case "light":
+      setLightThemeColors();
+      break;
+    case "dark":
+      setDarkThemeColors();
+      break;
+    case "default":
+      if (
+        window.matchMedia &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches
+      ) {
+        setDarkThemeColors();
+        break;
+      } else {
+        setLightThemeColors();
+        break;
+      }
+  }
+});
