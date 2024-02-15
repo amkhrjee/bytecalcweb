@@ -6994,6 +6994,22 @@ const navDrawer = document.querySelector(".menu");
 const supportButton = document.querySelector(".support-btn");
 const supportDialog = document.querySelector(".support-dialog");
 const dialogCloseButton = document.querySelector(".dialog-close-btn");
+const commitDate = document.querySelector(".commit-date");
+
+// Update Commit Date
+fetch("https://api.github.com/repos/amkhrjee/bytecalcweb/commits?per_page=1")
+  .then((res) => res.json())
+  .then((commits) => {
+    const lastCommitDate = commits[0].commit.author.date;
+    const formattedDate = new Date(lastCommitDate).toLocaleString("en-GB", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    });
+    commitDate.innerHTML = formattedDate;
+  })
+  .catch((error) => console.error(error));
+
 // Support Button
 supportButton.addEventListener("click", () => {
   supportDialog.open = true;
@@ -7224,37 +7240,19 @@ hiddenRowButtons.forEach((button) => {
     // functionality
     if (button.dataset.val == "bin") {
       if (outputVal) {
-        inputArea.value = "BIN(" + outputVal + ")";
+        inputArea.value = "bin(" + outputVal + ")";
         showOutput(outputVal.toString(2), false);
         inputArea.style.fontSize = "3.5rem";
       } else showOutput("Empty Input", true);
     } else if (button.dataset.val == "hex") {
       if (outputVal) {
-        inputArea.value = "HEX(" + outputVal + ")";
+        inputArea.value = "hex(" + outputVal + ")";
         showOutput(outputVal.toString(16), false);
         inputArea.style.fontSize = "3.5rem";
       } else showOutput("Empty Input", true);
     }
   });
 });
-
-// let listToggle = false;
-// menuButton.addEventListener("click", () => {
-//   Haptics.vibrate(tinyVibration);
-//   if (!listToggle) {
-//     listMenu.style.visibility = "visible";
-//     listMenu.style.opacity = 1;
-//     listMenu.style.transform = "translateY(0)";
-//     listToggle = true;
-//   } else {
-//     listMenu.style.opacity = 0;
-//     listMenu.style.transform = "translateY(-50px)";
-//     setTimeout(() => {
-//       listMenu.style.visibility = "hidden";
-//     }, 100);
-//     listToggle = false;
-//   }
-// });
 
 document.body.addEventListener("click", (e) => {
   if (
@@ -7274,29 +7272,6 @@ document.body.addEventListener("click", (e) => {
     isNavDrawerOpen = false;
   }
 });
-
-// const openPopUpDialog = () => {
-//   popUpDialog.style.visibility = "visible";
-//   popUpDialog.style.opacity = "1";
-//   document.querySelector(".wrapper").style.opacity = "0.2";
-//   document.querySelector(".wrapper").style.filter = "blur(2px)";
-// };
-
-// const closePopUpDialog = () => {
-//   popUpDialog.style.visibility = "hidden";
-//   popUpDialog.style.opacity = "0";
-//   document.querySelector(".wrapper").style.opacity = "1";
-//   document.querySelector(".wrapper").style.filter = "blur(0px)";
-
-//   // close the list menu
-//   listMenu.style.opacity = 0;
-//   listMenu.style.transform = "translateY(-50px)";
-//   setTimeout(() => {
-//     listMenu.style.visibility = "hidden";
-//   }, 100);
-//   listToggle = false;
-// };
-
 // themeOption.addEventListener("click", () => {
 //   Haptics.vibrate(tinyVibration);
 //   openPopUpDialog();
