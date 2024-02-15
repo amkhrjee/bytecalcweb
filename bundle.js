@@ -6993,12 +6993,35 @@ const firstRow = document.querySelector(".first-row");
 const navDrawer = document.querySelector(".menu");
 const supportButton = document.querySelector(".support-btn");
 const supportDialog = document.querySelector(".support-dialog");
-const dialogCloseButton = document.querySelector(".dialog-close-btn");
+const supportDialogCloseButton = document.querySelector(
+  ".support-dialog-close-btn"
+);
 const commitDate = document.querySelector(".commit-date");
+const changeThemeButton = document.querySelector(".change-theme-btn");
+const themeDialog = document.querySelector(".theme-dialog");
+const themeDialogCloseButton = document.querySelector(
+  ".theme-dialog-close-btn"
+);
 
-// // vibration durations
+// vibration durations
 const smallVibration = 75;
 const tinyVibration = 50;
+
+// Theme change mechanism
+changeThemeButton.addEventListener("click", () => {
+  console.log("Button Clicked!!!");
+  themeDialog.open = true;
+  // Closing  the navDrawer
+  [display, firstRow, hiddenOps, buttonsWrapper].forEach((element) => {
+    element.style.opacity = 1;
+    element.style.filter = "blur(0px)";
+  });
+  navDrawer.style.transform = "translateX(-70dvw)";
+  setTimeout(() => {
+    navDrawer.style.visibility = "hidden";
+  }, 100);
+  isNavDrawerOpen = false;
+});
 
 // Update Commit Date
 fetch("https://api.github.com/repos/amkhrjee/bytecalcweb/commits?per_page=1")
@@ -7020,9 +7043,14 @@ supportButton.addEventListener("click", () => {
   supportDialog.open = true;
 });
 
-dialogCloseButton.addEventListener("click", () => {
+supportDialogCloseButton.addEventListener("click", () => {
   Haptics.vibrate(tinyVibration);
   supportDialog.open = false;
+});
+
+themeDialogCloseButton.addEventListener("click", () => {
+  Haptics.vibrate(tinyVibration);
+  themeDialog.open = false;
 });
 
 document.querySelector(".upi-payment").addEventListener("click", () => {
@@ -7265,7 +7293,6 @@ document.body.addEventListener("click", (e) => {
     !e.target.closest(".menu-btn") &&
     isNavDrawerOpen
   ) {
-    console.log("Clicking outside the menu!");
     [display, firstRow, hiddenOps, buttonsWrapper].forEach((element) => {
       element.style.opacity = 1;
       element.style.filter = "blur(0px)";
