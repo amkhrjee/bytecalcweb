@@ -1,44 +1,180 @@
 import { Interpreter, Parser, Scanner } from "./calculator.js";
+// material-web (https://material-web.dev) imports
+import "@material/web/icon/icon.js";
+import "@material/web/menu/menu.js";
+import "@material/web/menu/menu-item.js";
+import "@material/web/button/text-button.js";
+import "@material/web/button/filled-button.js";
+import "@material/web/iconbutton/icon-button.js";
+import "@material/web/button/outlined-button.js";
+import "@material/web/button/filled-tonal-button.js";
+import "@material/web/iconbutton/filled-tonal-icon-button.js";
+import "@material/web/button/elevated-button.js";
+import "@material/web/list/list.js";
+import "@material/web/list/list-item.js";
+import "@material/web/divider/divider.js";
+import "@material/web/dialog/dialog.js";
+import "@material/web/radio/radio.js";
 
-const listMenu = document.querySelector(".list");
-const popUpDialog = document.querySelector(".pop-up");
-const menuButton = document.querySelector(".menu>img");
-const hiddenRow = document.querySelector(".hidden-row");
-const themeOption = document.querySelector(".list>span");
-const arrow = document.querySelector(".menu-overlay-button>img");
-const outputDisplay = document.querySelector(".text-ouput-display");
-const buttons = document.querySelectorAll(".input-grid-wrapper>*");
-const firstRowButtons = document.querySelectorAll(".first-row-btn");
-const hiddenRowButton = document.querySelectorAll(".hidden-row-btn");
-const inputArea = document.querySelector(".text-input-display>input");
-const inputGridWrapper = document.querySelector(".input-grid-wrapper");
-const menuOverlayButton = document.querySelector(".menu-overlay-button");
+// ELements
+const outputDisplay = document.querySelector(".output-display");
+const buttonsWrapper = document.querySelector(".buttons");
+const buttons = document.querySelectorAll(".buttons>*");
+const firstRowButtons = document.querySelectorAll(".op-buttons>*");
+const hiddenRowButtons = document.querySelectorAll(
+  ".hidden-ops>md-filled-button"
+);
+const inputArea = document.querySelector(".numinput");
+const menuButton = document.querySelector(".menu-btn");
+const copyButton = document.querySelector(
+  ".output-display-wrapper>md-icon-button"
+);
+const toggleButton = document.querySelector("md-filled-tonal-icon-button");
+const opButtons = document.querySelector(".op-buttons");
+const hiddenOps = document.querySelector(".hidden-ops");
+const display = document.querySelector(".display");
+const firstRow = document.querySelector(".first-row");
+const navDrawer = document.querySelector(".menu");
+const supportButton = document.querySelector(".support-btn");
+const supportDialog = document.querySelector(".support-dialog");
+const supportDialogCloseButton = document.querySelector(
+  ".support-dialog-close-btn"
+);
+const commitDate = document.querySelector(".commit-date");
+const changeThemeButton = document.querySelector(".change-theme-btn");
+const themeDialog = document.querySelector(".theme-dialog");
+const themeDialogCloseButton = document.querySelector(
+  ".theme-dialog-close-btn"
+);
 
 // vibration durations
 const smallVibration = 75;
 const tinyVibration = 50;
 
+// Theme change mechanism
+changeThemeButton.addEventListener("click", () => {
+  themeDialog.open = true;
+  // Closing  the navDrawer
+  [display, firstRow, hiddenOps, buttonsWrapper].forEach((element) => {
+    element.style.opacity = 1;
+    element.style.filter = "blur(0px)";
+  });
+  navDrawer.style.transform = "translateX(-70dvw)";
+  setTimeout(() => {
+    navDrawer.style.visibility = "hidden";
+  }, 100);
+  isNavDrawerOpen = false;
+});
+
+// Update Commit Date
+fetch("https://api.github.com/repos/amkhrjee/bytecalcweb/commits?per_page=1")
+  .then((res) => res.json())
+  .then((commits) => {
+    const lastCommitDate = commits[0].commit.author.date;
+    const formattedDate = new Date(lastCommitDate).toLocaleString("en-GB", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    });
+    commitDate.innerHTML = formattedDate;
+  })
+  .catch((error) => console.error(error));
+
+// Support Button
+supportButton.addEventListener("click", () => {
+  Haptics.vibrate(tinyVibration);
+  supportDialog.open = true;
+});
+
+supportDialogCloseButton.addEventListener("click", () => {
+  Haptics.vibrate(tinyVibration);
+  supportDialog.open = false;
+});
+
+themeDialogCloseButton.addEventListener("click", () => {
+  Haptics.vibrate(tinyVibration);
+  themeDialog.open = false;
+});
+
+document.querySelector(".upi-payment").addEventListener("click", () => {
+  navigator.clipboard.writeText("aniruddhamukherjee@fbl").then(() => {
+    alert(
+      "The UPI ID aniruddhamukherjee@fbl has been copied to your clipboard. You can open the UPI app of your choice, paste the UPI ID and pay to my UPI ID. Thanks for your support!"
+    );
+  });
+});
+
+// Navigation Drawer
+let isNavDrawerOpen = false;
+menuButton.addEventListener("click", () => {
+  Haptics.vibrate(tinyVibration);
+  isNavDrawerOpen = true;
+  navDrawer.style.visibility = "visible";
+  navDrawer.style.transform = "translateX(0)";
+  [display, firstRow, hiddenOps, buttonsWrapper].forEach((element) => {
+    element.style.opacity = "0.5";
+    element.style.filter = "blur(2px)";
+  });
+});
+
+// Copy Button
+copyButton.addEventListener("click", () => {
+  Haptics.vibrate(tinyVibration);
+  navigator.clipboard
+    .writeText(outputDisplay.innerHTML)
+    .then(() => {
+      console.log("text added to clipboard");
+    })
+    .catch(() => {
+      console.error("could not add to the clipboard");
+    });
+});
+
+// Hidden Buttons Transition Animation
+let isFirstRowHidden = false;
+toggleButton.addEventListener("click", () => {
+  Haptics.vibrate(tinyVibration);
+  if (!isFirstRowHidden) {
+    opButtons.style.transform = "translateX(-100dvw)";
+    toggleButton.style.transform = "translateX(-85dvw)";
+    hiddenOps.style.display = "block";
+    setTimeout(() => {
+      hiddenOps.style.transform = "translateX(0)";
+    }, 50);
+    isFirstRowHidden = true;
+  } else {
+    opButtons.style.transform = "translateX(0)";
+    toggleButton.style.transform = "translateX(0)";
+    hiddenOps.style.transform = "translateX(85dvw)";
+    setTimeout(() => {
+      hiddenOps.style.display = "none";
+    }, 500);
+    isFirstRowHidden = false;
+  }
+});
+
 // Parens
 let leftParenPresent = false;
 
 const showOutput = (message, isError) => {
-  if (!isError) {
-    outputDisplay.style.color = "inherit";
-    outputDisplay.innerHTML = message;
+  copyButton.selected = false;
+  // copyButton.toggle = true;
+  if (String(message).length < 10) {
+    outputDisplay.style.fontSize = "2rem";
   } else {
-    outputDisplay.style.color = "red";
+    outputDisplay.style.fontSize = "1.5rem";
+  }
+  if (!isError) {
+    outputDisplay.style.color = "var(--md-sys-color-on-secondary-container)";
+    outputDisplay.innerHTML = message;
+    copyButton.style.display = "block";
+  } else {
+    outputDisplay.style.color = "var(--md-sys-color-error)";
     outputDisplay.innerHTML = message;
   }
 };
 
-// Pretty print tokens
-const printTokens = (tokens) => {
-  tokens.forEach((token) => {
-    console.log(token.toString());
-  });
-};
-
-// change input area font
+// // change input area font
 const updateFontSize = () => {
   if (inputArea.value.length >= 6 && inputArea.value.length <= 9)
     inputArea.style.fontSize = "4.5rem";
@@ -81,14 +217,15 @@ const clearAllInput = () => {
   inputArea.value = newValue;
   const newCaretPos = caretStart - 1;
   inputArea.setSelectionRange(newCaretPos, newCaretPos);
+  copyButton.style.display = "none";
 };
 
 buttons.forEach((button) => {
   button.addEventListener("click", () => {
     Haptics.vibrate(tinyVibration);
-    button.style.borderRadius = "10%";
+    button.style.borderRadius = "10px";
     setTimeout(() => {
-      button.style.borderRadius = "32px";
+      button.style.borderRadius = "40px";
     }, 200);
 
     // populating input
@@ -101,6 +238,7 @@ buttons.forEach((button) => {
       inputArea.value = "";
       inputArea.style.fontSize = "6rem";
       outputDisplay.innerHTML = "";
+      copyButton.style.display = "none";
     } else if (
       value === "+" ||
       value === "-" ||
@@ -121,7 +259,6 @@ buttons.forEach((button) => {
     } else if (value === "=") {
       let scanner = new Scanner(inputArea.value);
       let resultTokens = scanner.scanTokens();
-      printTokens(resultTokens);
       let parser = new Parser(resultTokens);
       try {
         let expression = parser.parse();
@@ -145,8 +282,6 @@ firstRowButtons.forEach((button) => {
     let newValue = "";
     switch (value) {
       case "log₂":
-        // newValue = "log₂(" + inputArea.value + ")";
-        // inputArea.value = newValue;
         insertTextAtCaret("log₂(");
         leftParenPresent = true;
         break;
@@ -166,45 +301,9 @@ firstRowButtons.forEach((button) => {
   });
 });
 
-let toggleArrow = false;
-
-menuOverlayButton.addEventListener("click", () => {
-  let currentAngle =
-    parseFloat(arrow.style.transform.replace(/[^0-9\-.,]/g, "")) || 0;
-  let rotationAngle = 180;
-  Haptics.vibrate(tinyVibration);
-  arrow.style.transform = "rotate(" + (currentAngle + rotationAngle) + "deg)";
-
-  // toggle display hidden menu
-  if (!toggleArrow) {
-    hiddenRow.style.display = "grid";
-    hiddenRow.style.zIndex = "1";
-    setTimeout(() => {
-      hiddenRow.style.opacity = 1;
-    }, 100);
-    hiddenRow.style.transform = "translateY(0)";
-    inputGridWrapper.style.height = "80%";
-    inputGridWrapper.style.transform = "translateY(5.5rem)";
-    toggleArrow = true;
-  } else {
-    hiddenRow.style.display = "none";
-    hiddenRow.style.zIndex = "-10";
-    hiddenRow.style.opacity = 0;
-    hiddenRow.style.transform = "translateY(-50px)";
-    inputGridWrapper.style.transform = "translateY(0)";
-    inputGridWrapper.style.height = "100%";
-    toggleArrow = false;
-  }
-});
-
-hiddenRowButton.forEach((button) => {
+hiddenRowButtons.forEach((button) => {
   button.addEventListener("click", () => {
-    Haptics.vibrate(smallVibration);
-    button.style.borderRadius = "0px";
-    setTimeout(() => {
-      button.style.borderRadius = "24px";
-    }, 200);
-
+    Haptics.vibrate(tinyVibration);
     const outputVal =
       outputDisplay.innerHTML.length && outputDisplay.innerHTML != "Empty Input"
         ? parseFloat(outputDisplay.innerHTML)
@@ -212,13 +311,13 @@ hiddenRowButton.forEach((button) => {
     // functionality
     if (button.dataset.val == "bin") {
       if (outputVal) {
-        inputArea.value = "BIN(" + outputVal + ")";
+        inputArea.value = "bin(" + outputVal + ")";
         showOutput(outputVal.toString(2), false);
         inputArea.style.fontSize = "3.5rem";
       } else showOutput("Empty Input", true);
     } else if (button.dataset.val == "hex") {
       if (outputVal) {
-        inputArea.value = "HEX(" + outputVal + ")";
+        inputArea.value = "hex(" + outputVal + ")";
         showOutput(outputVal.toString(16), false);
         inputArea.style.fontSize = "3.5rem";
       } else showOutput("Empty Input", true);
@@ -226,150 +325,165 @@ hiddenRowButton.forEach((button) => {
   });
 });
 
-let listToggle = false;
-menuButton.addEventListener("click", () => {
-  Haptics.vibrate(tinyVibration);
-  if (!listToggle) {
-    listMenu.style.visibility = "visible";
-    listMenu.style.opacity = 1;
-    listMenu.style.transform = "translateY(0)";
-    listToggle = true;
-  } else {
-    listMenu.style.opacity = 0;
-    listMenu.style.transform = "translateY(-50px)";
-    setTimeout(() => {
-      listMenu.style.visibility = "hidden";
-    }, 100);
-    listToggle = false;
-  }
-});
-
 document.body.addEventListener("click", (e) => {
-  if (!e.target.closest(".menu")) {
-    listMenu.style.opacity = 0;
-    listMenu.style.transform = "translateY(-50px)";
+  if (
+    !e.target.closest(".menu") &&
+    !e.target.closest(".menu-btn") &&
+    isNavDrawerOpen
+  ) {
+    [display, firstRow, hiddenOps, buttonsWrapper].forEach((element) => {
+      element.style.opacity = 1;
+      element.style.filter = "blur(0px)";
+    });
+    navDrawer.style.transform = "translateX(-70dvw)";
     setTimeout(() => {
-      listMenu.style.visibility = "hidden";
+      navDrawer.style.visibility = "hidden";
     }, 100);
-    listToggle = false;
+    isNavDrawerOpen = false;
   }
-});
-
-const openPopUpDialog = () => {
-  popUpDialog.style.visibility = "visible";
-  popUpDialog.style.opacity = "1";
-  document.querySelector(".wrapper").style.opacity = "0.2";
-  document.querySelector(".wrapper").style.filter = "blur(2px)";
-};
-
-const closePopUpDialog = () => {
-  popUpDialog.style.visibility = "hidden";
-  popUpDialog.style.opacity = "0";
-  document.querySelector(".wrapper").style.opacity = "1";
-  document.querySelector(".wrapper").style.filter = "blur(0px)";
-
-  // close the list menu
-  listMenu.style.opacity = 0;
-  listMenu.style.transform = "translateY(-50px)";
-  setTimeout(() => {
-    listMenu.style.visibility = "hidden";
-  }, 100);
-  listToggle = false;
-};
-
-themeOption.addEventListener("click", () => {
-  Haptics.vibrate(tinyVibration);
-  openPopUpDialog();
 });
 
 const setLightThemeColors = () => {
   const root = document.documentElement;
-  root.style.setProperty("--primary-color", "#EEF5FF");
-  root.style.setProperty("--secondary-color", "#B4D4FF");
-  root.style.setProperty("--tertiary-color", "#86B6F6");
-  root.style.setProperty("--quaternery-color", "#176B87");
-  root.style.setProperty("--text-color", "#000000");
-  document.body.style.backgroundColor = "#FFF";
-  document.querySelector(".svg-icon").style.filter = "invert(0%)";
-  document.getElementById("downarrow").style.filter = "invert(0%)";
+
+  root.style.setProperty("--md-sys-color-primary", "hsl(100, 55%, 27%)");
+  root.style.setProperty(
+    "--md-sys-color-primary-container",
+    "hsl(98, 79%, 77%)"
+  );
+  root.style.setProperty("--md-sys-color-on-primary", "hsl(0, 0%, 100%)");
+  root.style.setProperty("--md-sys-color-secondary", "hsl(95, 13%, 34%)");
+  root.style.setProperty(
+    "--md-sys-color-secondary-container",
+    "hsl(90, 37%, 85%)"
+  );
+  root.style.setProperty(
+    "--md-sys-color-on-secondary-container",
+    "hsl(100, 41%, 9%)"
+  );
+  root.style.setProperty("--md-sys-color-tertiary", "hsl(180, 29%, 31%)");
+  root.style.setProperty(
+    "--md-sys-color-tertiary-container",
+    "hsl(181, 56%, 83%)"
+  );
+  root.style.setProperty("--md-sys-color-error", "hsl(0, 75%, 42%)");
+  root.style.setProperty("--md-sys-color-error-container", "hsl(6, 100%, 92%)");
+  root.style.setProperty("--md-sys-color-background", "hsl(84, 29%, 90%)");
+  root.style.setProperty("--md-sys-color-on-surface", "hsl(90, 8%, 10%)");
+  root.style.setProperty(
+    "--md-sys-color-on-surface-variant",
+    "hsl(90, 7%, 26%)"
+  );
+  root.style.setProperty("--md-sys-color-surface", "hsl(84, 3%, 36%)");
+  root.style.setProperty("--md-sys-color-surface-bright", "hsl(72, 50%, 96%)");
+  root.style.setProperty("--md-sys-color-surface-dim", "hsl(72, 12%, 84%)");
+  root.style.setProperty(
+    "--md-sys-color-surface-container",
+    "hsl(72, 24%, 92%)"
+  );
+  root.style.setProperty(
+    "--md-sys-color-surface-container-lowest",
+    "hsl(0, 0%, 100%)"
+  );
+  root.style.setProperty(
+    "--md-sys-color-surface-container-low",
+    "hsl(72, 33%, 94%)"
+  );
+  root.style.setProperty(
+    "--md-sys-color-surface-container-high",
+    "hsl(72, 19%, 89%)"
+  );
+  root.style.setProperty(
+    "--md-sys-color-surface-container-highest",
+    "hsl(73, 14%, 87%)"
+  );
+  root.style.setProperty("--md-sys-color-outline", "hsl(85, 5%, 45%)");
+  root.style.setProperty("--md-sys-color-outline-variant", "hsl(83, 11%, 76%)");
 };
 
 const setDarkThemeColors = () => {
   const root = document.documentElement;
-  root.style.setProperty("--primary-color", "#263365");
-  root.style.setProperty("--secondary-color", "#40A2D8");
-  root.style.setProperty("--tertiary-color", "#0B60B0");
-  root.style.setProperty("--quaternery-color", "#000000");
-  root.style.setProperty("--text-color", "#FFF");
-  document.body.style.backgroundColor = "#000000";
-  document.querySelector(".svg-icon").style.filter = "invert(100%)";
-  document.getElementById("downarrow").style.filter = "invert(100%)";
+
+  root.style.setProperty("--md-sys-color-primary", "hsl(98, 52%, 66%)");
+  root.style.setProperty(
+    "--md-sys-color-primary-container",
+    "hsl(99, 86%, 17%)"
+  );
+  root.style.setProperty("--md-sys-color-on-primary", "hsl(101, 100%, 14%)");
+  root.style.setProperty("--md-sys-color-secondary", "hsl(91, 21%, 74%)");
+  root.style.setProperty(
+    "--md-sys-color-secondary-container",
+    "hsl(94, 17%, 25%)"
+  );
+  root.style.setProperty(
+    "--md-sys-color-on-secondary-container",
+    "hsl(91, 21%, 74%)"
+  );
+  root.style.setProperty("--md-sys-color-tertiary", "hsl(181, 34%, 72%)");
+  root.style.setProperty(
+    "--md-sys-color-tertiary-container",
+    "hsl(180, 44%, 21%)"
+  );
+  root.style.setProperty("--md-sys-color-error", "hsl(6, 100%, 84%)");
+  root.style.setProperty(
+    "--md-sys-color-error-container",
+    "hsl(356, 100%, 29%)"
+  );
+  root.style.setProperty("--md-sys-color-background", "hsl(84, 29%, 90%)");
+  root.style.setProperty("--md-sys-color-on-surface", "hsl(60, 11%, 88%)");
+  root.style.setProperty(
+    "--md-sys-color-on-surface-variant",
+    "hsl(83, 11%, 76%)"
+  );
+  root.style.setProperty("--md-sys-color-surface", "hsl(90, 18%, 7%)");
+  root.style.setProperty("--md-sys-color-surface-bright", "hsl(86, 6%, 21%)");
+  root.style.setProperty("--md-sys-color-surface-dim", "hsl(90, 18%, 7%)");
+  root.style.setProperty(
+    "--md-sys-color-surface-container",
+    "hsl(86, 12%, 12%)"
+  );
+  root.style.setProperty(
+    "--md-sys-color-surface-container-lowest",
+    "hsl(90, 25%, 5%)"
+  );
+  root.style.setProperty(
+    "--md-sys-color-surface-container-low",
+    "hsl(86, 14%, 10%)"
+  );
+  root.style.setProperty(
+    "--md-sys-color-surface-container-high",
+    "hsl(86, 9%, 15%)"
+  );
+  root.style.setProperty(
+    "--md-sys-color-surface-container-highest",
+    "hsl(86, 7%, 20%)"
+  );
+  root.style.setProperty("--md-sys-color-outline", "hsl(85, 5%, 55%)");
+  root.style.setProperty("--md-sys-color-outline-variant", "hsl(90, 7%, 26%)");
 };
 
-const currentTheme =
-  window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
-    ? "dark"
-    : "light";
-const newTheme = null;
-
 document.forms.theme.addEventListener("change", (e) => {
-  if (e.target.type === "radio") {
-    const selectedTheme = e.target.value;
-
-    // change the theme instantly
-    const root = document.documentElement;
-    switch (selectedTheme) {
-      case "light":
-        setLightThemeColors();
-        newTheme = "light";
-        break;
-      case "dark":
+  console.log(e.target.value);
+  console.log("In the form!");
+  const selectedTheme = e.target.value;
+  // change the theme instantly
+  switch (selectedTheme) {
+    case "light":
+      setLightThemeColors();
+      break;
+    case "dark":
+      setDarkThemeColors();
+      break;
+    case "default":
+      if (
+        window.matchMedia &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches
+      ) {
         setDarkThemeColors();
-        newTheme = "dark";
         break;
-      case "default":
-        if (
-          window.matchMedia &&
-          window.matchMedia("(prefers-color-scheme: dark)").matches
-        ) {
-          setDarkThemeColors();
-          newTheme = "dark";
-          break;
-        } else {
-          setLightThemeColors();
-          newTheme = "light";
-          break;
-        }
-    }
+      } else {
+        setLightThemeColors();
+        break;
+      }
   }
 });
-
-document.querySelector("input[type='radio']").addEventListener("click", () => {
-  Haptics.vibrate(tinyVibration);
-});
-
-document
-  .querySelectorAll(".pop-up-buttons>button")[0]
-  .addEventListener("click", () => {
-    Haptics.vibrate(tinyVibration);
-    // Revert back to previous config
-    if (currentTheme == "dark") setDarkThemeColors();
-    else setLightThemeColors();
-    closePopUpDialog();
-  });
-
-document
-  .querySelectorAll(".pop-up-buttons>button")[1]
-  .addEventListener("click", () => {
-    Haptics.vibrate(tinyVibration);
-    // Save the current config
-    if (newTheme) {
-      if (newTheme != currentTheme) {
-        if (newTheme == "dark") setDarkThemeColors();
-        else setLightThemeColors();
-      } else {
-        // Dont't do anything for  now
-      }
-    }
-    closePopUpDialog();
-  });

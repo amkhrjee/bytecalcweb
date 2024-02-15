@@ -1,0 +1,41 @@
+.topbar {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    top: 0.5rem;
+    z-index: 10;
+    justify-content: center;
+    align-items: center;
+
+    md-outlined-button {
+        flex: 0 1 auto;
+        min-width: 7rem;
+        text-align: center;
+
+        span {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.5rem;
+        }
+    }
+}
+
+.topbar>div {
+    flex: 1;
+    text-align: center;
+
+    &:first-child {
+        padding-left: 1rem;
+        text-align: left;
+    }
+
+    &:last-child {
+        text-align: right;
+        padding-right: 1rem;
+
+        md-elevated-button {
+            min-width: 4rem;
+        }
+    }
+}

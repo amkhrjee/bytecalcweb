@@ -5,117 +5,192 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ByteCalc</title>
+  <title>Byte Calculator</title>
   <meta name="description" content="Calculator for Programmers" />
-  <meta property="og:title" content="ByteCalc" />
+  <meta property="og:title" content="Byte Calculator" />
   <meta property="og:image" content="./res/favicons/favicon-32x32.png" />
   <meta property="og:url" content="https://amkhrjee.github.io/bytecalcweb/" />
-  <link rel="stylesheet" href="./css/display.css" />
   <link rel="manifest" href="./manifest.json" />
-  <link rel="stylesheet" href="./css/input.css" />
+  <link rel="stylesheet" href="./css/output.css" />
   <link rel="icon" href="/res/favicons/favicon-32x32.png" type="image/x-icon" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Spline+Sans+Mono:ital,wght@0,300..700;1,300..700&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
   <script src="js/haptics.js"></script>
+  <script defer data-domain="amkhrjee.github.io/bytecalcweb" src="https://plausible.io/js/script.js"></script>
 </head>
 
 <body onload="loadHaptics()">
-  <div class="pop-up">
-    <h3>Choose theme</h3>
-    <form name="theme">
-      <label>
-        <input type="radio" name="option" value="light" />
-        Light
-      </label>
-      <label>
-        <input type="radio" name="option" value="dark" />
-        Dark
-      </label>
-      <label>
-        <input type="radio" name="option" value="default" />
-        System default
-      </label>
-    </form>
-    <div class="pop-up-buttons">
-      <button>Cancel</button>
-      <button>OK</button>
+
+  <!-- <div class="overlay-container">
+    <div class="gradient"></div>
+    <img class="overlay-image" src="./res/overlay.png">
+  </div> -->
+
+  <md-dialog class="theme-dialog">
+    <div slot="headline">Change theme</div>
+    <div slot="content">
+      <md-divider></md-divider>
+      <form name="theme">
+        <md-radio id="light" aria-label="light" name="option" value="light"></md-radio>
+        <label for="light">Light</label>
+        <md-radio id="dark" aria-label="dark" name="option" value="dark"></md-radio>
+        <label for="dark">Dark</label>
+        <md-radio id="default" aria-label="default" name="option" value="default" checked></md-radio>
+        <label for="default" for="theme">System default</label>
+      </form>
+    </div>
+    <div slot="actions">
+      <md-text-button class="theme-dialog-close-btn">Close</md-text-button>
+    </div>
+  </md-dialog>
+
+
+
+  <!-- Side Menu -->
+  <div class="menu">
+    <div class="info">
+      <img src="./res/favicons/android-chrome-192x192.png">
+      <div>
+        <div class="title">Byte <br> Calculator
+        </div>
+        <div class="release">Last Commit: <br><span class="commit-date">¯\_(ツ)_/¯</span></div>
+      </div>
+    </div>
+
+    <md-divider></md-divider>
+    <div class="list">
+      <md-list>
+        <md-list-item class="change-theme-btn" type="button"><md-icon slot="start">palette</md-icon>Change
+          Theme</md-list-item>
+        <md-list-item
+          href="mailto:aniruddha.mukherji@outlook.com?subject=ByteCal%20Bug%20Report&body=Describe%20the%20bug%20or%20attach%20a%20screenshot.%20I'll%20try%20to%20fix%20it%20asap."
+          type="button"><md-icon slot="start">bug_report</md-icon>Report Bug</md-list-item>
+        <md-list-item
+          href="mailto:aniruddha.mukherji@outlook.com?subject=ByteCal%20Feature%20Request&body=What%20feature%20do%20you%20want?"
+          type="button"><md-icon slot="start">function</md-icon>Request Feature</md-list-item>
+        <md-list-item target="_blank" href="https://github.com/amkhrjee/bytecalcweb" type="button"><md-icon
+            slot="start">code</md-icon>View Source</md-list-item>
+        <md-list-item target="_blank" href="https://linktr.ee/amkhrjee" type="button"><md-icon
+            slot="start">emoji_people</md-icon>About
+          Me</md-list-item>
+      </md-list>
+      <div>Made in India 🇮🇳</div>
     </div>
   </div>
-  <div class="wrapper">
-    <div class="display">
-      <div class="menu">
-        <img src="./res/menu.svg" class="svg-icon" />
-        <div class="list">
-          <span>🎨 Theme</span>
-          <a target="_blank" href="https://github.com/amkhrjee/bytecalcweb">👨‍💻 Source</a>
-          <a href="#">💳 Support</a>
-          <a target="_blank" href="https://twitter.com/amkhrjee">👦 About Me</a>
-        </div>
+
+  <!-- Display -->
+  <div class="display">
+    <!-- Top Bar -->
+    <div class="topbar">
+      <div>
+        <md-icon-button class="menu-btn">
+          <md-icon>menu</md-icon>
+        </md-icon-button>
       </div>
-      <div class="input-display">
-        <div class="text-input-display">
-          <input name="user-unput" inputmode="none" type="text" />
-        </div>
-      </div>
-      <div class="output-display">
-        <div class="text-ouput-display"></div>
-      </div>
-    </div>
-    <div class="first-row">
-      <div class="first-row-op-buttons">
-        <div data-val="log₂" class="first-row-btn">log<sub>2</sub></div>
-        <div data-val="2^" class="first-row-btn">2<sup>x</sup></div>
-        <div data-val="mod" class="first-row-btn">mod</div>
-        <div data-val="^" class="first-row-btn">^</div>
-      </div>
-      <div class="menu-overlay-button">
-        <img id="downarrow" src="./res/downarrow.svg" class="svg-icon" />
+
+      <md-outlined-button class="support-btn">
+        <span>
+          <md-icon>favorite</md-icon>
+          Support
+        </span>
+      </md-outlined-button>
+
+      <div>
+        <md-elevated-button>
+          DEC
+        </md-elevated-button>
       </div>
     </div>
-    <div class="hidden-row">
-      <div data-val="bin" class="hidden-row-btn">
-        Convert to<br />
-        Binary
-      </div>
-      <div data-val="hex" class="hidden-row-btn">
-        Convert to<br />
-        Hexadecimal
+    <!-- Input Display -->
+    <div class="input-display-wrapper">
+      <div>
+        <input class="numinput" name="user-input" inputmode="none" type="text" />
       </div>
     </div>
-    <div class="input-grid-wrapper">
-      <div data-val="AC" style="
-            background-color: var(--text-color);
-            color: var(--primary-color);
-          ">
-        AC
-      </div>
-      <div data-val="parens" class="operator">()</div>
-      <div data-val="%" class="operator">%</div>
-      <div data-val="/" class="operator">/</div>
-      <div data-val="7">7</div>
-      <div data-val="8">8</div>
-      <div data-val="9">9</div>
-      <div data-val="×" class="operator">×</div>
-      <div data-val="4">4</div>
-      <div data-val="5">5</div>
-      <div data-val="6">6</div>
-      <div data-val="-" class="operator">-</div>
-      <div data-val="1">1</div>
-      <div data-val="2">2</div>
-      <div data-val="3">3</div>
-      <div data-val="+" class="operator">+</div>
-      <div data-val="0">0</div>
-      <div data-val=".">.</div>
-      <div id="backspace" data-val="backspace">
-        <span class="material-symbols-outlined"> backspace </span>
-      </div>
-      <div data-val="=" style="background-color: var(--secondary-color)">
-        =
-      </div>
+    <!-- Output Display -->
+    <div class="output-display-wrapper">
+      <md-icon-button toggle>
+        <md-icon>content_copy</md-icon>
+        <md-icon slot="selected">done</md-icon>
+      </md-icon-button>
+      <div class="output-display"></div>
     </div>
   </div>
+  <!-- First Row Operations -->
+  <div class="first-row">
+    <div class="op-buttons">
+      <md-text-button data-val="log₂">log<sub>2</sub></md-text-button>
+      <md-text-button data-val="2^">2<sup>x</sup></md-text-button>
+      <md-text-button data-val="mod">mod</md-text-button>
+      <md-text-button data-val="^">^</md-text-button>
+    </div>
+    <md-filled-tonal-icon-button toggle>
+      <md-icon>chevron_left</md-icon>
+      <md-icon slot="selected">chevron_right</md-icon>
+      </md-icon>
+    </md-filled-tonal-icon-button>
+  </div>
+  <!-- Hidden Buttons -->
+  <div class="hidden-ops">
+    <md-filled-button data-val="bin">
+      Convert to <br> Binary
+    </md-filled-button>
+    <md-filled-button data-val="hex">
+      Convert to <br>Hexadecimal
+    </md-filled-button>
+  </div>
+
+  <!-- Input Buttons -->
+  <div class="buttons">
+    <md-filled-button data-val="AC">AC</md-filled-button>
+    <md-filled-button data-val="parens">()</md-filled-button>
+    <md-filled-button data-val="%">%</md-filled-button>
+    <md-filled-button data-val="/">/</md-filled-button>
+    <md-filled-tonal-button data-val="7">7</md-filled-tonal-button>
+    <md-filled-tonal-button data-val="8">8</md-filled-tonal-button>
+    <md-filled-tonal-button data-val="9">9</md-filled-tonal-button>
+    <md-filled-button data-val="×">×</md-filled-button>
+    <md-filled-tonal-button data-val="4">4</md-filled-tonal-button>
+    <md-filled-tonal-button data-val="5">5</md-filled-tonal-button>
+    <md-filled-tonal-button data-val="6">6</md-filled-tonal-button>
+    <md-filled-button data-val="-">-</md-filled-button>
+    <md-filled-tonal-button data-val="1">1</md-filled-tonal-button>
+    <md-filled-tonal-button data-val="2">2</md-filled-tonal-button>
+    <md-filled-tonal-button data-val="3">3</md-filled-tonal-button>
+    <md-filled-button data-val="+">+</md-filled-button>
+    <md-filled-tonal-button data-val="0">0</md-filled-tonal-button>
+    <md-filled-tonal-button data-val=".">.</md-filled-tonal-button>
+    <md-filled-tonal-button id="backspace" data-val="backspace">
+      <md-icon>backspace</md-icon>
+    </md-filled-tonal-button>
+    <md-filled-button data-val="=">=</md-filled-button>
+  </div>
+
+  <md-dialog class="support-dialog">
+    <div slot="headline">Support developer</div>
+    <div slot="content">
+      <md-divider></md-divider>
+      <md-list>
+        <md-list-item target="_blank" href="https://paypal.me/amkhrjee?country.x=IN&locale.x=en_GB"
+          type="button"><md-icon slot="start">payments</md-icon>Support via PayPal</md-list-item>
+        <md-list-item target="_blank" href="https://www.buymeacoffee.com/amkhrjee" type="button"><md-icon
+            slot="start">local_cafe</md-icon>Support via BuyMeACoffee</md-list-item>
+        <md-list-item class="upi-payment" type="button"><md-icon slot="start">currency_rupee</md-icon>Support via UPI
+          (India)</md-list-item>
+        <md-list-item target="_blank" href="https://github.com/amkhrjee/bytecalcweb" type="button"><md-icon
+            slot="start">grade</md-icon>Star on GitHub</md-list-item>
+      </md-list>
+    </div>
+    <div slot="actions">
+      <md-text-button class="support-dialog-close-btn">Close</md-text-button>
+    </div>
+  </md-dialog>
   <script src="js/haptics.js"></script>
-  <script type="module" src="./js/animation.js"></script>
+  <script type="module" src="./bundle.js"></script>
 </body>
 
 </html>

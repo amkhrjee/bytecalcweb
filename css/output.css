@@ -1,0 +1,359 @@
+.overlay-container {
+  position: absolute;
+  z-index: 5;
+  width: 100%;
+}
+.overlay-container .gradient {
+  position: absolute;
+  z-index: inherit;
+  background-image: linear-gradient(to bottom, transparent 0%, #1e4d4d 55%, #1e4d4d 100%);
+  width: 100%;
+  height: 100%;
+}
+.overlay-container img {
+  width: 100%;
+  position: relative;
+  object-fit: cover;
+  display: inline-block;
+}
+
+.topbar {
+  position: absolute;
+  width: 100%;
+  display: flex;
+  top: 0.5rem;
+  z-index: 10;
+  justify-content: center;
+  align-items: center;
+}
+.topbar md-outlined-button {
+  flex: 0 1 auto;
+  min-width: 7rem;
+  text-align: center;
+}
+.topbar md-outlined-button span {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.topbar > div {
+  flex: 1;
+  text-align: center;
+}
+.topbar > div:first-child {
+  padding-left: 1rem;
+  text-align: left;
+}
+.topbar > div:last-child {
+  text-align: right;
+  padding-right: 1rem;
+}
+.topbar > div:last-child md-elevated-button {
+  min-width: 4rem;
+}
+
+.display {
+  width: 100%;
+  position: relative;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+  background-color: var(--md-sys-color-tertiary-container);
+  transition: opacity 0.5s ease, filter 0.5s ease;
+}
+
+.input-display-wrapper {
+  position: relative;
+  height: 70%;
+}
+.input-display-wrapper div {
+  display: flex;
+  overflow-x: auto;
+  position: absolute;
+  bottom: 0;
+  right: 1rem;
+  left: 1rem;
+}
+.input-display-wrapper div input {
+  outline: none;
+  color: var(--md-sys-color-tertiary);
+  border: none;
+  font-size: 6rem;
+  padding: 0;
+  height: fit-content;
+  width: 100%;
+  background-color: inherit;
+  text-align: right;
+  caret-color: var(--md-sys-color-secondary);
+  font-family: inherit;
+  transition: font-size 0.5s ease;
+  z-index: 10;
+}
+.input-display-wrapper div input:focus {
+  border: none;
+}
+
+.output-display-wrapper {
+  height: 30%;
+  font-size: 2rem;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 1rem;
+}
+.output-display-wrapper div {
+  position: absolute;
+  right: 1rem;
+  font-size: 1.5rem;
+  text-align: right;
+  max-width: 22rem;
+  overflow-x: hidden;
+  color: var(--md-sys-color-on-secondary-container);
+}
+.output-display-wrapper md-icon-button {
+  display: none;
+}
+
+.first-row {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding-inline: 1rem;
+  align-items: center;
+  transition: opacity 0.5s ease, filter 0.5s ease;
+}
+.first-row div {
+  transition: transform 0.5s ease;
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+  padding-right: 0.5rem;
+}
+.first-row div md-text-button {
+  font-size: 1.5rem;
+  width: 100%;
+}
+.first-row md-filled-tonal-icon-button {
+  transition: transform 0.5s ease;
+}
+
+.hidden-ops {
+  position: absolute;
+  top: 35dvh;
+  bottom: 55dvh;
+  right: 0;
+  width: 85%;
+  display: flex;
+  justify-content: space-evenly;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  justify-items: center;
+  align-items: center;
+  transform: translateX(85dvw);
+  transition: transform 0.5s ease, opacity 0.5s ease, filter 0.5s ease;
+  display: none;
+}
+.hidden-ops > * {
+  min-width: fit-content;
+  padding-inline: 2rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+@media screen and (max-width: 376px) {
+  .hidden-ops > * {
+    padding-inline: 1.5rem;
+  }
+}
+@media screen and (max-width: 376px) {
+  .hidden-ops {
+    left: 14dvw;
+    padding-top: 0.5rem;
+  }
+}
+
+.buttons {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  padding-inline: 0.5rem;
+  padding-bottom: 0.5rem;
+  gap: 0.25rem;
+  transition: opacity 0.5s ease, filter 0.5s ease;
+}
+.buttons * {
+  height: 100%;
+  font-size: 1.7rem;
+  transition: border-radius 0.5s ease;
+  border-radius: 40px;
+}
+
+.menu {
+  position: absolute;
+  z-index: 20;
+  width: 70%;
+  background-color: var(--md-sys-color-surface-container-highest);
+  color: var(--md-sys-color-on-surface);
+  left: 0;
+  height: 99dvh;
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 12px;
+  visibility: hidden;
+  transform: translateX(-70dvw);
+  transition: transform 0.5s ease;
+}
+
+.info {
+  height: 20%;
+  display: flex;
+  padding: 2rem;
+  gap: 0.5rem;
+  justify-content: center;
+  align-items: center;
+}
+.info > img {
+  width: 5rem;
+  height: 5rem;
+}
+
+.title {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.release {
+  font-size: 1rem;
+}
+
+.list {
+  position: relative;
+  height: 80%;
+}
+.list md-list {
+  max-width: 100%;
+  background-color: inherit;
+}
+.list div {
+  position: absolute;
+  bottom: 1rem;
+  left: 4rem;
+}
+
+.support-dialog {
+  width: 85dvw;
+  position: absolute;
+  margin-top: 25dvh;
+  margin-left: 7.5dvw;
+  z-index: 10;
+}
+.support-dialog div[slot=headline] {
+  padding: 1rem;
+  padding-inline-start: 1.2rem;
+}
+.support-dialog div[slot=actions] {
+  padding: 0.5rem;
+}
+.support-dialog div[slot=actions] md-text-button {
+  width: 100%;
+}
+.support-dialog md-list {
+  background-color: inherit;
+}
+
+.theme-dialog {
+  width: 85dvw;
+  position: absolute;
+  margin-top: 25dvh;
+  margin-left: 7.5dvw;
+  z-index: 10;
+}
+.theme-dialog div[slot=headline] {
+  padding: 1rem;
+  padding-inline-start: 1.2rem;
+}
+.theme-dialog div[slot=actions] {
+  padding: 0.5rem;
+}
+.theme-dialog div[slot=actions] md-text-button {
+  width: 100%;
+}
+.theme-dialog form {
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: 10% 90%;
+  row-gap: 1.5rem;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --md-sys-color-primary: hsl(100, 55%, 27%);
+  --md-sys-color-primary-container: hsl(98, 79%, 77%);
+  --md-sys-color-on-primary: hsl(0, 0%, 100%);
+  --md-sys-color-secondary: hsl(95, 13%, 34%);
+  --md-sys-color-secondary-container: hsl(90, 37%, 85%);
+  --md-sys-color-on-secondary-container: hsl(100, 41%, 9%);
+  --md-sys-color-tertiary: hsl(180, 29%, 31%);
+  --md-sys-color-tertiary-container: hsl(181, 56%, 83%);
+  --md-sys-color-error: hsl(0, 75%, 42%);
+  --md-sys-color-error-container: hsl(6, 100%, 92%);
+  --md-sys-color-background: hsl(84, 29%, 90%);
+  --md-sys-color-on-surface: hsl(90, 8%, 10%);
+  --md-sys-color-on-surface-variant: hsl(90, 7%, 26%);
+  --md-sys-color-surface: hsl(84, 3%, 36%);
+  --md-sys-color-surface-bright: hsl(72, 50%, 96%);
+  --md-sys-color-surface-dim: hsl(72, 12%, 84%);
+  --md-sys-color-surface-container: hsl(72, 24%, 92%);
+  --md-sys-color-surface-container-lowest: hsl(0, 0%, 100%);
+  --md-sys-color-surface-container-low: hsl(72, 33%, 94%);
+  --md-sys-color-surface-container-high: hsl(72, 19%, 89%);
+  --md-sys-color-surface-container-highest: hsl(73, 14%, 87%);
+  --md-sys-color-outline: hsl(85, 5%, 45%);
+  --md-sys-color-outline-variant: hsl(83, 11%, 76%);
+  --md-ref-typeface-brand: "Spline Sans Mono";
+  --md-ref-typeface-plain: "Spline Sans Mono";
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --md-sys-color-primary: hsl(98, 52%, 66%);
+    --md-sys-color-primary-container: hsl(99, 86%, 17%);
+    --md-sys-color-on-primary: hsl(101, 100%, 14%);
+    --md-sys-color-secondary: hsl(91, 21%, 74%);
+    --md-sys-color-secondary-container: hsl(94, 17%, 25%);
+    --md-sys-color-on-secondary-container: hsl(91, 21%, 74%);
+    --md-sys-color-tertiary: hsl(181, 34%, 72%);
+    --md-sys-color-tertiary-container: hsl(180, 44%, 21%);
+    --md-sys-color-error: hsl(6, 100%, 84%);
+    --md-sys-color-error-container: hsl(356, 100%, 29%);
+    --md-sys-color-background: hsl(84, 29%, 90%);
+    --md-sys-color-on-surface: hsl(60, 11%, 88%);
+    --md-sys-color-on-surface-variant: hsl(83, 11%, 76%);
+    --md-sys-color-surface: hsl(90, 18%, 7%);
+    --md-sys-color-surface-bright: hsl(86, 6%, 21%);
+    --md-sys-color-surface-dim: hsl(90, 18%, 7%);
+    --md-sys-color-surface-container: hsl(86, 12%, 12%);
+    --md-sys-color-surface-container-lowest: hsl(90, 25%, 5%);
+    --md-sys-color-surface-container-low: hsl(86, 14%, 10%);
+    --md-sys-color-surface-container-high: hsl(86, 9%, 15%);
+    --md-sys-color-surface-container-highest: hsl(86, 7%, 20%);
+    --md-sys-color-outline: hsl(85, 5%, 55%);
+    --md-sys-color-outline-variant: hsl(90, 7%, 26%);
+  }
+}
+body {
+  height: 100dvh;
+  display: grid;
+  grid-template-rows: 35% 10% 55%;
+  justify-items: center;
+  background-color: var(--md-sys-color-surface-container);
+  font-family: "Spline Sans Mono", monospace;
+  transition: background-color 0.5s ease;
+}
+
+/*# sourceMappingURL=output.css.map */
