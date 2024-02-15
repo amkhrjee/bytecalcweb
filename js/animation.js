@@ -40,6 +40,10 @@ const supportDialog = document.querySelector(".support-dialog");
 const dialogCloseButton = document.querySelector(".dialog-close-btn");
 const commitDate = document.querySelector(".commit-date");
 
+// // vibration durations
+const smallVibration = 75;
+const tinyVibration = 50;
+
 // Update Commit Date
 fetch("https://api.github.com/repos/amkhrjee/bytecalcweb/commits?per_page=1")
   .then((res) => res.json())
@@ -56,10 +60,12 @@ fetch("https://api.github.com/repos/amkhrjee/bytecalcweb/commits?per_page=1")
 
 // Support Button
 supportButton.addEventListener("click", () => {
+  Haptics.vibrate(tinyVibration);
   supportDialog.open = true;
 });
 
 dialogCloseButton.addEventListener("click", () => {
+  Haptics.vibrate(tinyVibration);
   supportDialog.open = false;
 });
 
@@ -74,6 +80,7 @@ document.querySelector(".upi-payment").addEventListener("click", () => {
 // Navigation Drawer
 let isNavDrawerOpen = false;
 menuButton.addEventListener("click", () => {
+  Haptics.vibrate(tinyVibration);
   isNavDrawerOpen = true;
   navDrawer.style.visibility = "visible";
   navDrawer.style.transform = "translateX(0)";
@@ -86,6 +93,7 @@ menuButton.addEventListener("click", () => {
 
 // Copy Button
 copyButton.addEventListener("click", () => {
+  Haptics.vibrate(tinyVibration);
   navigator.clipboard
     .writeText(outputDisplay.innerHTML)
     .then(() => {
@@ -100,6 +108,7 @@ copyButton.addEventListener("click", () => {
 
 let isFirstRowHidden = false;
 toggleButton.addEventListener("click", () => {
+  Haptics.vibrate(tinyVibration);
   if (!isFirstRowHidden) {
     opButtons.style.transform = "translateX(-100dvw)";
     toggleButton.style.transform = "translateX(-85dvw)";
@@ -118,10 +127,6 @@ toggleButton.addEventListener("click", () => {
     isFirstRowHidden = false;
   }
 });
-
-// // vibration durations
-const smallVibration = 75;
-const tinyVibration = 50;
 
 // Parens
 let leftParenPresent = false;
