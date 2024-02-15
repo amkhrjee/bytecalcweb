@@ -5,7 +5,7 @@
     right: 0;
     width: 85%;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     padding-top: 1rem;
     padding-bottom: 1rem;
     justify-items: center;
@@ -14,9 +14,8 @@
     transition: transform 0.5s ease, opacity 0.5s ease, filter 0.5s ease;
     display: none;
 
-
     >* {
-        width: fit-content;
+        min-width: fit-content;
         padding-inline: 2rem;
         padding-top: 0.5rem;
         padding-bottom: 0.5rem;

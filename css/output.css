@@ -146,7 +146,7 @@
   right: 0;
   width: 85%;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   padding-top: 1rem;
   padding-bottom: 1rem;
   justify-items: center;
@@ -156,7 +156,7 @@
   display: none;
 }
 .hidden-ops > * {
-  width: fit-content;
+  min-width: fit-content;
   padding-inline: 2rem;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;

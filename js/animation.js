@@ -21,7 +21,9 @@ const outputDisplay = document.querySelector(".output-display");
 const buttonsWrapper = document.querySelector(".buttons");
 const buttons = document.querySelectorAll(".buttons>*");
 const firstRowButtons = document.querySelectorAll(".op-buttons>*");
-const hiddenRowButton = document.querySelectorAll(".hidden-row-btn");
+const hiddenRowButtons = document.querySelectorAll(
+  ".hidden-ops>md-filled-button"
+);
 const inputArea = document.querySelector(".numinput");
 const menuButton = document.querySelector(".menu-btn");
 const copyButton = document.querySelector(
@@ -256,65 +258,29 @@ firstRowButtons.forEach((button) => {
   });
 });
 
-// let toggleArrow = false;
-
-// menuOverlayButton.addEventListener("click", () => {
-//   let currentAngle =
-//     parseFloat(arrow.style.transform.replace(/[^0-9\-.,]/g, "")) || 0;
-//   let rotationAngle = 180;
-//   Haptics.vibrate(tinyVibration);
-//   arrow.style.transform = "rotate(" + (currentAngle + rotationAngle) + "deg)";
-
-//   // toggle display hidden menu
-//   if (!toggleArrow) {
-//     hiddenRow.style.display = "grid";
-//     hiddenRow.style.zIndex = "1";
-//     setTimeout(() => {
-//       hiddenRow.style.opacity = 1;
-//     }, 100);
-//     hiddenRow.style.transform = "translateY(0)";
-//     inputGridWrapper.style.height = "80%";
-//     inputGridWrapper.style.transform = "translateY(5.5rem)";
-//     toggleArrow = true;
-//   } else {
-//     hiddenRow.style.display = "none";
-//     hiddenRow.style.zIndex = "-10";
-//     hiddenRow.style.opacity = 0;
-//     hiddenRow.style.transform = "translateY(-50px)";
-//     inputGridWrapper.style.transform = "translateY(0)";
-//     inputGridWrapper.style.height = "100%";
-//     toggleArrow = false;
-//   }
-// });
-
-// hiddenRowButton.forEach((button) => {
-//   button.addEventListener("click", () => {
-//     Haptics.vibrate(smallVibration);
-//     button.style.borderRadius = "0px";
-//     setTimeout(() => {
-//       button.style.borderRadius = "24px";
-//     }, 200);
-
-//     const outputVal =
-//       outputDisplay.innerHTML.length && outputDisplay.innerHTML != "Empty Input"
-//         ? parseFloat(outputDisplay.innerHTML)
-//         : parseFloat(inputArea.value);
-//     // functionality
-//     if (button.dataset.val == "bin") {
-//       if (outputVal) {
-//         inputArea.value = "BIN(" + outputVal + ")";
-//         showOutput(outputVal.toString(2), false);
-//         inputArea.style.fontSize = "3.5rem";
-//       } else showOutput("Empty Input", true);
-//     } else if (button.dataset.val == "hex") {
-//       if (outputVal) {
-//         inputArea.value = "HEX(" + outputVal + ")";
-//         showOutput(outputVal.toString(16), false);
-//         inputArea.style.fontSize = "3.5rem";
-//       } else showOutput("Empty Input", true);
-//     }
-//   });
-// });
+hiddenRowButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    Haptics.vibrate(tinyVibration);
+    const outputVal =
+      outputDisplay.innerHTML.length && outputDisplay.innerHTML != "Empty Input"
+        ? parseFloat(outputDisplay.innerHTML)
+        : parseFloat(inputArea.value);
+    // functionality
+    if (button.dataset.val == "bin") {
+      if (outputVal) {
+        inputArea.value = "BIN(" + outputVal + ")";
+        showOutput(outputVal.toString(2), false);
+        inputArea.style.fontSize = "3.5rem";
+      } else showOutput("Empty Input", true);
+    } else if (button.dataset.val == "hex") {
+      if (outputVal) {
+        inputArea.value = "HEX(" + outputVal + ")";
+        showOutput(outputVal.toString(16), false);
+        inputArea.style.fontSize = "3.5rem";
+      } else showOutput("Empty Input", true);
+    }
+  });
+});
 
 // let listToggle = false;
 // menuButton.addEventListener("click", () => {
