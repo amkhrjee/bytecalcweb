@@ -128,3 +128,8 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+todo.todo
+# Things we can just build
+js
+bundle.js

@@ -3,8 +3,12 @@
   "version": "1.1.0",
   "description": "Calculator for Programmers",
   "homepage": "https://amkhrjee.github.io/bytecalcweb/",
+  "type": "module",
   "scripts": {
-    "publish": "gh-pages -d public"
+    "publish": "gh-pages -d public",
+    "tsc": "tsc --watch -p tsconfig.json",
+    "sass": "sass --watch ./scss:./public/css",
+    "rollup": "npx rollup -c -w"
   },
   "author": "amkhrjee",
   "license": "MIT",
