@@ -192,7 +192,6 @@
 .menu {
   position: absolute;
   z-index: 20;
-  width: 70%;
   background-color: var(--md-sys-color-surface-container-highest);
   color: var(--md-sys-color-on-surface);
   left: 0;
@@ -202,6 +201,16 @@
   visibility: hidden;
   transform: translateX(-70dvw);
   transition: transform 0.5s ease;
+}
+@media (max-width: 430px) {
+  .menu {
+    width: 70%;
+  }
+}
+@media (min-width: 431px) {
+  .menu {
+    width: 301px;
+  }
 }
 
 .info {
@@ -354,6 +363,7 @@ body {
   background-color: var(--md-sys-color-surface-container);
   font-family: "Spline Sans Mono", monospace;
   transition: background-color 0.5s ease;
+  max-width: 430px;
 }
 
 /*# sourceMappingURL=output.css.map */

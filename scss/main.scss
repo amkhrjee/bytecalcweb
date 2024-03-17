@@ -81,4 +81,5 @@ body {
   background-color: var(--md-sys-color-surface-container);
   font-family: "Spline Sans Mono", monospace;
   transition: background-color 0.5s ease;
+  max-width: 430px;
 }
