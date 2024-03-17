@@ -4,7 +4,7 @@ import resolve from "@rollup/plugin-node-resolve";
 export default {
   input: ["./js/animation.js", "./js/calculator.js"],
   output: {
-    dir: "./public/",
+    dir: "./public/js",
     format: "es",
     sourcemap: true,
   },

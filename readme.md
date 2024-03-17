@@ -1,7 +1,9 @@
 # ByteCalc: Calculator for Programmers
 
-Ever wondered why there is no calcuulator with log of base two as an in-built operator? Well, no more!
+ByteCalc is a light-weight calculator on your browser. It has functions like log base two, power of two and modulus, aimed specifically towards computer science students.
 
-ByteCalc is aimed specifically towards people who work with computers.
+Being a PWA, ByteCalc can be easily installed to your device's homescreen.
 
-This project is heavily WIP.
+## Setup
+
+This project uses TypeScript and SCSS without any frameworks. All setup are done via running different commands defined in `npm scripts` in `package.json`.
