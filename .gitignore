@@ -131,6 +131,6 @@ dist
 
 todo.todo
 # Things we can just build
-js
+js/
 bundle.js
 temp
