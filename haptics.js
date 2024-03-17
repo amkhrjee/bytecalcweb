@@ -48,6 +48,9 @@ function loadHaptics() {
   enabled = !!navigatorVibrate;
 
   // calls to navigatorVibrate always bound to global navigator object
+  /**
+   * @returns {boolean}
+   */
   function vibrate() {
     if (enabled) {
       // vibrate will not work unless bound to navigator global

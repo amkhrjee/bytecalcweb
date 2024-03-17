@@ -1,360 +1,4 @@
-// Code inspiration: Crafting Interpreters by Robert Nystrom (https://craftinginterpreters.com/)
-var TokenType;
-(function (TokenType) {
-    // ONE-CHARACTER
-    TokenType[TokenType["LEFT_PAREN"] = 0] = "LEFT_PAREN";
-    TokenType[TokenType["RIGHT_PAREN"] = 1] = "RIGHT_PAREN";
-    TokenType[TokenType["DOT"] = 2] = "DOT";
-    TokenType[TokenType["MINUS"] = 3] = "MINUS";
-    TokenType[TokenType["PLUS"] = 4] = "PLUS";
-    TokenType[TokenType["SLASH"] = 5] = "SLASH";
-    TokenType[TokenType["CROSS"] = 6] = "CROSS";
-    TokenType[TokenType["PERCENT"] = 7] = "PERCENT";
-    TokenType[TokenType["EQUAL"] = 8] = "EQUAL";
-    TokenType[TokenType["EXPONENT"] = 9] = "EXPONENT";
-    TokenType[TokenType["END"] = 10] = "END";
-    // Literals
-    TokenType[TokenType["NUMBER"] = 11] = "NUMBER";
-    // Keywords
-    TokenType[TokenType["MOD"] = 12] = "MOD";
-    TokenType[TokenType["LOG_TWO"] = 13] = "LOG_TWO";
-})(TokenType || (TokenType = {}));
-class Token {
-    constructor(type, lexeme, literal) {
-        this.toString = () => {
-            return TokenType[this.type] + ": " + this.lexeme + " " + this.literal;
-        };
-        this.type = type;
-        this.lexeme = lexeme;
-        this.literal = literal;
-    }
-}
-class Scanner {
-    constructor(src) {
-        this.source = src;
-        this.start = 0;
-        this.current = 0;
-        this.tokens = [];
-    }
-    scanTokens() {
-        while (this.current < this.source.length) {
-            this.start = this.current;
-            this.scanToken();
-        }
-        this.tokens.push(new Token(TokenType.END, "", null));
-        /* Check for implicit multiplications
-          Scenarios:
-              1. <num>(
-              2. )(
-              3. )<num>
-              4. <num>log
-              5. )log
-        */
-        let currentIndex = 0;
-        this.tokens.forEach((token) => {
-            if (currentIndex > 0) {
-                if (token.type == TokenType.LEFT_PAREN ||
-                    token.type == TokenType.LOG_TWO) {
-                    let previousIndex = currentIndex - 1;
-                    if (this.tokens[previousIndex].type == TokenType.NUMBER ||
-                        this.tokens[previousIndex].type == TokenType.RIGHT_PAREN) {
-                        this.addCrossAt(currentIndex);
-                    }
-                }
-                else if (token.type == TokenType.RIGHT_PAREN) {
-                    let nextIndex = currentIndex + 1;
-                    if (this.tokens[nextIndex].type == TokenType.NUMBER ||
-                        this.tokens[nextIndex].type == TokenType.LEFT_PAREN) {
-                        this.addCrossAt(currentIndex + 1);
-                    }
-                }
-            }
-            currentIndex += 1;
-        });
-        return this.tokens;
-    }
-    addCrossAt(indexToInsertAt) {
-        this.tokens.splice(indexToInsertAt, 0, new Token(TokenType.CROSS, "", null));
-        indexToInsertAt += 2;
-    }
-    scanToken() {
-        let singleChar = this.advanceChar();
-        switch (singleChar) {
-            case "(":
-                this.addToken(TokenType.LEFT_PAREN, null);
-                break;
-            case ")":
-                this.addToken(TokenType.RIGHT_PAREN, null);
-                break;
-            case ".":
-                this.addToken(TokenType.DOT, null);
-                break;
-            case "-":
-                this.addToken(TokenType.MINUS, null);
-                break;
-            case "+":
-                this.addToken(TokenType.PLUS, null);
-                break;
-            case "×":
-                this.addToken(TokenType.CROSS, null);
-                break;
-            case "%":
-                this.addToken(TokenType.PERCENT, null);
-                break;
-            case "/":
-                this.addToken(TokenType.SLASH, null);
-                break;
-            case "=":
-                this.addToken(TokenType.EQUAL, null);
-                break;
-            case "^":
-                this.addToken(TokenType.EXPONENT, null);
-                break;
-            case "l":
-                this.current += 3;
-                this.addToken(TokenType.LOG_TWO, null);
-                break;
-            case "m":
-                this.current += 2;
-                this.addToken(TokenType.MOD, null);
-                break;
-            default:
-                while (this.isDigit(this.peek()))
-                    this.advanceChar();
-                // Look for fractional part
-                if (this.peek() == "." && this.isDigit(this.peekNext())) {
-                    this.advanceChar();
-                    while (this.isDigit(this.peek()))
-                        this.advanceChar();
-                }
-                this.addToken(TokenType.NUMBER, parseFloat(this.source.substring(this.start, this.current)));
-        }
-    }
-    advanceChar() {
-        return this.source.charAt(this.current++);
-    }
-    addToken(type, literal) {
-        let text = this.source.substring(this.start, this.current);
-        this.tokens.push(new Token(type, text, literal));
-    }
-    peek() {
-        if (this.current < this.source.length)
-            return this.source.charAt(this.current);
-        else
-            return null;
-    }
-    isDigit(char) {
-        return !isNaN(parseInt(char));
-    }
-    peekNext() {
-        if (this.current + 1 < this.source.length)
-            return this.source.charAt(this.current + 1);
-        else
-            return null;
-    }
-}
-class Expr {
-}
-class Binary extends Expr {
-    constructor(left, operator, right) {
-        super();
-        this.left = left;
-        this.operator = operator;
-        this.right = right;
-    }
-    accept(visitor) {
-        return visitor.visitBinaryExpr(this);
-    }
-}
-class Grouping extends Expr {
-    constructor(expression) {
-        super();
-        this.expression = expression;
-    }
-    accept(visitor) {
-        return visitor.visitGroupingExpr(this);
-    }
-}
-class Literal extends Expr {
-    constructor(value) {
-        super();
-        this.value = value;
-    }
-    accept(visitor) {
-        return visitor.visitLiteralExpr(this);
-    }
-}
-class Unary extends Expr {
-    constructor(operator, right) {
-        super();
-        this.operator = operator;
-        this.right = right;
-    }
-    accept(visitor) {
-        return visitor.visitUnaryExpr(this);
-    }
-}
-class Parser {
-    constructor(tokens) {
-        this.tokens = [];
-        this.current = 0;
-        this.tokens = tokens;
-    }
-    parse() {
-        console.log("Parsing");
-        try {
-            return this.expression();
-        }
-        catch (error) {
-            throw error;
-        }
-    }
-    expression() {
-        return this.percentage();
-    }
-    percentage() {
-        let expr = this.term();
-        if (this.match(TokenType.PERCENT)) {
-            let operator = this.previous();
-            let right = this.term();
-            expr = new Binary(expr, operator, right);
-        }
-        return expr;
-    }
-    term() {
-        let expr = this.factor();
-        while (this.match(TokenType.PLUS, TokenType.MINUS)) {
-            let operator = this.previous();
-            let right = this.factor();
-            expr = new Binary(expr, operator, right);
-        }
-        return expr;
-    }
-    factor() {
-        let expr = this.exponent();
-        while (this.match(TokenType.SLASH, TokenType.CROSS, TokenType.MOD)) {
-            let operator = this.previous();
-            let right = this.exponent();
-            expr = new Binary(expr, operator, right);
-        }
-        return expr;
-    }
-    exponent() {
-        let expr = this.unary();
-        while (this.match(TokenType.EXPONENT)) {
-            let operator = this.previous();
-            let right = this.exponent();
-            expr = new Binary(expr, operator, right);
-        }
-        return expr;
-    }
-    unary() {
-        if (this.match(TokenType.MINUS, TokenType.LOG_TWO)) {
-            let operator = this.previous();
-            let expr = this.unary();
-            return new Unary(operator, expr);
-        }
-        else
-            return this.primary();
-    }
-    primary() {
-        if (this.match(TokenType.NUMBER)) {
-            return new Literal(this.previous().literal);
-        }
-        if (this.match(TokenType.LEFT_PAREN)) {
-            let expr = this.expression();
-            this.consume(TokenType.RIGHT_PAREN, "Missing )");
-            return new Grouping(expr);
-        }
-        throw Error("Format Error");
-    }
-    match(...types) {
-        for (let type of types) {
-            if (this.check(type)) {
-                this.advance();
-                return true;
-            }
-        }
-        return false;
-    }
-    check(type) {
-        if (this.isAtEnd())
-            return false;
-        return this.peek().type == type;
-    }
-    advance() {
-        if (!this.isAtEnd())
-            this.current += 1;
-        return this.previous();
-    }
-    isAtEnd() {
-        return this.tokens[this.current].type == TokenType.END;
-    }
-    peek() {
-        return this.tokens[this.current];
-    }
-    previous() {
-        return this.tokens[this.current - 1];
-    }
-    consume(type, message) {
-        if (this.check(type))
-            return this.advance();
-        throw Error(message);
-    }
-}
-class Interpreter {
-    visitBinaryExpr(expr) {
-        let left = this.evaluate(expr.left);
-        let right = this.evaluate(expr.right);
-        try {
-            switch (expr.operator.type) {
-                case TokenType.PLUS:
-                    return left + right;
-                case TokenType.MINUS:
-                    return left - right;
-                case TokenType.SLASH:
-                    return left / right;
-                case TokenType.CROSS:
-                    return left * right;
-                case TokenType.MOD:
-                    return left % right;
-                case TokenType.EXPONENT:
-                    return Math.pow(left, right);
-                case TokenType.PERCENT:
-                    return (left / right) * 100;
-                default:
-                    return null;
-            }
-        }
-        catch (error) {
-            throw error;
-        }
-    }
-    visitGroupingExpr(expr) {
-        return this.evaluate(expr.expression);
-    }
-    visitLiteralExpr(expr) {
-        return expr.value;
-    }
-    visitUnaryExpr(expr) {
-        let right = this.evaluate(expr.right);
-        switch (expr.operator.type) {
-            case TokenType.MINUS:
-                return -right;
-            case TokenType.LOG_TWO:
-                return Math.log2(right);
-            default:
-                return null;
-        }
-    }
-    interpret(expr) {
-        let value = this.evaluate(expr);
-        return value;
-    }
-    evaluate(expr) {
-        return expr.accept(this);
-    }
-}
+import { Scanner, Interpreter, Parser } from './calculator.js';
 
 /******************************************************************************
 Copyright (c) Microsoft Corporation.
@@ -6972,19 +6616,16 @@ MdRadio = __decorate([
     t$3('md-radio')
 ], MdRadio);
 
+// Styles
 // ELements
 const outputDisplay = document.querySelector(".output-display");
 const buttonsWrapper = document.querySelector(".buttons");
 const buttons = document.querySelectorAll(".buttons>*");
 const firstRowButtons = document.querySelectorAll(".op-buttons>*");
-const hiddenRowButtons = document.querySelectorAll(
-  ".hidden-ops>md-filled-button"
-);
+const hiddenRowButtons = document.querySelectorAll(".hidden-ops>md-filled-button");
 const inputArea = document.querySelector(".numinput");
 const menuButton = document.querySelector(".menu-btn");
-const copyButton = document.querySelector(
-  ".output-display-wrapper>md-icon-button"
-);
+const copyButton = document.querySelector(".output-display-wrapper>md-icon-button");
 const toggleButton = document.querySelector("md-filled-tonal-icon-button");
 const opButtons = document.querySelector(".op-buttons");
 const hiddenOps = document.querySelector(".hidden-ops");
@@ -6993,453 +6634,371 @@ const firstRow = document.querySelector(".first-row");
 const navDrawer = document.querySelector(".menu");
 const supportButton = document.querySelector(".support-btn");
 const supportDialog = document.querySelector(".support-dialog");
-const supportDialogCloseButton = document.querySelector(
-  ".support-dialog-close-btn"
-);
+const supportDialogCloseButton = document.querySelector(".support-dialog-close-btn");
 const commitDate = document.querySelector(".commit-date");
 const changeThemeButton = document.querySelector(".change-theme-btn");
 const themeDialog = document.querySelector(".theme-dialog");
-const themeDialogCloseButton = document.querySelector(
-  ".theme-dialog-close-btn"
-);
-
+const themeDialogCloseButton = document.querySelector(".theme-dialog-close-btn");
 // vibration durations
 const smallVibration = 75;
 const tinyVibration = 50;
-
 // Theme change mechanism
 changeThemeButton.addEventListener("click", () => {
-  themeDialog.open = true;
-  // Closing  the navDrawer
-  [display, firstRow, hiddenOps, buttonsWrapper].forEach((element) => {
-    element.style.opacity = 1;
-    element.style.filter = "blur(0px)";
-  });
-  navDrawer.style.transform = "translateX(-70dvw)";
-  setTimeout(() => {
-    navDrawer.style.visibility = "hidden";
-  }, 100);
-  isNavDrawerOpen = false;
-});
-
-// Update Commit Date
-fetch("https://api.github.com/repos/amkhrjee/bytecalcweb/commits?per_page=1")
-  .then((res) => res.json())
-  .then((commits) => {
-    const lastCommitDate = commits[0].commit.author.date;
-    const formattedDate = new Date(lastCommitDate).toLocaleString("en-GB", {
-      day: "numeric",
-      month: "short",
-      year: "numeric",
-    });
-    commitDate.innerHTML = formattedDate;
-  })
-  .catch((error) => console.error(error));
-
-// Support Button
-supportButton.addEventListener("click", () => {
-  Haptics.vibrate(tinyVibration);
-  supportDialog.open = true;
-});
-
-supportDialogCloseButton.addEventListener("click", () => {
-  Haptics.vibrate(tinyVibration);
-  supportDialog.open = false;
-});
-
-themeDialogCloseButton.addEventListener("click", () => {
-  Haptics.vibrate(tinyVibration);
-  themeDialog.open = false;
-});
-
-document.querySelector(".upi-payment").addEventListener("click", () => {
-  navigator.clipboard.writeText("aniruddhamukherjee@fbl").then(() => {
-    alert(
-      "The UPI ID aniruddhamukherjee@fbl has been copied to your clipboard. You can open the UPI app of your choice, paste the UPI ID and pay to my UPI ID. Thanks for your support!"
-    );
-  });
-});
-
-// Navigation Drawer
-let isNavDrawerOpen = false;
-menuButton.addEventListener("click", () => {
-  Haptics.vibrate(tinyVibration);
-  isNavDrawerOpen = true;
-  navDrawer.style.visibility = "visible";
-  navDrawer.style.transform = "translateX(0)";
-  [display, firstRow, hiddenOps, buttonsWrapper].forEach((element) => {
-    element.style.opacity = "0.5";
-    element.style.filter = "blur(2px)";
-  });
-});
-
-// Copy Button
-copyButton.addEventListener("click", () => {
-  Haptics.vibrate(tinyVibration);
-  navigator.clipboard
-    .writeText(outputDisplay.innerHTML)
-    .then(() => {
-      console.log("text added to clipboard");
-    })
-    .catch(() => {
-      console.error("could not add to the clipboard");
-    });
-});
-
-// Hidden Buttons Transition Animation
-let isFirstRowHidden = false;
-toggleButton.addEventListener("click", () => {
-  Haptics.vibrate(tinyVibration);
-  if (!isFirstRowHidden) {
-    opButtons.style.transform = "translateX(-100dvw)";
-    toggleButton.style.transform = "translateX(-85dvw)";
-    hiddenOps.style.display = "block";
-    setTimeout(() => {
-      hiddenOps.style.transform = "translateX(0)";
-    }, 50);
-    isFirstRowHidden = true;
-  } else {
-    opButtons.style.transform = "translateX(0)";
-    toggleButton.style.transform = "translateX(0)";
-    hiddenOps.style.transform = "translateX(85dvw)";
-    setTimeout(() => {
-      hiddenOps.style.display = "none";
-    }, 500);
-    isFirstRowHidden = false;
-  }
-});
-
-// Parens
-let leftParenPresent = false;
-
-const showOutput = (message, isError) => {
-  copyButton.selected = false;
-  // copyButton.toggle = true;
-  if (String(message).length < 10) {
-    outputDisplay.style.fontSize = "2rem";
-  } else {
-    outputDisplay.style.fontSize = "1.5rem";
-  }
-  if (!isError) {
-    outputDisplay.style.color = "var(--md-sys-color-on-secondary-container)";
-    outputDisplay.innerHTML = message;
-    copyButton.style.display = "block";
-  } else {
-    outputDisplay.style.color = "var(--md-sys-color-error)";
-    outputDisplay.innerHTML = message;
-  }
-};
-
-// // change input area font
-const updateFontSize = () => {
-  if (inputArea.value.length >= 6 && inputArea.value.length <= 9)
-    inputArea.style.fontSize = "4.5rem";
-  else if (inputArea.value.length > 9 && inputArea.value.length <= 12)
-    inputArea.style.fontSize = "3.5rem";
-  else if (inputArea.value.length > 12) inputArea.style.fontSize = "2.5rem";
-};
-
-// return focus to input area
-const focusInputArea = () => {
-  if (document.activeElement !== inputArea) {
-    inputArea.focus();
-  }
-};
-
-const insertTextAtCaret = (text) => {
-  const caretStart = inputArea.selectionStart;
-  const caretEnd = inputArea.selectionEnd;
-
-  const currentValue = inputArea.value;
-
-  const newValue =
-    currentValue.substring(0, caretStart) +
-    text +
-    currentValue.substring(caretEnd);
-  inputArea.value = newValue;
-  const newCaretPos = caretStart + text.length;
-  inputArea.setSelectionRange(newCaretPos, newCaretPos);
-};
-
-const clearAllInput = () => {
-  const caretStart = inputArea.selectionStart;
-  const caretEnd = inputArea.selectionEnd;
-
-  const currentValue = inputArea.value;
-
-  const newValue =
-    currentValue.substring(0, caretStart - 1) +
-    currentValue.substring(caretEnd);
-  inputArea.value = newValue;
-  const newCaretPos = caretStart - 1;
-  inputArea.setSelectionRange(newCaretPos, newCaretPos);
-  copyButton.style.display = "none";
-};
-
-buttons.forEach((button) => {
-  button.addEventListener("click", () => {
-    Haptics.vibrate(tinyVibration);
-    button.style.borderRadius = "10px";
-    setTimeout(() => {
-      button.style.borderRadius = "40px";
-    }, 200);
-
-    // populating input
-    const value = button.dataset.val;
-    if (!isNaN(value)) {
-      insertTextAtCaret(value);
-    } else if (value === "backspace") {
-      clearAllInput();
-    } else if (value === "AC") {
-      inputArea.value = "";
-      inputArea.style.fontSize = "6rem";
-      outputDisplay.innerHTML = "";
-      copyButton.style.display = "none";
-    } else if (
-      value === "+" ||
-      value === "-" ||
-      value === "×" ||
-      value === "/" ||
-      value === "%" ||
-      value === "."
-    ) {
-      insertTextAtCaret(value);
-    } else if (value === "parens") {
-      if (leftParenPresent) {
-        insertTextAtCaret(")");
-        leftParenPresent = false;
-      } else {
-        insertTextAtCaret("(");
-        leftParenPresent = true;
-      }
-    } else if (value === "=") {
-      let scanner = new Scanner(inputArea.value);
-      let resultTokens = scanner.scanTokens();
-      let parser = new Parser(resultTokens);
-      try {
-        let expression = parser.parse();
-        let interpreter = new Interpreter();
-        let result = interpreter.interpret(expression);
-        showOutput(result, false);
-      } catch (error) {
-        showOutput(error.message, true);
-      }
-    }
-    updateFontSize();
-    focusInputArea();
-  });
-});
-
-firstRowButtons.forEach((button) => {
-  button.addEventListener("click", () => {
-    Haptics.vibrate(smallVibration);
-
-    const value = button.dataset.val;
-    let newValue = "";
-    switch (value) {
-      case "log₂":
-        insertTextAtCaret("log₂(");
-        leftParenPresent = true;
-        break;
-      case "2^":
-        newValue = "2^(" + inputArea.value + ")";
-        inputArea.value = newValue;
-        break;
-      case "mod":
-        insertTextAtCaret("mod");
-        break;
-      case "^":
-        insertTextAtCaret("^");
-        break;
-    }
-    updateFontSize();
-    focusInputArea();
-  });
-});
-
-hiddenRowButtons.forEach((button) => {
-  button.addEventListener("click", () => {
-    Haptics.vibrate(tinyVibration);
-    const outputVal =
-      outputDisplay.innerHTML.length && outputDisplay.innerHTML != "Empty Input"
-        ? parseFloat(outputDisplay.innerHTML)
-        : parseFloat(inputArea.value);
-    // functionality
-    if (button.dataset.val == "bin") {
-      if (outputVal) {
-        inputArea.value = "bin(" + outputVal + ")";
-        showOutput(outputVal.toString(2), false);
-        inputArea.style.fontSize = "3.5rem";
-      } else showOutput("Empty Input", true);
-    } else if (button.dataset.val == "hex") {
-      if (outputVal) {
-        inputArea.value = "hex(" + outputVal + ")";
-        showOutput(outputVal.toString(16), false);
-        inputArea.style.fontSize = "3.5rem";
-      } else showOutput("Empty Input", true);
-    }
-  });
-});
-
-document.body.addEventListener("click", (e) => {
-  if (
-    !e.target.closest(".menu") &&
-    !e.target.closest(".menu-btn") &&
-    isNavDrawerOpen
-  ) {
+    themeDialog.open = true;
+    // Closing  the navDrawer
     [display, firstRow, hiddenOps, buttonsWrapper].forEach((element) => {
-      element.style.opacity = 1;
-      element.style.filter = "blur(0px)";
+        element.style.opacity = "1";
+        element.style.filter = "blur(0px)";
     });
     navDrawer.style.transform = "translateX(-70dvw)";
     setTimeout(() => {
-      navDrawer.style.visibility = "hidden";
+        navDrawer.style.visibility = "hidden";
     }, 100);
     isNavDrawerOpen = false;
-  }
 });
-
+// Update Commit Date
+fetch("https://api.github.com/repos/amkhrjee/bytecalcweb/commits?per_page=1")
+    .then((res) => res.json())
+    .then((commits) => {
+    const lastCommitDate = commits[0].commit.author.date;
+    const formattedDate = new Date(lastCommitDate).toLocaleString("en-GB", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+    });
+    commitDate.innerHTML = formattedDate;
+})
+    .catch((error) => console.error(error));
+// Support Button
+supportButton.addEventListener("click", () => {
+    //@ts-ignore
+    Haptics.vibrate(tinyVibration);
+    supportDialog.open = true;
+});
+supportDialogCloseButton.addEventListener("click", () => {
+    //@ts-ignore
+    Haptics.vibrate(tinyVibration);
+    supportDialog.open = false;
+});
+themeDialogCloseButton.addEventListener("click", () => {
+    //@ts-ignore
+    Haptics.vibrate(tinyVibration);
+    themeDialog.open = false;
+});
+document.querySelector(".upi-payment").addEventListener("click", () => {
+    navigator.clipboard.writeText("aniruddhamukherjee@fbl").then(() => {
+        alert("The UPI ID aniruddhamukherjee@fbl has been copied to your clipboard. You can open the UPI app of your choice, paste the UPI ID and pay to my UPI ID. Thanks for your support!");
+    });
+});
+// Navigation Drawer
+let isNavDrawerOpen = false;
+menuButton.addEventListener("click", () => {
+    //@ts-ignore
+    Haptics.vibrate(tinyVibration);
+    isNavDrawerOpen = true;
+    navDrawer.style.visibility = "visible";
+    navDrawer.style.transform = "translateX(0)";
+    [display, firstRow, hiddenOps, buttonsWrapper].forEach((element) => {
+        element.style.opacity = "0.5";
+        element.style.filter = "blur(2px)";
+    });
+});
+// Copy Button
+copyButton.addEventListener("click", () => {
+    //@ts-ignore
+    Haptics.vibrate(tinyVibration);
+    navigator.clipboard
+        .writeText(outputDisplay.innerHTML)
+        .then(() => {
+        console.log("text added to clipboard");
+    })
+        .catch(() => {
+        console.error("could not add to the clipboard");
+    });
+});
+// Hidden Buttons Transition Animation
+let isFirstRowHidden = false;
+toggleButton.addEventListener("click", () => {
+    //@ts-ignore
+    Haptics.vibrate(tinyVibration);
+    if (!isFirstRowHidden) {
+        opButtons.style.transform = "translateX(-100dvw)";
+        toggleButton.style.transform = "translateX(-85dvw)";
+        hiddenOps.style.display = "block";
+        setTimeout(() => {
+            hiddenOps.style.transform = "translateX(0)";
+        }, 50);
+        isFirstRowHidden = true;
+    }
+    else {
+        opButtons.style.transform = "translateX(0)";
+        toggleButton.style.transform = "translateX(0)";
+        hiddenOps.style.transform = "translateX(85dvw)";
+        setTimeout(() => {
+            hiddenOps.style.display = "none";
+        }, 500);
+        isFirstRowHidden = false;
+    }
+});
+// Parens
+let leftParenPresent = false;
+const showOutput = (message, isError) => {
+    copyButton.selected = false;
+    // copyButton.toggle = true;
+    if (String(message).length < 10) {
+        outputDisplay.style.fontSize = "2rem";
+    }
+    else {
+        outputDisplay.style.fontSize = "1.5rem";
+    }
+    if (!isError) {
+        outputDisplay.style.color = "var(--md-sys-color-on-secondary-container)";
+        outputDisplay.innerHTML = message;
+        copyButton.style.display = "block";
+    }
+    else {
+        outputDisplay.style.color = "var(--md-sys-color-error)";
+        outputDisplay.innerHTML = message;
+    }
+};
+// // change input area font
+const updateFontSize = () => {
+    if (inputArea.value.length >= 6 && inputArea.value.length <= 9)
+        inputArea.style.fontSize = "4.5rem";
+    else if (inputArea.value.length > 9 && inputArea.value.length <= 12)
+        inputArea.style.fontSize = "3.5rem";
+    else if (inputArea.value.length > 12)
+        inputArea.style.fontSize = "2.5rem";
+};
+// return focus to input area
+const focusInputArea = () => {
+    if (document.activeElement !== inputArea) {
+        inputArea.focus();
+    }
+};
+const insertTextAtCaret = (text) => {
+    const caretStart = inputArea.selectionStart;
+    const caretEnd = inputArea.selectionEnd;
+    const currentValue = inputArea.value;
+    const newValue = currentValue.substring(0, caretStart) +
+        text +
+        currentValue.substring(caretEnd);
+    inputArea.value = newValue;
+    const newCaretPos = caretStart + text.length;
+    inputArea.setSelectionRange(newCaretPos, newCaretPos);
+};
+const clearAllInput = () => {
+    const caretStart = inputArea.selectionStart;
+    const caretEnd = inputArea.selectionEnd;
+    const currentValue = inputArea.value;
+    const newValue = currentValue.substring(0, caretStart - 1) +
+        currentValue.substring(caretEnd);
+    inputArea.value = newValue;
+    const newCaretPos = caretStart - 1;
+    inputArea.setSelectionRange(newCaretPos, newCaretPos);
+    copyButton.style.display = "none";
+};
+buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+        //@ts-ignore
+        Haptics.vibrate(tinyVibration);
+        button.style.borderRadius = "10px";
+        setTimeout(() => {
+            button.style.borderRadius = "40px";
+        }, 200);
+        // populating input
+        const value = button.dataset.val;
+        if (!isNaN(parseInt(value))) {
+            insertTextAtCaret(value);
+        }
+        else if (value === "backspace") {
+            clearAllInput();
+        }
+        else if (value === "AC") {
+            inputArea.value = "";
+            inputArea.style.fontSize = "6rem";
+            outputDisplay.innerHTML = "";
+            copyButton.style.display = "none";
+        }
+        else if (value === "+" ||
+            value === "-" ||
+            value === "×" ||
+            value === "/" ||
+            value === "%" ||
+            value === ".") {
+            insertTextAtCaret(value);
+        }
+        else if (value === "parens") {
+            if (leftParenPresent) {
+                insertTextAtCaret(")");
+                leftParenPresent = false;
+            }
+            else {
+                insertTextAtCaret("(");
+                leftParenPresent = true;
+            }
+        }
+        else if (value === "=") {
+            let scanner = new Scanner(inputArea.value);
+            let resultTokens = scanner.scanTokens();
+            let parser = new Parser(resultTokens);
+            try {
+                let expression = parser.parse();
+                let interpreter = new Interpreter();
+                let result = interpreter.interpret(expression);
+                showOutput(result.toString(), false);
+            }
+            catch (error) {
+                showOutput(error.message, true);
+            }
+        }
+        updateFontSize();
+        focusInputArea();
+    });
+});
+firstRowButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+        //@ts-ignore
+        Haptics.vibrate(smallVibration);
+        const value = button.dataset.val;
+        let newValue = "";
+        switch (value) {
+            case "log₂":
+                insertTextAtCaret("log₂(");
+                leftParenPresent = true;
+                break;
+            case "2^":
+                newValue = "2^(" + inputArea.value + ")";
+                inputArea.value = newValue;
+                break;
+            case "mod":
+                insertTextAtCaret("mod");
+                break;
+            case "^":
+                insertTextAtCaret("^");
+                break;
+        }
+        updateFontSize();
+        focusInputArea();
+    });
+});
+hiddenRowButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+        //@ts-ignore
+        Haptics.vibrate(tinyVibration);
+        const outputVal = outputDisplay.innerHTML.length && outputDisplay.innerHTML != "Empty Input"
+            ? parseFloat(outputDisplay.innerHTML)
+            : parseFloat(inputArea.value);
+        // functionality
+        if (button.dataset.val == "bin") {
+            if (outputVal) {
+                inputArea.value = "bin(" + outputVal + ")";
+                showOutput(outputVal.toString(2), false);
+                inputArea.style.fontSize = "3.5rem";
+            }
+            else
+                showOutput("Empty Input", true);
+        }
+        else if (button.dataset.val == "hex") {
+            if (outputVal) {
+                inputArea.value = "hex(" + outputVal + ")";
+                showOutput(outputVal.toString(16), false);
+                inputArea.style.fontSize = "3.5rem";
+            }
+            else
+                showOutput("Empty Input", true);
+        }
+    });
+});
+document.body.addEventListener("click", (e) => {
+    if (!e.target.closest(".menu") &&
+        !e.target.closest(".menu-btn") &&
+        isNavDrawerOpen) {
+        [display, firstRow, hiddenOps, buttonsWrapper].forEach((element) => {
+            element.style.opacity = "1";
+            element.style.filter = "blur(0px)";
+        });
+        navDrawer.style.transform = "translateX(-70dvw)";
+        setTimeout(() => {
+            navDrawer.style.visibility = "hidden";
+        }, 100);
+        isNavDrawerOpen = false;
+    }
+});
 const setLightThemeColors = () => {
-  const root = document.documentElement;
-
-  root.style.setProperty("--md-sys-color-primary", "hsl(100, 55%, 27%)");
-  root.style.setProperty(
-    "--md-sys-color-primary-container",
-    "hsl(98, 79%, 77%)"
-  );
-  root.style.setProperty("--md-sys-color-on-primary", "hsl(0, 0%, 100%)");
-  root.style.setProperty("--md-sys-color-secondary", "hsl(95, 13%, 34%)");
-  root.style.setProperty(
-    "--md-sys-color-secondary-container",
-    "hsl(90, 37%, 85%)"
-  );
-  root.style.setProperty(
-    "--md-sys-color-on-secondary-container",
-    "hsl(100, 41%, 9%)"
-  );
-  root.style.setProperty("--md-sys-color-tertiary", "hsl(180, 29%, 31%)");
-  root.style.setProperty(
-    "--md-sys-color-tertiary-container",
-    "hsl(181, 56%, 83%)"
-  );
-  root.style.setProperty("--md-sys-color-error", "hsl(0, 75%, 42%)");
-  root.style.setProperty("--md-sys-color-error-container", "hsl(6, 100%, 92%)");
-  root.style.setProperty("--md-sys-color-background", "hsl(84, 29%, 90%)");
-  root.style.setProperty("--md-sys-color-on-surface", "hsl(90, 8%, 10%)");
-  root.style.setProperty(
-    "--md-sys-color-on-surface-variant",
-    "hsl(90, 7%, 26%)"
-  );
-  root.style.setProperty("--md-sys-color-surface", "hsl(84, 3%, 36%)");
-  root.style.setProperty("--md-sys-color-surface-bright", "hsl(72, 50%, 96%)");
-  root.style.setProperty("--md-sys-color-surface-dim", "hsl(72, 12%, 84%)");
-  root.style.setProperty(
-    "--md-sys-color-surface-container",
-    "hsl(72, 24%, 92%)"
-  );
-  root.style.setProperty(
-    "--md-sys-color-surface-container-lowest",
-    "hsl(0, 0%, 100%)"
-  );
-  root.style.setProperty(
-    "--md-sys-color-surface-container-low",
-    "hsl(72, 33%, 94%)"
-  );
-  root.style.setProperty(
-    "--md-sys-color-surface-container-high",
-    "hsl(72, 19%, 89%)"
-  );
-  root.style.setProperty(
-    "--md-sys-color-surface-container-highest",
-    "hsl(73, 14%, 87%)"
-  );
-  root.style.setProperty("--md-sys-color-outline", "hsl(85, 5%, 45%)");
-  root.style.setProperty("--md-sys-color-outline-variant", "hsl(83, 11%, 76%)");
+    const root = document.documentElement;
+    root.style.setProperty("--md-sys-color-primary", "hsl(100, 55%, 27%)");
+    root.style.setProperty("--md-sys-color-primary-container", "hsl(98, 79%, 77%)");
+    root.style.setProperty("--md-sys-color-on-primary", "hsl(0, 0%, 100%)");
+    root.style.setProperty("--md-sys-color-secondary", "hsl(95, 13%, 34%)");
+    root.style.setProperty("--md-sys-color-secondary-container", "hsl(90, 37%, 85%)");
+    root.style.setProperty("--md-sys-color-on-secondary-container", "hsl(100, 41%, 9%)");
+    root.style.setProperty("--md-sys-color-tertiary", "hsl(180, 29%, 31%)");
+    root.style.setProperty("--md-sys-color-tertiary-container", "hsl(181, 56%, 83%)");
+    root.style.setProperty("--md-sys-color-error", "hsl(0, 75%, 42%)");
+    root.style.setProperty("--md-sys-color-error-container", "hsl(6, 100%, 92%)");
+    root.style.setProperty("--md-sys-color-background", "hsl(84, 29%, 90%)");
+    root.style.setProperty("--md-sys-color-on-surface", "hsl(90, 8%, 10%)");
+    root.style.setProperty("--md-sys-color-on-surface-variant", "hsl(90, 7%, 26%)");
+    root.style.setProperty("--md-sys-color-surface", "hsl(84, 3%, 36%)");
+    root.style.setProperty("--md-sys-color-surface-bright", "hsl(72, 50%, 96%)");
+    root.style.setProperty("--md-sys-color-surface-dim", "hsl(72, 12%, 84%)");
+    root.style.setProperty("--md-sys-color-surface-container", "hsl(72, 24%, 92%)");
+    root.style.setProperty("--md-sys-color-surface-container-lowest", "hsl(0, 0%, 100%)");
+    root.style.setProperty("--md-sys-color-surface-container-low", "hsl(72, 33%, 94%)");
+    root.style.setProperty("--md-sys-color-surface-container-high", "hsl(72, 19%, 89%)");
+    root.style.setProperty("--md-sys-color-surface-container-highest", "hsl(73, 14%, 87%)");
+    root.style.setProperty("--md-sys-color-outline", "hsl(85, 5%, 45%)");
+    root.style.setProperty("--md-sys-color-outline-variant", "hsl(83, 11%, 76%)");
 };
-
 const setDarkThemeColors = () => {
-  const root = document.documentElement;
-
-  root.style.setProperty("--md-sys-color-primary", "hsl(98, 52%, 66%)");
-  root.style.setProperty(
-    "--md-sys-color-primary-container",
-    "hsl(99, 86%, 17%)"
-  );
-  root.style.setProperty("--md-sys-color-on-primary", "hsl(101, 100%, 14%)");
-  root.style.setProperty("--md-sys-color-secondary", "hsl(91, 21%, 74%)");
-  root.style.setProperty(
-    "--md-sys-color-secondary-container",
-    "hsl(94, 17%, 25%)"
-  );
-  root.style.setProperty(
-    "--md-sys-color-on-secondary-container",
-    "hsl(91, 21%, 74%)"
-  );
-  root.style.setProperty("--md-sys-color-tertiary", "hsl(181, 34%, 72%)");
-  root.style.setProperty(
-    "--md-sys-color-tertiary-container",
-    "hsl(180, 44%, 21%)"
-  );
-  root.style.setProperty("--md-sys-color-error", "hsl(6, 100%, 84%)");
-  root.style.setProperty(
-    "--md-sys-color-error-container",
-    "hsl(356, 100%, 29%)"
-  );
-  root.style.setProperty("--md-sys-color-background", "hsl(84, 29%, 90%)");
-  root.style.setProperty("--md-sys-color-on-surface", "hsl(60, 11%, 88%)");
-  root.style.setProperty(
-    "--md-sys-color-on-surface-variant",
-    "hsl(83, 11%, 76%)"
-  );
-  root.style.setProperty("--md-sys-color-surface", "hsl(90, 18%, 7%)");
-  root.style.setProperty("--md-sys-color-surface-bright", "hsl(86, 6%, 21%)");
-  root.style.setProperty("--md-sys-color-surface-dim", "hsl(90, 18%, 7%)");
-  root.style.setProperty(
-    "--md-sys-color-surface-container",
-    "hsl(86, 12%, 12%)"
-  );
-  root.style.setProperty(
-    "--md-sys-color-surface-container-lowest",
-    "hsl(90, 25%, 5%)"
-  );
-  root.style.setProperty(
-    "--md-sys-color-surface-container-low",
-    "hsl(86, 14%, 10%)"
-  );
-  root.style.setProperty(
-    "--md-sys-color-surface-container-high",
-    "hsl(86, 9%, 15%)"
-  );
-  root.style.setProperty(
-    "--md-sys-color-surface-container-highest",
-    "hsl(86, 7%, 20%)"
-  );
-  root.style.setProperty("--md-sys-color-outline", "hsl(85, 5%, 55%)");
-  root.style.setProperty("--md-sys-color-outline-variant", "hsl(90, 7%, 26%)");
+    const root = document.documentElement;
+    root.style.setProperty("--md-sys-color-primary", "hsl(98, 52%, 66%)");
+    root.style.setProperty("--md-sys-color-primary-container", "hsl(99, 86%, 17%)");
+    root.style.setProperty("--md-sys-color-on-primary", "hsl(101, 100%, 14%)");
+    root.style.setProperty("--md-sys-color-secondary", "hsl(91, 21%, 74%)");
+    root.style.setProperty("--md-sys-color-secondary-container", "hsl(94, 17%, 25%)");
+    root.style.setProperty("--md-sys-color-on-secondary-container", "hsl(91, 21%, 74%)");
+    root.style.setProperty("--md-sys-color-tertiary", "hsl(181, 34%, 72%)");
+    root.style.setProperty("--md-sys-color-tertiary-container", "hsl(180, 44%, 21%)");
+    root.style.setProperty("--md-sys-color-error", "hsl(6, 100%, 84%)");
+    root.style.setProperty("--md-sys-color-error-container", "hsl(356, 100%, 29%)");
+    root.style.setProperty("--md-sys-color-background", "hsl(84, 29%, 90%)");
+    root.style.setProperty("--md-sys-color-on-surface", "hsl(60, 11%, 88%)");
+    root.style.setProperty("--md-sys-color-on-surface-variant", "hsl(83, 11%, 76%)");
+    root.style.setProperty("--md-sys-color-surface", "hsl(90, 18%, 7%)");
+    root.style.setProperty("--md-sys-color-surface-bright", "hsl(86, 6%, 21%)");
+    root.style.setProperty("--md-sys-color-surface-dim", "hsl(90, 18%, 7%)");
+    root.style.setProperty("--md-sys-color-surface-container", "hsl(86, 12%, 12%)");
+    root.style.setProperty("--md-sys-color-surface-container-lowest", "hsl(90, 25%, 5%)");
+    root.style.setProperty("--md-sys-color-surface-container-low", "hsl(86, 14%, 10%)");
+    root.style.setProperty("--md-sys-color-surface-container-high", "hsl(86, 9%, 15%)");
+    root.style.setProperty("--md-sys-color-surface-container-highest", "hsl(86, 7%, 20%)");
+    root.style.setProperty("--md-sys-color-outline", "hsl(85, 5%, 55%)");
+    root.style.setProperty("--md-sys-color-outline-variant", "hsl(90, 7%, 26%)");
 };
-
-document.forms.theme.addEventListener("change", (e) => {
-  console.log(e.target.value);
-  console.log("In the form!");
-  const selectedTheme = e.target.value;
-  // change the theme instantly
-  switch (selectedTheme) {
-    case "light":
-      setLightThemeColors();
-      break;
-    case "dark":
-      setDarkThemeColors();
-      break;
-    case "default":
-      if (
-        window.matchMedia &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches
-      ) {
-        setDarkThemeColors();
-        break;
-      } else {
-        setLightThemeColors();
-        break;
-      }
-  }
+document.forms["theme"].addEventListener("change", (e) => {
+    console.log(e.target.value);
+    console.log("In the form!");
+    const selectedTheme = e.target.value;
+    // change the theme instantly
+    switch (selectedTheme) {
+        case "light":
+            setLightThemeColors();
+            break;
+        case "dark":
+            setDarkThemeColors();
+            break;
+        case "default":
+            if (window.matchMedia &&
+                window.matchMedia("(prefers-color-scheme: dark)").matches) {
+                setDarkThemeColors();
+                break;
+            }
+            else {
+                setLightThemeColors();
+                break;
+            }
+    }
 });
+//# sourceMappingURL=animation.js.map
