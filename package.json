@@ -7,7 +7,7 @@
   "scripts": {
     "publish": "gh-pages -d public",
     "tsc": "tsc --watch -p tsconfig.json",
-    "sass": "sass --watch ./scss:./public/css",
+    "sass": "sass --watch ./scss/main.scss:./public/css/output.css",
     "rollup": "npx rollup -c -w"
   },
   "author": "amkhrjee",
