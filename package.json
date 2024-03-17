@@ -2,13 +2,15 @@
   "name": "bytecalc",
   "version": "1.0.0",
   "description": "Calculator for Programmers",
+  "homepage": "https://amkhrjee.github.io/bytecalcweb",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "publish": "gh-pages -d public"
   },
   "author": "amkhrjee",
   "license": "MIT",
   "devDependencies": {
+    "gh-pages": "^6.1.1",
     "prettier": "3.2.5"
   },
   "dependencies": {
