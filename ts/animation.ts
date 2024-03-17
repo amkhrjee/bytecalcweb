@@ -200,7 +200,7 @@ const showOutput = (message: string, isError: boolean) => {
   }
 };
 
-// // change input area font
+// change input area font
 const updateFontSize = () => {
   if (inputArea.value.length >= 6 && inputArea.value.length <= 9)
     inputArea.style.fontSize = "4.5rem";
