@@ -1,14 +1,14 @@
-import { rollup } from "rollup";
 import resolve from "@rollup/plugin-node-resolve";
+import terser from "@rollup/plugin-terser";
 
 export default {
   input: ["./js/animation.js", "./js/calculator.js"],
   output: {
     dir: "./public/js",
-    format: "es",
-    sourcemap: true,
+    format: "esm",
+    sourcemap: false,
   },
-  plugins: [resolve()],
+  plugins: [terser(), resolve()],
   watch: {
     clearScreen: false,
   },
