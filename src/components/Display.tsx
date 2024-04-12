@@ -11,6 +11,7 @@ import {
   useDisclosure,
 } from "@nextui-org/react";
 import RestoreOutlinedIcon from "@mui/icons-material/RestoreOutlined";
+import ContentCopyOutlinedIcon from "@mui/icons-material/ContentCopyOutlined";
 
 export default function Display() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -24,7 +25,13 @@ export default function Display() {
         </Button>
       </CardHeader>
       <CardBody>
-        <input className="outline-none border-none text-9xl p-0 h-fit w-full bg-inherit text-right font-inherit" />
+        <input className="outline-none border-none text-6xl p-0 h-fit w-full bg-inherit text-right font-inherit" />
+        <div className="flex justify-between items-center">
+          <Button isIconOnly aria-label="copy">
+            <ContentCopyOutlinedIcon />
+          </Button>
+          <div className="text-xl">3.141246</div>
+        </div>
       </CardBody>
       <Modal backdrop="blur" isOpen={isOpen} onClose={onClose}>
         <ModalContent>

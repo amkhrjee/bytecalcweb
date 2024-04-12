@@ -3,6 +3,7 @@ import BugReportOutlinedIcon from "@mui/icons-material/BugReportOutlined";
 import AutoGraphIcon from "@mui/icons-material/AutoGraph";
 import CodeIcon from "@mui/icons-material/Code";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import TableRowsOutlinedIcon from "@mui/icons-material/TableRowsOutlined";
 import Mode from "./Mode";
 import {
   Navbar,
@@ -34,8 +35,16 @@ export default function Topbar() {
       <NavbarMenu>
         <Listbox aria-label="Actions">
           <ListboxItem
+            textValue="Truth Table Generator"
+            key="truth"
+            startContent={<TableRowsOutlinedIcon />}
+          >
+            {" "}
+            Truth Table Generator
+          </ListboxItem>
+          <ListboxItem
             textValue="Change Theme"
-            key="new"
+            key="theme"
             startContent={<ColorLensOutlinedIcon />}
           >
             {" "}
