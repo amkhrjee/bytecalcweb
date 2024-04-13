@@ -80,8 +80,7 @@ export default function Topbar() {
           </ListboxItem>
         </Listbox>
         <Chip>
-          Made with 🍫 by{" "}
-          <Link href="https://bento.me/amkhrjee">@amkhrjee</Link>
+          Made by <Link href="https://bento.me/amkhrjee">@amkhrjee</Link>
         </Chip>
       </NavbarMenu>
     </Navbar>
