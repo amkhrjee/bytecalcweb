@@ -30,7 +30,7 @@ export default function Display() {
           <Button isIconOnly aria-label="copy">
             <ContentCopyOutlinedIcon />
           </Button>
-          <div className="text-xl font-semibold">3.141246</div>
+          <div className="text-2xl font-semibold">3.141246</div>
         </div>
       </CardBody>
       <Modal

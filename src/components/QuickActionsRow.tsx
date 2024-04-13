@@ -10,7 +10,7 @@ import {
 import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined";
 export default function QuickActionsRow() {
   return (
-    <ButtonGroup className="w-full p-2">
+    <ButtonGroup variant="shadow" className="w-full p-2">
       <Button className="w-full text-xl">log₂</Button>
       <Button className="w-full text-xl">mod</Button>
       <Button className="w-full text-xl">2^</Button>
