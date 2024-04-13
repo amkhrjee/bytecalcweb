@@ -11,7 +11,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Work Sans", "system-ui"],
+        sans: ["Onest", "system-ui"],
         monospace: [
           "Fira Code",
           "Consolas",

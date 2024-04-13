@@ -45,8 +45,12 @@ export default function QuickActionsRow() {
           </DropdownSection>
           <DropdownSection aria-label="miscellaneous" title="Miscellaneous">
             <DropdownItem key="percentage">%</DropdownItem>
-            <DropdownItem key="ln">ln</DropdownItem>
-            <DropdownItem key="log10">log_10</DropdownItem>
+            <DropdownItem key="ln">
+              log<sub>e</sub>
+            </DropdownItem>
+            <DropdownItem key="log10">
+              log<sub>10</sub>
+            </DropdownItem>
           </DropdownSection>
         </DropdownMenu>
       </Dropdown>
