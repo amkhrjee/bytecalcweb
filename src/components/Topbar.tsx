@@ -32,52 +32,38 @@ export default function Topbar() {
           <Mode />
         </NavbarItem>
       </NavbarContent>
-      <NavbarMenu>
+      <NavbarMenu className="dark text-foreground bg-background">
         <Listbox aria-label="Actions">
           <ListboxItem
-            textValue="Truth Table Generator"
+            title="Truth Table Generator"
             key="truth"
             startContent={<TableRowsOutlinedIcon />}
-          >
-            {" "}
-            Truth Table Generator
-          </ListboxItem>
+          />
           <ListboxItem
-            textValue="Change Theme"
+            title="Change Theme"
             key="theme"
             startContent={<ColorLensOutlinedIcon />}
-          >
-            {" "}
-            Change Theme
-          </ListboxItem>
+          />
           <ListboxItem
+            title="Report Bug"
             key="bug"
-            textValue="Report Bug"
             startContent={<BugReportOutlinedIcon />}
-          >
-            Report Bug
-          </ListboxItem>
+          />
           <ListboxItem
+            title="Request Feature"
             key="feature"
-            textValue="Request Feature"
             startContent={<AutoGraphIcon />}
-          >
-            Request Feature
-          </ListboxItem>
+          />
           <ListboxItem
+            title="View Source"
             key="source"
-            textValue="View Source"
             startContent={<CodeIcon />}
-          >
-            View Source
-          </ListboxItem>
+          />
           <ListboxItem
+            title="Sponsor"
             key="sponsor"
-            textValue="Sponsor"
             startContent={<FavoriteBorderIcon />}
-          >
-            Sponsor
-          </ListboxItem>
+          />
         </Listbox>
         <Chip>
           Made by <Link href="https://bento.me/amkhrjee">@amkhrjee</Link>
