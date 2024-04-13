@@ -9,7 +9,18 @@ export default {
     "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ["Work Sans", "system-ui"],
+        monospace: [
+          "Fira Code",
+          "Consolas",
+          "Menlo",
+          "Courier New",
+          "DejaVu Sans",
+        ],
+      },
+    },
   },
   darkMode: "class",
   plugins: [nextui()],

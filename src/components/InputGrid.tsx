@@ -25,6 +25,9 @@ export default function InputGrid() {
     "",
     "=",
   ];
+
+  const specialSymbols = ["AC", "(", ")", "/", "×", "-", "+", "="];
+
   return (
     <div className="grid grid-cols-4 gap-2 p-2 h-full flex-grow">
       {inputSymbols.map((inputSymbol) => (
@@ -35,7 +38,14 @@ export default function InputGrid() {
             </Button>
           )}
           {inputSymbol.length != 0 && (
-            <Button className="text-2xl font-bold h-full">{inputSymbol}</Button>
+            <Button
+              color={
+                specialSymbols.includes(inputSymbol) ? "secondary" : "default"
+              }
+              className="text-3xl font-bold h-full"
+            >
+              {inputSymbol}
+            </Button>
           )}
         </Fragment>
       ))}

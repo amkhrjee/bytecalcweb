@@ -17,16 +17,14 @@ export default function QuickActionsRow() {
       {/* <Button className="w-full" isIconOnly>
         <KeyboardArrowDownOutlinedIcon />
       </Button> */}
-      <Dropdown backdrop="blur">
+      <Dropdown className="dark text-foreground bg-background" backdrop="blur">
         <DropdownTrigger>
           <Button className="w-full" isIconOnly>
             <KeyboardArrowDownOutlinedIcon />
           </Button>
         </DropdownTrigger>
         <DropdownMenu
-          // itemClasses={{
-          //   base: ["grid", "grid-cols-4", "gap-4"],
-          // }}
+          // className="grid grid-cols-2"
           variant="faded"
           aria-label="Static Actions"
         >

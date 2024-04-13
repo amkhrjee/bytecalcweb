@@ -25,7 +25,7 @@ export default function Display() {
         </Button>
       </CardHeader>
       <CardBody>
-        <input className="outline-none border-none text-6xl p-0 h-fit w-full bg-inherit text-right font-inherit" />
+        <input className="font-monospace outline-none border-none text-6xl p-0 h-fit w-full bg-inherit text-right font-inherit" />
         <div className="flex justify-between items-center">
           <Button isIconOnly aria-label="copy">
             <ContentCopyOutlinedIcon />
@@ -33,7 +33,12 @@ export default function Display() {
           <div className="text-xl font-semibold">3.141246</div>
         </div>
       </CardBody>
-      <Modal backdrop="blur" isOpen={isOpen} onClose={onClose}>
+      <Modal
+        className="dark text-foreground bg-background"
+        backdrop="blur"
+        isOpen={isOpen}
+        onClose={onClose}
+      >
         <ModalContent>
           {(onClose) => (
             <>
