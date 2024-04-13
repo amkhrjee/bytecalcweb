@@ -25,7 +25,7 @@ export default function QuickActionsRow() {
   // const unaryOperators = []
 
   return (
-    <ButtonGroup variant="shadow" className="w-full p-2">
+    <ButtonGroup className="w-full p-2">
       <Button className="w-full text-xl">log₂</Button>
       <Button className="w-full text-xl">mod</Button>
       <Button className="w-full text-xl">2^</Button>

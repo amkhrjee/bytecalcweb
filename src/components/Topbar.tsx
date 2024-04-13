@@ -103,7 +103,7 @@ export default function Topbar() {
       </Navbar>
       <Modal
         isOpen={isOpen}
-        placement="center"
+        // placement="center"
         onOpenChange={onOpenChange}
         className="dark text-foreground bg-background "
       >

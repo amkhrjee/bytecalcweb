@@ -17,7 +17,7 @@ export default function Display() {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    <Card className="h-auto">
+    <Card>
       <CardHeader className="flex justify-between">
         <p>Last Ans: 123.34</p>
         <Button isIconOnly aria-label="history" onPress={() => onOpen()}>
