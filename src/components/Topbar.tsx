@@ -4,6 +4,7 @@ import AutoGraphIcon from "@mui/icons-material/AutoGraph";
 import CodeIcon from "@mui/icons-material/Code";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import TableRowsOutlinedIcon from "@mui/icons-material/TableRowsOutlined";
+import OpenInNewOutlinedIcon from "@mui/icons-material/OpenInNewOutlined";
 import Mode from "./Mode";
 import {
   Navbar,
@@ -66,21 +67,33 @@ export default function Topbar() {
               title="Report Bug"
               key="bug"
               startContent={<BugReportOutlinedIcon />}
+              endContent={<OpenInNewOutlinedIcon />}
+              target="_blank"
+              href="mailto:aniruddha.mukherji@outlook.com?subject=ByteCalcWeb%20Bug%20Report&body=Describe%20the%20bug%20or%20attach%20a%20screenshot.%20I'll%20try%20to%20fix%20it%20asap."
             />
             <ListboxItem
               title="Request Feature"
               key="feature"
               startContent={<AutoGraphIcon />}
+              endContent={<OpenInNewOutlinedIcon />}
+              target="_blank"
+              href="mailto:aniruddha.mukherji@outlook.com?subject=ByteCal%20Feature%20Request&body=What%20feature%20do%20you%20want?"
             />
             <ListboxItem
-              title="View Source"
+              title="View Source Code"
               key="source"
               startContent={<CodeIcon />}
+              endContent={<OpenInNewOutlinedIcon />}
+              target="_blank"
+              href="https://github.com/amkhrjee/bytecalcweb"
             />
             <ListboxItem
-              title="Sponsor"
-              key="sponsor"
+              title="Support Developer"
+              key="support"
               startContent={<FavoriteBorderIcon />}
+              endContent={<OpenInNewOutlinedIcon />}
+              target="_blank"
+              href="https://linktr.ee/amkhrjee"
             />
           </Listbox>
           <Chip>
